@@ -1,0 +1,12 @@
+{
+  "usingComponents": {
+    "van-tag": "/dist/tag/index",
+    "van-search": "/dist/search/index",
+    "van-card": "/dist/card/index",
+    "van-button": "/dist/button/index",
+    "van-tab": "/dist/tab/index",
+    "van-tabs": "/dist/tabs/index",
+    "vpush-view": "/vpush-pro-sdk/components/view",
+    "van-dialog": "/dist/dialog/index"
+  }
+}

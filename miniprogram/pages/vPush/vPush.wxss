@@ -1,0 +1,63 @@
+.intro {
+  margin: 30px;
+  text-align: center;
+}
+.intro-title {
+  font-size: 24px;
+  font-weight: 400;
+  color: #333;
+}
+.intro-url {
+  font-size: 16px;
+  font-weight: 300;
+  color: #666;
+  margin-top: 10px;
+}
+.mybutton {
+  color: #333;
+  background-color: #EEE;
+  border: 5px solid rgba(255, 255, 255, 0.6);
+  width: 100px;
+  height: 100px;
+  border-radius: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.body {
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding-top:900rpx;
+  padding-left:400rpx;
+}
+.cell {
+  margin-top: 10px;
+  border-top: 1px solid #EEE;
+  padding-top: 10px;
+  font-size: 18px;
+  color: #333;
+}
+.cell > text {
+  margin-right: 20px;
+}
+.tips, .warn {
+  padding: 5px 10px;
+  margin: 10px;
+  border-radius: 5px;
+  text-align: center;
+  background-color: rgba(3, 169, 244, 0.1);
+}
+.tips > text, .warn > text {
+  font-size: 12px;
+  color: #03a9f4;
+  font-weight: 200;
+}
+.warn {
+  background-color: rgba(255, 152, 0, 0.1);
+}
+.warn > text {
+  color: #ff9800;
+}

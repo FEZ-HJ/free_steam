@@ -1,0 +1,32 @@
+<official-account></official-account>
+
+<van-card wx:for="{{items}}" wx:for-item="item" wx:key="_id"
+        num=""
+        tag="{{item.factory}}"
+        price="0.00"
+        desc="{{item.englishName}}"
+        title="{{item.chineseName}}"
+        thumb="{{item.rowImage}}"
+        title-class="title"
+        origin-price="{{item.price}}"
+        data-reply-Type="{{item._id}}"
+        bindtap="collect"
+      >
+        <view slot="tags">
+          <van-tag plain type="danger" custom-class="tag" wx:for="{{item.type}}" wx:for-item="tag" wx:key="tag">{{tag}}</van-tag>
+        </view>
+      
+      <view slot="footer">
+        <view class='link-top'></view>
+      </view>
+
+</van-card>
+
+<view class='body' wx:if="{{show}}">
+  <vpush-view
+    onClickHandler="customHandler"
+    custom-class="mybutton"
+  >接受推送</vpush-view>
+</view>
+
+<van-dialog id="van-dialog" />

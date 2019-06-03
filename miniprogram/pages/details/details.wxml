@@ -1,0 +1,62 @@
+<view class="swiper-container">
+  <swiper autoplay="auto" interval="50000" duration="500" current="{{swiperCurrent}}" bindchange="swiperChange" class="swiper">
+    <block wx:for="{{slider}}" wx:key="unique">
+      <swiper-item>
+          <video class="img" wx:if="{{item.type == 'video'}}"
+            id="myVideo"
+            src="{{item.url}}"
+            danmu-list="{{danmuList}}"
+            enable-danmu
+            danmu-btn
+            controls
+          ></video>
+          
+          <image wx:if="{{item.type == 'image'}}" src="{{item.url}}" class="img"></image>
+
+      </swiper-item>
+    </block>
+  </swiper>
+ 
+  <view class="dots">
+    <block wx:for="{{slider}}" wx:key="unique">
+      <view class="dot{{index == swiperCurrent ? ' active' : ''}}"></view>
+    </block>
+  </view>
+
+</view>
+
+<view class="container">
+
+  <view class="head">
+    <text class='title'>{{title}}</text>
+    <text class='author'>{{desc}}</text>
+  </view>
+  
+</view>
+
+<van-panel  status="">
+<view class='c'> 
+    <view class="e">游戏信息
+      <text class='a'>最近评测：{{assess}}</text>
+      <text class='a'>全部评测：{{allAssess}}</text>
+      <text class='a'>发售时间：{{date}}</text>
+      <text class='a'>游戏类型：{{tag}}</text>
+      <text class='a'>游戏语言：{{language}}</text>
+    </view>
+  </view>
+  <view class='c'> 
+    <view class="e">游戏简介
+      <text bindtap='unfold' class='a'>{{content}}<text class='content1' bindtap='unfold'>{{operation}}</text></text>
+    </view>
+  </view>
+  </van-panel>
+
+<view class="WxComment">
+  <WxComment 
+    tipOne="Markdown " 
+    tipTwo="will be supported, Powered by yicm." 
+    submitBtnText="回复" 
+    articleID="{{article_id}}"    
+    contentLen='1'>
+  </WxComment>
+</view>
