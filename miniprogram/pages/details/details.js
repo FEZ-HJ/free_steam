@@ -70,5 +70,15 @@ Page({
         console.error('[数据库] [查询记录] 失败：', err)
       }
     })
+  },
+
+  onShareAppMessage: function () {
+    let users = wx.getStorageSync('user');
+    if (res.from === 'button') { }
+    return {
+      title: '转发',
+      path: '/pages/details/details?id=' + this.data.article_id,
+      success: function (res) { }
+    }
   }
 })
