@@ -1,4 +1,4 @@
-{
+  {
   "usingComponents": {
     "van-tag": "/dist/tag/index",
     "van-search": "/dist/search/index",

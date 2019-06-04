@@ -6,11 +6,13 @@
 		"es6": true,
 		"postcss": true,
 		"minified": true,
-		"newFeature": true
+		"newFeature": true,
+		"autoAudits": true,
+		"checkInvalidKey": true
 	},
 	"appid": "wxc78e9d02efadbba9",
 	"projectname": "free_steam",
-	"libVersion": "2.2.5",
+	"libVersion": "2.7.1",
 	"simulatorType": "wechat",
 	"simulatorPluginLibVersion": {},
 	"condition": {

@@ -7,15 +7,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    items: [
-      {
-        chineseName: "超级房车赛：起点2",
-        englishName: "Grid 2",
-        price: "0",
-        type: ['开始：2019-05-22','结束：2019-05-25'],
-        rowImage: "https://media.st.dl.bscstorage.net/steam/apps/44350/header.jpg?t=1558459769",
-      }
-    ],
+    value: '',
     show:true
   },
 
@@ -81,5 +73,35 @@ Page({
       show: false
     })
   },
+
+  onSearch:function(e){
+    const db = wx.cloud.database()
+    const _ = db.command
+    var that = this
+    console.log(this.data.value)
+    db.collection('jiudaoxiaoyang').where({
+      chineseName: db.RegExp({
+        regexp: e.detail,
+        //从搜索栏中获取的value作为规则进行匹配。
+        options: 'i',
+        //大小写不区分
+      })
+    }).orderBy('_id', 'desc').get({
+      success: res => {
+        console.log(res.data)
+        if (res.data.length > 0) {
+          that.setData({
+            items: res.data
+          })
+        }
+      },
+      fail: err => {
+        wx.showToast({
+          icon: 'none',
+          title: '查询记录失败'
+        })
+      }
+    })
+  }
 
 })
