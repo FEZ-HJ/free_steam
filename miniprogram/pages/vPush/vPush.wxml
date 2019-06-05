@@ -1,12 +1,10 @@
-<view class='body'>
-  <!-- 收集凭证 -->
-  <vpush-view
-    onClickHandler="customHandler"
-    custom-class="mybutton"
-  >凭证+</vpush-view>
-  <!-- 开关 -->
-  <!-- <view class='cell'>
-    <text>接收推送</text>
-    <switch checked='{{open_push}}' bindchange="togglePush"></switch>
-  </view> -->
-</view>
+<calendar 
+  days-color="{{days}}" 
+  calendar-style="calendar"
+  header-style="header"
+  weeks-type="cn"
+  lunar="true"
+  bindnextMonth="dateChange"
+  bindprevMonth="dateChange"
+  binddateChange="dateChange"
+/>

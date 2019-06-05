@@ -1,3 +1,5 @@
+<!-- <vpush-checkin bind:onCheckIn="checkIn" /> -->
+
 <van-search
   value="{{value}}"
   placeholder="请输入搜索关键词"
@@ -12,12 +14,12 @@
 <van-card wx:for="{{items}}" wx:for-item="item" wx:key="_id"
         num=""
         tag="{{item.factory}}"
-        price="0.00"
+        price="{{item.newPrice}}"
+        origin-price="{{item.price}}"
         desc="{{item.englishName}}"
         title="{{item.chineseName}}"
         thumb="{{item.rowImage}}"
         title-class="title"
-        origin-price="{{item.price}}"
         data-reply-Type="{{item._id}}"
         bindtap="collect"
       >

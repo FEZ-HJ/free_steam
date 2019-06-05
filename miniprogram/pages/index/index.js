@@ -15,9 +15,10 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.query()
+    this.onSearch()
   },
 
+  //初始化 
   query: function () {
     const db = wx.cloud.database()
     const _ = db.command
@@ -49,12 +50,14 @@ Page({
     })
   },
 
+// 跳转到详情页面
   collect: function (e) {
     wx.navigateTo({
       url: '../details/details?id='+ e.currentTarget.dataset.replyType
     })
   },
 
+// 推送功能
   customHandler: function (e) {
     wx.setStorage({
       key: 'isShow',
@@ -74,14 +77,15 @@ Page({
     })
   },
 
+  // 查询限免内容 
   onSearch:function(e){
     const db = wx.cloud.database()
     const _ = db.command
     var that = this
-    console.log(this.data.value)
+    var name = e ==undefined ? '' : e.detail
     db.collection('jiudaoxiaoyang').where({
       chineseName: db.RegExp({
-        regexp: e.detail,
+        regexp: name,
         //从搜索栏中获取的value作为规则进行匹配。
         options: 'i',
         //大小写不区分
@@ -102,6 +106,20 @@ Page({
         })
       }
     })
-  }
+  },
 
+// 签到功能
+  checkIn:function(){
+    wx.cloud.callFunction({
+      name: 'addAndInsert',
+      data: {
+        date: util.formatDay(new Date()),
+      },
+      success: function (res) {
+        console.log(res) // 3
+      },
+      fail: console.error
+    })
+    console.log("签到")
+  }
 })

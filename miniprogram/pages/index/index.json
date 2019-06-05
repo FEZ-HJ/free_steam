@@ -7,6 +7,7 @@
     "van-tab": "/dist/tab/index",
     "van-tabs": "/dist/tabs/index",
     "vpush-view": "/vpush-pro-sdk/components/view",
+    "vpush-checkin": "/vpush-pro-sdk/components/checkin",
     "van-dialog": "/dist/dialog/index"
   }
 }

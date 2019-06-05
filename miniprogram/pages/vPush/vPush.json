@@ -1,5 +1,5 @@
 {
   "usingComponents": {
-    "vpush-view": "/vpush-pro-sdk/components/view"
+    "calendar": "plugin://calendar/calendar"
   }
 }
