@@ -1,9 +1,0 @@
-.calendar {
-    background-color: #eeedff;
-    padding-top: 10px;
-}
-
-.header {
-    font-size: large; /*修改了标题文字和按钮的大小*/
-    color: #605eac;   /*修改了标题文字和按钮的颜色*/
-}

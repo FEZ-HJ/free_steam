@@ -1,5 +1,4 @@
 // miniprogram/pages/index/index.js
-import Dialog from '../../dist/dialog/dialog';
 var util = require('../../utils/util.js')
 Page({
 
@@ -30,14 +29,6 @@ Page({
           that.setData({
             items: res.data
           })
-          var isshow = wx.getStorageSync('isShow')
-          var isdate = wx.getStorageSync('isDate')
-          var i = util.duration(isdate, util.formatDay(new Date()))
-          if (isshow == that.data.items[0]._id && i < 7) {
-            that.setData({
-              show: false
-            })
-          }
         }
       },
       fail: err => {
@@ -54,26 +45,6 @@ Page({
   collect: function (e) {
     wx.navigateTo({
       url: '../details/details?id='+ e.currentTarget.dataset.replyType
-    })
-  },
-
-// 推送功能
-  customHandler: function (e) {
-    wx.setStorage({
-      key: 'isShow',
-      data: this.data.items[0]._id
-    })
-    wx.setStorage({
-      key: 'isDate',
-      data: util.formatDay(new Date())
-    })
-    Dialog.alert({
-      message: '开启推送成功！因小程序设置，此次开启只能保证7天内接受一次推送'
-    }).then(() => {
-      // on close
-    });
-    this.setData({
-      show: false
     })
   },
 
@@ -108,18 +79,4 @@ Page({
     })
   },
 
-// 签到功能
-  checkIn:function(){
-    wx.cloud.callFunction({
-      name: 'addAndInsert',
-      data: {
-        date: util.formatDay(new Date()),
-      },
-      success: function (res) {
-        console.log(res) // 3
-      },
-      fail: console.error
-    })
-    console.log("签到")
-  }
 })

@@ -32,12 +32,3 @@
       </view>
 
 </van-card>
-
-<!-- <view class='body' wx:if="{{show}}">
-  <vpush-view
-    onClickHandler="customHandler"
-    custom-class="mybutton"
-  >接受推送</vpush-view>
-</view> -->
-
-<van-dialog id="van-dialog" />

@@ -1,0 +1,10 @@
+{
+  "usingComponents": {
+    "van-dialog": "/dist/dialog/index",
+    "vpush-checkin": "/vpush-pro-sdk/components/checkin",
+    "vpush-view": "/vpush-pro-sdk/components/view",
+    "van-collapse": "/dist/collapse/index",
+    "calendar": "/components/calendar/calendar",
+    "van-collapse-item": "/dist/collapse-item/index"
+  }
+}
