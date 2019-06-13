@@ -4,7 +4,8 @@ import Dialog from '../../dist/dialog/dialog';
 Page({
   data:{
     show: true,
-    activeNames: ['']
+    activeName: '',
+    money: '111'
   },
   // 下拉展示
   onChange(event) {

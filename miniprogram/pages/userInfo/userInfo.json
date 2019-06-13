@@ -1,6 +1,7 @@
 {
   "usingComponents": {
     "van-dialog": "/dist/dialog/index",
+    "van-icon": "/dist/icon/index",
     "vpush-checkin": "/vpush-pro-sdk/components/checkin",
     "vpush-view": "/vpush-pro-sdk/components/view",
     "van-collapse": "/dist/collapse/index",
