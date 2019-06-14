@@ -24,6 +24,8 @@ Page({
     }
     // 查询签到积分
     this.queryScore()
+    // 查询用户信息
+    this.hasGottenUserInfo()
 
     // this.addScore(10)
     // this.addSignDate()
@@ -74,11 +76,12 @@ Page({
     })
     // 存入签到日期并修改签到记录
     this.addSignDate()
-    // Dialog.alert({
-    //   message: '开启推送成功！因小程序设置，此次开启只能保证7天内接受一次推送'
-    // }).then(() => {
-    //   // on close
-    // });
+    
+    Dialog.alert({
+      message: '签到成功！'
+    }).then(() => {
+      // on close
+    });
 
     // 增加签到积分
     if (this.data.continuousDay >= 6) {
@@ -155,4 +158,21 @@ Page({
     });
   },
 
+  // 查询用户信息
+  hasGottenUserInfo:function(){
+    var that = this
+    wx.getSetting({
+      success: (data) => {
+        if (data.authSetting['scope.userInfo']) {
+          wx.getUserInfo({
+            success: (data) => {
+              that.setData({
+                userInfo: data.userInfo
+              })
+            }
+          })
+        }
+      }
+    })
+  }
 });
