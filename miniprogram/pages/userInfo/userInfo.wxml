@@ -7,26 +7,6 @@
   >签到</vpush-view>
 </view>
 
-<!-- <view class='tab' bindtap='sponsor'>
-    <view class='left'>
-      <image src='images/sponsor.png' class='leftImage'></image>
-      <text class='text'>可用喜加一币：1000</text>
-    </view>
-</view> -->
-
-<!-- <van-collapse value="{{ activeNames }}" bind:change="onChange">
-  <van-collapse-item title="签到记录" name="1">
-    <calendar 
-      days-color="{{days}}" 
-      weeks-type="cn"
-      show-more-days="true"
-    />
-  </van-collapse-item>
-  <van-collapse-item title="签到记录" name="2">
-    
-  </van-collapse-item>
-</van-collapse> -->
-
 <van-collapse value="{{ activeNames }}" bind:change="onChange" accordion>
   <van-collapse-item title="喜加一币：{{money}}" name="5" icon="point-gift">
 

@@ -12,10 +12,19 @@
 <form
   report-submit
   bindsubmit='add'>
-  <button
+  <button wx:if="{{show}}"
     form-type='submit'
     class="custom-class"
     hover-class='button-hover'>
     <slot />
   </button>
+  <button wx:if="{{!show}}"
+    open-type="getUserInfo"
+    lang="zh_CN"
+    class="custom-class"
+    hover-class='button-hover'
+    bindgetuserinfo="onGotUserInfo">
+    <slot />
+  </button>
 </form>
+

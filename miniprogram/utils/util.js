@@ -49,6 +49,11 @@ const parserDate = date => {
   }
 }
 
+// 求某个日期前N天的日期
+const preDate = (date,day) => {
+  var time  = new Date(date).getTime()
+  return formatDay(new Date(time-day*24*60*60*1000))
+}
 
 module.exports = {
   formatTime: formatTime,
@@ -56,5 +61,6 @@ module.exports = {
   formatDay: formatDay,
   duration: duration,
   format: format,
-  parserDate: parserDate
+  parserDate: parserDate,
+  preDate: preDate
 }
