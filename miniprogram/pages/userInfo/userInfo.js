@@ -5,7 +5,8 @@ Page({
   data:{
     show: true,
     activeNames: '',
-    money: '0'
+    money: '0',
+    rank:'0'
   },
 
   onLoad: function (e) {
@@ -24,10 +25,14 @@ Page({
     }
     // 查询签到积分
     this.queryScore()
+    // 查询签到等级
+    this.queryRank()
     // 查询用户信息
     this.hasGottenUserInfo()
 
     // this.addScore(10)
+
+    // this.addRank(10)
     // this.addSignDate()
   },
 
@@ -89,6 +94,9 @@ Page({
     }else{
       this.addScore(50)
     }
+
+    // 增加签到经验
+    this.addRank(50)
   },
 
   // 存入签到日期
@@ -134,7 +142,7 @@ Page({
       },
       fail: console.error
     })
-    console.log("签到")
+    console.log("签到积分")
   },
 
   queryScore: function(){
@@ -145,6 +153,38 @@ Page({
         console.log(res)
         that.setData({
           money:res.data[0].score
+        })
+      },
+      fail: console.error
+    })
+  },
+
+  //  添加等级经验 
+  addRank: function (score) {
+    var that = this
+    wx.cloud.callFunction({
+      name: 'addAndInsertRank',
+      data: {
+        score: score
+      },
+      success: function (res) {
+        console.log(res)
+        that.queryRank()
+      },
+      fail: console.error
+    })
+    console.log("签到经验")
+  },
+
+  // 查询等级经验
+  queryRank: function () {
+    var that = this
+    const db = wx.cloud.database()
+    db.collection('rank').get({
+      success: res => {
+        console.log(res)
+        that.setData({
+          rank: res.data[0].score
         })
       },
       fail: console.error

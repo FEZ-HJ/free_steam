@@ -13,11 +13,15 @@
 </view>
 
 <van-collapse value="{{ activeNames }}" bind:change="onChange" accordion>
-  <van-collapse-item title="喜加一币：{{money}}" name="5" icon="point-gift">
+  <van-collapse-item title="等级：{{rank}}级" name="1" icon="gem">
+      <van-progress percentage="50" />
+  </van-collapse-item>
+
+  <van-collapse-item title="喜加一币：{{money}}" name="2" icon="point-gift">
 
   </van-collapse-item>
   
-  <van-collapse-item title="签到记录" name="1" icon="graphic">
+  <van-collapse-item title="签到记录" name="3" icon="graphic">
     <calendar 
       days-color="{{days}}" 
       weeks-type="cn"

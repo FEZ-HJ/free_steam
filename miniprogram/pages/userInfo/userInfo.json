@@ -1,6 +1,7 @@
 {
   "usingComponents": {
     "van-button": "/dist/button/index",
+    "van-progress": "/dist/progress/index",
     "van-dialog": "/dist/dialog/index",
     "van-icon": "/dist/icon/index",
     "van-collapse": "/dist/collapse/index",
