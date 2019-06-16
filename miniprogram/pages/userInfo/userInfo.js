@@ -97,6 +97,7 @@ Page({
 
     // 增加签到经验
     this.addRank(50)
+    
   },
 
   // 存入签到日期
@@ -182,6 +183,8 @@ Page({
     const db = wx.cloud.database()
     db.collection('rank').get({
       success: res => {
+        // 计算等级
+
         console.log(res)
         that.setData({
           rank: res.data[0].score
