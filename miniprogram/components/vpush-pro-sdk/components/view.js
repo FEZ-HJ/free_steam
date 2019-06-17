@@ -31,12 +31,19 @@ Component({
    */
   methods: {
     add: function (e) {     
-      vPush.addFormId(e);
+      // vPush.addFormId(e);
       // 回调父层的onClickHandler函数
       this.triggerEvent('onClickHandler', e, {});
     },
     onGotUserInfo: function (e) {
       if (e.detail.userInfo != undefined){
+        const db = wx.cloud.database()
+        db.collection('userInfo').add({
+          data: {data:e.detail.userInfo},
+          success: res => {
+            console.log("存入用户信息成功")
+          },
+        })
         this.triggerEvent('onGotUserInfo', e, {});
       }
     },

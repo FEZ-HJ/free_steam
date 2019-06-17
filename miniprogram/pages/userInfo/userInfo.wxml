@@ -14,21 +14,45 @@
 
 <van-collapse value="{{ activeNames }}" bind:change="onChange" accordion>
   <van-collapse-item title="等级：{{rank}}级" name="1" icon="gem">
-      <van-progress percentage="50" />
+      <van-progress percentage="{{progress}}" />
   </van-collapse-item>
 
-  <van-collapse-item title="喜加一币：{{money}}" name="2" icon="point-gift">
+  <van-collapse-item title="积分：{{money}}" name="2" icon="point-gift">
+
+    <van-panel title="30000积分" status="60000积分">
+      <van-row gutter="20">
+        <van-col span="12">
+          <image bindtap="convert" data-reply-Type="30000" src="http://www.whoisyours.cn/blog/5$U30P}H2QNE]][PRCV`GM9.png?blog" class="img"></image>
+        </van-col>
+        <van-col span="12">
+          <image bindtap="convert" data-reply-Type="60000" src="http://www.whoisyours.cn/blog/P3LTT33[B0@1M5)66FDG_FG.png?blog" class="img"></image>
+        </van-col>
+      </van-row>
+    </van-panel>
+
+    <van-panel title="150000积分" status="300000积分">
+      <van-row gutter="20">
+        <van-col span="12">
+          <image bindtap="convert" data-reply-Type="150000" src="http://www.whoisyours.cn/blog/TV3KW3V2I16}H89ZQX_FFAW.png?blog" class="img"></image>
+        </van-col>
+        <van-col span="12">
+          <image bindtap="convert" data-reply-Type="300000" src="http://www.whoisyours.cn/blog/X)L`$1X(1[G})O{@KA3CI@4.png?blog" class="img"></image>
+        </van-col>
+      </van-row>
+    </van-panel>
 
   </van-collapse-item>
-  
+
   <van-collapse-item title="签到记录" name="3" icon="graphic">
-    <calendar 
-      days-color="{{days}}" 
+    <calendar
+      days-color="{{days}}"
       weeks-type="cn"
       show-more-days="true"
     />
   </van-collapse-item>
-  
+
 </van-collapse>
 
 <van-dialog id="van-dialog" />
+<van-notify id="van-notify" />
+<van-toast id="van-toast" />

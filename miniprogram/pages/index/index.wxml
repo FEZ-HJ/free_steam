@@ -1,12 +1,16 @@
 <!-- <vpush-checkin bind:onCheckIn="checkIn" /> -->
 
-<van-search
+<!-- <van-search
   value="{{value}}"
   placeholder="请输入搜索关键词"
   show-action
   bind:search="onSearch"
   bind:cancel="onSearch"
   bind:change="onSearch"
+/> -->
+<van-notice-bar
+  mode="closeable"
+  text="签到积分可兑换steam礼品卡，后续会增加获取积分的方式以及可兑换的礼品"
 />
 
 <official-account></official-account>

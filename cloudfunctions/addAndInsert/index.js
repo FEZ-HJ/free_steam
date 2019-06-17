@@ -15,7 +15,7 @@ exports.main = async (event, context) => {
 
   return new Promise((resolve, reject) => {
     db.collection('signIn').where({
-      openid: OPENID
+      _openid: OPENID
       }).get().then((res)=>{
         if(res.data.length){
           db.collection('signIn').doc(res.data[0]._id).update({
@@ -30,7 +30,7 @@ exports.main = async (event, context) => {
         }else{
           db.collection('signIn').add({
             data: {
-              openid: OPENID,
+              _openid: OPENID,
               data: [date]
             }
           }).then((res) => {

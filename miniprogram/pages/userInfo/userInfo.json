@@ -1,6 +1,10 @@
 {
   "usingComponents": {
     "van-button": "/dist/button/index",
+    "van-panel": "/dist/panel/index",
+    "van-row": "/dist/row/index",
+    "van-col": "/dist/col/index",
+    "van-toast": "/dist/toast/index",
     "van-progress": "/dist/progress/index",
     "van-dialog": "/dist/dialog/index",
     "van-icon": "/dist/icon/index",
@@ -8,7 +12,8 @@
     "van-collapse-item": "/dist/collapse-item/index",
     "van-action-sheet": "/dist/action-sheet/index",
     "van-popup": "/dist/popup/index",
-    "vpush-view": "/vpush-pro-sdk/components/view",
+    "van-notify": "/dist/notify/index",
+    "vpush-view": "/components/vpush-pro-sdk/components/view",
     "calendar": "/components/calendar/calendar"
   }
 }

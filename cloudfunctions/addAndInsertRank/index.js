@@ -16,7 +16,7 @@ exports.main = async (event, context) => {
 
   return new Promise((resolve, reject) => {
     db.collection('rank').where({
-      openid: OPENID
+      _openid: OPENID
     }).get().then((res) => {
       if (res.data.length) {
         db.collection('rank').doc(res.data[0]._id).update({
@@ -29,7 +29,7 @@ exports.main = async (event, context) => {
       } else {
         db.collection('rank').add({
           data: {
-            openid: OPENID,
+            _openid: OPENID,
             score: score
           }
         }).then((res) => {
