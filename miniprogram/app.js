@@ -1,5 +1,5 @@
 // 1. 引入vPush核心文件
-const vPush = require("./vpush-pro-sdk/vpush.pro.js");
+const vPush = require("./components/vpush-pro-sdk/vpush.pro.js");
 
 
 App({
