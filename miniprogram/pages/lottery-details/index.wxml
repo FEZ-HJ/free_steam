@@ -1,0 +1,84 @@
+<van-row>
+    <van-col offset="20" span="4" custom-class="light">
+      <van-tag mark type="danger" bind:tap="history">抽奖历史</van-tag>
+    </van-col>
+</van-row>
+
+<view class="container">
+
+  <view class="head">
+    <text class='title'>{{title}}</text>
+    <text class='author'>{{desc}}</text>
+  </view>
+  
+  <image src="http://www.whoisyours.cn/blog/5$U30P}H2QNE]][PRCV`GM9.png?blog"  class="avatar" />
+
+  <block>
+    <van-button size="normal" type="danger"  bind:click="lottery" >参与抽奖</van-button>
+    <view class='text1'>观看完整视频参与抽奖</view>
+    <view class='text2'>观看次数越多中奖几率越大</view>
+  </block>
+
+</view>
+
+<van-row>
+    <van-col span="2" offset="1" custom-class="light">
+    中奖
+    </van-col>
+    <van-col span="2" custom-class="dark">
+      <image src="https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTI64XUGp3cKv4Gn8SOm6WX7RvgBwErgzWZqFPWqK94XCQZCNjFVsficYZFQ4ukGnqvPrjsG1O4ibDug/132"  class="portrait" />
+    </van-col>
+    <van-col span="14" offset="1" custom-class="light">
+    时光若刻我是一个无人知道的小小鸟
+    </van-col>
+    <van-col  span="4" custom-class="dark">
+      100次
+    </van-col>
+</van-row>
+
+<van-row>
+    <van-col span="2" offset="1" custom-class="light">
+    1
+    </van-col>
+    <van-col span="2" custom-class="dark">
+      <image src="https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTI64XUGp3cKv4Gn8SOm6WX7RvgBwErgzWZqFPWqK94XCQZCNjFVsficYZFQ4ukGnqvPrjsG1O4ibDug/132"  class="portrait" />
+    </van-col>
+    <van-col span="14" offset="1" custom-class="light">
+    时光若刻
+    </van-col>
+    <van-col  span="4" custom-class="dark">
+      100次
+    </van-col>
+</van-row>
+
+
+<van-row>
+    <van-col span="2" offset="1" custom-class="light">
+    2
+    </van-col>
+    <van-col span="2" custom-class="dark">
+      <image src="https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTI64XUGp3cKv4Gn8SOm6WX7RvgBwErgzWZqFPWqK94XCQZCNjFVsficYZFQ4ukGnqvPrjsG1O4ibDug/132"  class="portrait" />
+    </van-col>
+    <van-col span="14" offset="1" custom-class="light">
+    时光若刻你是一个有人知道的大大鸟
+    </van-col>
+    <van-col  span="4" custom-class="dark">
+      100次
+    </van-col>
+</van-row>
+
+
+<van-row>
+    <van-col span="2" offset="1" custom-class="light">
+    3
+    </van-col>
+    <van-col span="2" custom-class="dark">
+      <image src="https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTI64XUGp3cKv4Gn8SOm6WX7RvgBwErgzWZqFPWqK94XCQZCNjFVsficYZFQ4ukGnqvPrjsG1O4ibDug/132"  class="portrait" />
+    </van-col>
+    <van-col span="14" offset="1" custom-class="light">
+    时光若刻
+    </van-col>
+    <van-col  span="4" custom-class="dark">
+      100次
+    </van-col>
+</van-row>

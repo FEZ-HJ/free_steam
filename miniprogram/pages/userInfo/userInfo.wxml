@@ -42,7 +42,7 @@
     </van-panel>
 
   </van-collapse-item>
-
+  
   <van-collapse-item title="签到记录" name="3" icon="graphic">
     <calendar
       days-color="{{days}}"
@@ -52,6 +52,26 @@
   </van-collapse-item>
 
 </van-collapse>
+
+<van-cell
+  icon="hot"
+  is-link
+  title="抽奖活动"
+  link-type="navigateTo"
+  url="/pages/lottery-details/index"
+  value="详情"
+/>
+<!-- <van-cell title="观看完整视频参与抽奖" value="(参与次数x{{lotteryTimes}})" />
+<van-cell title="奖品：Steam30元点卡">
+    <van-button size="small" type="danger" round bind:click="lottery" >参与抽奖</van-button>
+</van-cell> -->
+
+
+<van-panel title="观看完整视频参与抽奖" desc="参与次数越多抽中概率越大" status="07-05 21:00开奖(参与x{{lotteryTimes}})" use-footer-slot header-class="img">
+  <van-cell title="奖品：Steam30元点卡">
+    <van-button size="small" type="danger" round bind:click="lottery" >参与抽奖</van-button>
+  </van-cell>
+</van-panel>
 
 <van-dialog id="van-dialog" />
 <van-notify id="van-notify" />

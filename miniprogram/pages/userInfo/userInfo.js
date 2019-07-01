@@ -12,6 +12,7 @@ Page({
     money: '0',
     rank:'1',
     progress: '0',
+    lotteryTimes: '5'
   },
 
   onLoad: function (e) {
@@ -240,6 +241,11 @@ Page({
     if (spend > this.data.money){
       Dialog.alert({ message: '该礼品需要' + spend +'积分,您的积分不足'}).then(() => {});
     }
-  }
+  },
+
+  // 抽奖详情
+  lottery:function(){
+    
+  },
 
 });

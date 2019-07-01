@@ -1,7 +1,9 @@
 {
   "pages": [
-    "pages/index/index",
     "pages/userInfo/userInfo",
+    "pages/lottery-history/index",
+    "pages/lottery-details/index",
+    "pages/index/index",
     "pages/details/details"
   ],
   "window": {
@@ -29,5 +31,6 @@
         "iconPath": "/images/tab/my.png"
       }
     ]
-  }
+  },
+  "sitemapLocation": "sitemap.json"
 }
