@@ -7,78 +7,40 @@
 <view class="container">
 
   <view class="head">
-    <text class='title'>{{title}}</text>
-    <text class='author'>{{desc}}</text>
+    <text class='title'>{{lottery_info.title}}</text>
+    <text class='author'>{{lottery_info.desc}}</text>
   </view>
   
-  <image src="http://www.whoisyours.cn/blog/5$U30P}H2QNE]][PRCV`GM9.png?blog"  class="avatar" />
+  <image src="{{lottery_info.img}}"  class="avatar" />
 
-  <block>
-    <van-button size="normal" type="danger"  bind:click="lottery" >参与抽奖</van-button>
+  <block wx:if="{{lottery_info.avatarURL == null}}">
+    <van-button size="normal" type="danger" bind:click="lottery" wx:if="{{userInfo != null}}">参与抽奖</van-button>
+    <van-button size="normal" type="danger" wx:if="{{userInfo == null}}" bind:getuserinfo="onGotUserInfo" open-type="getUserInfo">参与抽奖</van-button>
     <view class='text1'>观看完整视频参与抽奖</view>
     <view class='text2'>观看次数越多中奖几率越大</view>
   </block>
 
 </view>
 
-<van-row>
-    <van-col span="2" offset="1" custom-class="light">
-    中奖
-    </van-col>
-    <van-col span="2" custom-class="dark">
-      <image src="https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTI64XUGp3cKv4Gn8SOm6WX7RvgBwErgzWZqFPWqK94XCQZCNjFVsficYZFQ4ukGnqvPrjsG1O4ibDug/132"  class="portrait" />
-    </van-col>
-    <van-col span="14" offset="1" custom-class="light">
-    时光若刻我是一个无人知道的小小鸟
-    </van-col>
-    <van-col  span="4" custom-class="dark">
-      100次
-    </van-col>
+<van-row wx:if="{{lottery_info.avatarURL != null}}">
+  <van-col span="2" offset="1" custom-class="light">中奖</van-col>
+  <van-col span="2" custom-class="dark"><image src="{{lottery_info.avatarURL}}"  class="portrait" /></van-col>
+  <van-col span="14"  custom-class="light">{{lottery_info.nickName}}</van-col>
+  <van-col  span="5" custom-class="dark">{{lottery_info.time}}次</van-col>
 </van-row>
 
-<van-row>
-    <van-col span="2" offset="1" custom-class="light">
-    1
-    </van-col>
-    <van-col span="2" custom-class="dark">
-      <image src="https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTI64XUGp3cKv4Gn8SOm6WX7RvgBwErgzWZqFPWqK94XCQZCNjFVsficYZFQ4ukGnqvPrjsG1O4ibDug/132"  class="portrait" />
-    </van-col>
-    <van-col span="14" offset="1" custom-class="light">
-    时光若刻
-    </van-col>
-    <van-col  span="4" custom-class="dark">
-      100次
-    </van-col>
+<van-row wx:if="{{lottery_recordSelf.avatarUrl != null}}">
+  <van-col span="2" offset="1" custom-class="light">我的</van-col>
+  <van-col span="2" custom-class="dark"><image src="{{lottery_recordSelf.avatarUrl}}" class="portrait" /></van-col>
+  <van-col span="14"  custom-class="light">{{lottery_recordSelf.nickName}}</van-col>
+  <van-col  span="5" custom-class="dark">{{lottery_recordSelf.time}}次</van-col>
 </van-row>
 
-
-<van-row>
-    <van-col span="2" offset="1" custom-class="light">
-    2
-    </van-col>
-    <van-col span="2" custom-class="dark">
-      <image src="https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTI64XUGp3cKv4Gn8SOm6WX7RvgBwErgzWZqFPWqK94XCQZCNjFVsficYZFQ4ukGnqvPrjsG1O4ibDug/132"  class="portrait" />
-    </van-col>
-    <van-col span="14" offset="1" custom-class="light">
-    时光若刻你是一个有人知道的大大鸟
-    </van-col>
-    <van-col  span="4" custom-class="dark">
-      100次
-    </van-col>
-</van-row>
-
-
-<van-row>
-    <van-col span="2" offset="1" custom-class="light">
-    3
-    </van-col>
-    <van-col span="2" custom-class="dark">
-      <image src="https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTI64XUGp3cKv4Gn8SOm6WX7RvgBwErgzWZqFPWqK94XCQZCNjFVsficYZFQ4ukGnqvPrjsG1O4ibDug/132"  class="portrait" />
-    </van-col>
-    <van-col span="14" offset="1" custom-class="light">
-    时光若刻
-    </van-col>
-    <van-col  span="4" custom-class="dark">
-      100次
-    </van-col>
-</van-row>
+<block wx:for="{{lottery_record}}" wx:key="_openid">
+  <van-row>
+    <van-col span="2" offset="1" custom-class="light">{{index+1}}</van-col>
+    <van-col span="2" custom-class="dark"><image src="{{item.avatarUrl}}"  class="portrait" /></van-col>
+    <van-col span="14" custom-class="light">{{item.nickName}}</van-col>
+    <van-col  span="5" custom-class="dark">{{item.time}}次</van-col>
+  </van-row>
+</block>

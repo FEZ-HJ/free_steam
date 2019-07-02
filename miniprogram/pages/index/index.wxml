@@ -8,12 +8,30 @@
   bind:cancel="onSearch"
   bind:change="onSearch"
 /> -->
-<van-notice-bar
+
+<!-- <van-notice-bar
   mode="closeable"
   text="签到积分可兑换steam礼品卡，后续会增加获取积分的方式以及可兑换的礼品"
-/>
+/> -->
 
 <official-account></official-account>
+
+<view class="swiper-container">
+  <swiper autoplay="auto" interval="6000" duration="700" current="{{swiperCurrent}}" bindchange="swiperChange" class="swiper">
+    <block wx:for="{{homepage}}" wx:key="unique">
+      <swiper-item>
+          <image src="{{item.img}}" data-reply-Type="{{item.id}}" bindtap='gg' class="img"></image>
+      </swiper-item>
+    </block>
+  </swiper>
+ 
+  <view class="dots">
+    <block wx:for="{{homepage}}" wx:key="unique">
+      <view class="dot{{index == swiperCurrent ? ' active' : ''}}"></view>
+    </block>
+  </view>
+
+</view>
 
 <van-card wx:for="{{items}}" wx:for-item="item" wx:key="_id"
         num=""
@@ -36,3 +54,5 @@
       </view>
 
 </van-card>
+
+

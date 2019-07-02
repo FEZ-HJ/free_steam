@@ -7,7 +7,8 @@ Page({
    */
   data: {
     value: '',
-    show:true
+    show:true,
+    swiperCurrent: 0,
   },
 
   /**
@@ -15,8 +16,14 @@ Page({
    */
   onLoad: function (options) {
     this.onSearch()
+    this.getHomePage()
   },
 
+  swiperChange: function (e) {
+    this.setData({
+      swiperCurrent: e.detail.current,
+    })
+  },
   //初始化 
   query: function () {
     const db = wx.cloud.database()
@@ -97,6 +104,34 @@ Page({
       }
     }
 
+  },
+
+  gg:function(e){
+    var id = e.currentTarget.dataset.replyType
+    if(id == '999'){
+      wx.previewImage({
+        urls: ['http://www.whoisyours.cn/blog/公众号二维码.png?blog'] // 需要预览的图片http链接列表
+      })
+    }else{
+      wx.navigateTo({
+        url: '../lottery-details/index?id=' + id
+      })
+    }
+  },
+
+  getHomePage:function(){
+    const db = wx.cloud.database()
+    const _ = db.command
+    var that = this
+    db.collection('homePage').get({
+      success: res => {
+        that.setData({
+          homepage: res.data
+        })
+        console.log("查询首页图片成功")
+      },
+      fail: console.error
+    })
   }
 
 })

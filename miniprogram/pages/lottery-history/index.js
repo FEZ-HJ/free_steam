@@ -12,9 +12,31 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    this.getLotteryContent()
 
   },
 
+  getLotteryContent: function () {
+    const db = wx.cloud.database()
+    const _ = db.command
+    var that = this
+    db.collection('lottery-content').orderBy('_id','desc').get({
+      success: res => {
+        that.setData({
+          lottery_info: res.data
+        })
+        console.log("查询抽奖信息成功")
+      },
+      fail: console.error
+    })
+  },
+
+  skipContent: function(e){
+    wx.navigateTo({
+      url: '../lottery-details/index?id=' + e.currentTarget.dataset.replyType
+    })
+  },
+  
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

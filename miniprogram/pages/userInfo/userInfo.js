@@ -4,6 +4,7 @@ import Notify from '../../dist/notify/notify';
 import Toast from '../../dist/toast/toast';
 
 const { grades, levels, addMaxScore , addMinScore } = getApp();
+let rewardedVideoAd = null
 
 Page({
   data:{
@@ -12,7 +13,8 @@ Page({
     money: '0',
     rank:'1',
     progress: '0',
-    lotteryTimes: '5'
+    lotteryTimes: '5',
+    userInfo: null
   },
 
   onLoad: function (e) {
@@ -35,11 +37,29 @@ Page({
     this.queryRank()
     // 查询用户信息
     this.hasGottenUserInfo()
+    // 查询抽奖信息 
+    this.getLotteryContent()
 
-    // this.addScore(10)
+    // 创建广告
+    if (wx.createRewardedVideoAd) {
+      rewardedVideoAd = wx.createRewardedVideoAd({ adUnitId: 'adunit-4bf71ea0625f3676' })
+      rewardedVideoAd.onLoad(() => {
+        console.log('onLoad event emit')
+      })
+      rewardedVideoAd.onError((err) => {
+        console.log('onError event emit', err)
+      })
+      rewardedVideoAd.onClose((res) => {
+        // 用户点击了【关闭广告】按钮
+        if (res && res.isEnded) {
+          // 正常播放结束，可以下发游戏奖励
+          this.addLotteryRecord()
+        } else {
+          Toast('观看完整广告才可参与抽奖！');
+        }
+      })
+    }
 
-    // this.addRank(10)
-    // this.addSignDate()
   },
 
   //设置日历日期样式
@@ -245,7 +265,70 @@ Page({
 
   // 抽奖详情
   lottery:function(){
-    
+    this.addLotteryRecord()
+    // rewardedVideoAd.show().catch(() => {
+    //   // 失败重试
+    //   rewardedVideoAd.load()
+    //     .then(() => rewardedVideoAd.show())
+    //     .catch(err => {
+    //       console.log('激励视频 广告显示失败')
+    //     })
+    // })
   },
+
+  // 用户授权
+  onGotUserInfo: function (e) {
+    if (e.detail.userInfo != undefined) {
+      this.setData({
+        userInfo: e.detail.userInfo
+      })
+      const db = wx.cloud.database()
+      db.collection('userInfo').add({
+        data: { data: e.detail.userInfo },
+        success: res => {
+          console.log("存入用户信息成功")
+        },
+      })
+      this.lottery()
+    } else {
+      Toast('授权之后才能参与抽奖哦！');
+    }
+  },
+
+  // 查询抽奖信息 
+  getLotteryContent: function () {
+    const db = wx.cloud.database()
+    const _ = db.command
+    var that = this
+    db.collection('lottery-content').where({
+      avatarURL: _.eq(null)
+    }).orderBy('_id', 'desc').get({
+      success: res => {
+        that.setData({
+          lottery_info: res.data
+        })
+        console.log("查询抽奖信息成功")
+      },
+      fail: console.error
+    })
+  },
+
+  // 存入抽奖次数
+  addLotteryRecord: function(){
+    console.log("开始存入抽奖次数")
+    var that = this
+    wx.cloud.callFunction({
+      name: 'addAndInsertLotteryRecord',
+      data: {
+        nickName: that.data.userInfo.nickName,
+        avatarUrl: that.data.userInfo.avatarUrl,
+        uid: "1"
+      },
+      success: function (res) {
+        console.log("存入抽奖次数成功")
+      },
+      fail: console.error
+    })
+  }
 
 });
