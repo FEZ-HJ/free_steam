@@ -18,7 +18,7 @@
   position: relative;
 }
 .swiper-container .swiper{
-  height: 200rpx;
+  height: 112rpx;
 }
 .swiper-container .swiper .img{
   position: absolute ;
@@ -44,4 +44,10 @@
 .swiper-container .dots .dot.active{
   width: 24rpx;
   background: #f80;
+}
+
+.image{
+  border-radius: 1%;
+   height: 112rpx;
+   width: 100%;
 }
