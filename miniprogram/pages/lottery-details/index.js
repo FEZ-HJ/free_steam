@@ -104,7 +104,6 @@ Page({
       },
       success: function (res) {
         console.log("查询当前用户抽奖信息成功")
-        console.log(res)
         if (res.result.data.length > 0) {
           that.setData({
             lottery_recordSelf: res.result.data[0]

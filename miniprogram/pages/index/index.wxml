@@ -21,11 +21,11 @@
     bindtap='honoreeClick'
   />
 </block>
-
+<!-- <button open-type='contact'>点击进入客服会话</button> -->
 <official-account></official-account>
 
 <view class="swiper-container">
-<swiper indicator-dots="true" autoplay="true" interval="6000" duration="700" class="swiper">
+<swiper autoplay="true" interval="6000" duration="700" class="swiper">
   <block wx:for="{{homepage}}"  wx:key="unique">
     <swiper-item>
        <image src="{{item.img}}" data-reply-Type="{{item.id}}" bindtap='homepageClick' class="image"></image>
