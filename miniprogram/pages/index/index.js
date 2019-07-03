@@ -15,10 +15,12 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.onSearch()
+    this.query()
     this.getHomePage()
+    this.getUserInfo()
   },
 
+// 轮播图控制方法
   swiperChange: function (e) {
     this.setData({
       swiperCurrent: e.detail.current,
@@ -86,6 +88,7 @@ Page({
     })
   },
 
+// 转发
   onShareAppMessage: function (ops) {
     if (ops.from === 'button') {
       // 来自页面内转发按钮
@@ -103,10 +106,10 @@ Page({
         console.log("转发失败:" + JSON.stringify(res));
       }
     }
-
   },
 
-  gg:function(e){
+// 轮播图点击
+  homepageClick:function(e){
     var id = e.currentTarget.dataset.replyType
     if(id == '999'){
       wx.previewImage({
@@ -119,6 +122,7 @@ Page({
     }
   },
 
+// 获取首页轮播图
   getHomePage:function(){
     const db = wx.cloud.database()
     const _ = db.command
@@ -132,6 +136,28 @@ Page({
       },
       fail: console.error
     })
-  }
+  },
+
+// 查询用户中奖信息
+  getUserInfo: function () {
+    var that = this
+    wx.cloud.callFunction({
+      name: 'queryHonoree',
+      success: function (res) {
+        console.log(res)
+        that.setData({
+          honoreeInfo: res.result.data
+        })
+      },
+      fail: console.error
+    })
+  },
+
+// 跳转到中奖页面
+  honoreeClick:function(e){
+    wx.navigateTo({
+      url: '../lottery-details/index?id=' + e.currentTarget.dataset.replyType
+    })
+  },
 
 })

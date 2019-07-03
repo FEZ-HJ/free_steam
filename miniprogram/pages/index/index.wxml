@@ -13,6 +13,14 @@
   mode="closeable"
   text="签到积分可兑换steam礼品卡，后续会增加获取积分的方式以及可兑换的礼品"
 /> -->
+<block wx:for="{{honoreeInfo}}" wx:key="_id">
+  <van-notice-bar
+    scrollable="false"
+    text="恭喜中奖！！!{{item.title}}。点击领取奖品"
+    data-reply-Type="{{item._id}}"
+    bindtap='honoreeClick'
+  />
+</block>
 
 <official-account></official-account>
 
@@ -20,7 +28,7 @@
   <swiper autoplay="auto" interval="6000" duration="700" current="{{swiperCurrent}}" bindchange="swiperChange" class="swiper">
     <block wx:for="{{homepage}}" wx:key="unique">
       <swiper-item>
-          <image src="{{item.img}}" data-reply-Type="{{item.id}}" bindtap='gg' class="img"></image>
+          <image src="{{item.img}}" data-reply-Type="{{item.id}}" bindtap='homepageClick' class="img"></image>
       </swiper-item>
     </block>
   </swiper>

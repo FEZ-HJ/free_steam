@@ -20,7 +20,7 @@ Page({
     const db = wx.cloud.database()
     const _ = db.command
     var that = this
-    db.collection('lottery-content').orderBy('_id','desc').get({
+    db.collection('lottery-content').orderBy('sort','desc').get({
       success: res => {
         that.setData({
           lottery_info: res.data

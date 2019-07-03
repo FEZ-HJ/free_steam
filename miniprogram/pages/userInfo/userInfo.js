@@ -8,13 +8,22 @@ let rewardedVideoAd = null
 
 Page({
   data:{
-    show: true,
+    // 下拉菜单打开项ID
     activeNames: '',
+    // 积分
     money: '0',
+    // 等级
     rank:'1',
+    // 经验比
     progress: '0',
-    lotteryTimes: '5',
-    userInfo: null
+    // 用户信息
+    userInfo: null,
+    // 连续签到天数
+    continuousDay:0,
+    // 奖品信息
+    lottery_info:null,
+    // 签到记录
+    days:null,
   },
 
   onLoad: function (e) {
@@ -36,7 +45,7 @@ Page({
     // 查询签到等级
     this.queryRank()
     // 查询用户信息
-    this.hasGottenUserInfo()
+    this.onLoadUserInfo()
     // 查询抽奖信息 
     this.getLotteryContent()
 
@@ -94,7 +103,7 @@ Page({
   },
 
   // 签到
-  customHandler: function (e) {
+  customHandler: function () {
     // 标记今天已经签到完成
     wx.setStorage({
       key: 'isDate',
@@ -236,6 +245,7 @@ Page({
 
   // 查询用户信息
   hasGottenUserInfo:function(){
+    this.customHandler()
     var that = this
     wx.getSetting({
       success: (data) => {
@@ -255,6 +265,27 @@ Page({
     })
   },
 
+// 初始化查询用户信息
+  onLoadUserInfo: function () {
+    var that = this
+    wx.getSetting({
+      success: (data) => {
+        if (data.authSetting['scope.userInfo']) {
+          wx.getUserInfo({
+            success: (data) => {
+              console.log("查询用户信息成功")
+              that.setData({
+                userInfo: data.userInfo
+              })
+            }
+          })
+        } else {
+          console.log("用户暂未授权")
+        }
+      }
+    })
+  },
+
   // 积分兑换 
   convert:function(e){
     var spend = e.currentTarget.dataset.replyType
@@ -263,7 +294,7 @@ Page({
     }
   },
 
-  // 抽奖详情
+  // 抽奖
   lottery:function(){
     this.addLotteryRecord()
     // rewardedVideoAd.show().catch(() => {
@@ -282,12 +313,22 @@ Page({
       this.setData({
         userInfo: e.detail.userInfo
       })
-      const db = wx.cloud.database()
-      db.collection('userInfo').add({
-        data: { data: e.detail.userInfo },
-        success: res => {
+      wx.cloud.callFunction({
+        name: 'setUserInfo',
+        data: {
+          avatarUrl: e.detail.userInfo.avatarUrl,
+          city: e.detail.userInfo.city,
+          country: e.detail.userInfo.country,
+          gender: e.detail.userInfo.gender,
+          language: e.detail.userInfo.language,
+          nickName: e.detail.userInfo.nickName,
+          province: e.detail.userInfo.province,
+        },
+        success: function (res) {
+          console.log(res)
           console.log("存入用户信息成功")
         },
+        fail: console.error
       })
       this.lottery()
     } else {

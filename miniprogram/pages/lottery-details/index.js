@@ -1,5 +1,6 @@
 // miniprogram/pages/lottery-details/index.js
 import Toast from '../../dist/toast/toast';
+import Dialog from '../../dist/dialog/dialog';
 let rewardedVideoAd = null
 Page({
 
@@ -7,21 +8,34 @@ Page({
    * 页面的初始数据
    */
   data: {
-    
+    // 奖品ID
+    lotteryId: '',
+    // 用户信息
+    userInfo:null,
+    // 奖品信息
+    lottery_info:null,
+    // 当前用户抽奖记录
+    lottery_recordSelf:null,
+    // 抽奖记录
+    lottery_record:null
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.getUserInfo(options.id)
+    // 查询当前用户抽奖信息
+    this.getLotteryRecordSelf(options.id)
+    // 查询用户授权信息
     this.hasGottenUserInfo()
+    // 查询奖品信息
+    this.getLotteryContent(options.id)
+    // 查询抽奖记录
+    this.getLotteryRecord(options.id)
+    // 奖品ID
     this.setData({
       lotteryId: options.id
     })
-    this.getLotteryContent(options.id)
-    this.getLotteryRecord(options.id)
-
     // 创建广告
     if (wx.createRewardedVideoAd) {
       rewardedVideoAd = wx.createRewardedVideoAd({ adUnitId: 'adunit-4bf71ea0625f3676' })
@@ -79,21 +93,23 @@ Page({
       fail: console.error
     })
   },
-
+  
   // 查询当前用户抽奖记录
-  getLotteryRecordSelf: function (id,openid) {
-    const db = wx.cloud.database()
-    const _ = db.command
+  getLotteryRecordSelf: function (id) {
     var that = this
-    db.collection('lottery-record').where({
-      uid: _.eq(id),
-      _openid: _.eq(openid),
-    }).get({
-      success: res => {
-        that.setData({
-          lottery_recordSelf: res.data[0]
-        })
-        console.log("查询抽奖信息成功")
+    wx.cloud.callFunction({
+      name: 'queryLotteryRecordSelf',
+      data: {
+        uid: id,
+      },
+      success: function (res) {
+        console.log("查询当前用户抽奖信息成功")
+        console.log(res)
+        if (res.result.data.length > 0) {
+          that.setData({
+            lottery_recordSelf: res.result.data[0]
+          })
+        }
       },
       fail: console.error
     })
@@ -102,20 +118,12 @@ Page({
   // 查询用户信息
   hasGottenUserInfo: function () {
     var that = this
-    wx.getSetting({
+    wx.getUserInfo({
       success: (data) => {
-        if (data.authSetting['scope.userInfo']) {
-          wx.getUserInfo({
-            success: (data) => {
-              console.log("查询用户信息成功")
-              that.setData({
-                userInfo: data.userInfo
-              })
-            }
-          })
-        } else {
-          console.log("用户暂未授权")
-        }
+        console.log("查询用户信息成功")
+        that.setData({
+          userInfo: data.userInfo
+        })
       }
     })
   },
@@ -126,12 +134,22 @@ Page({
       this.setData({
         userInfo: e.detail.userInfo
       })
-      const db = wx.cloud.database()
-      db.collection('userInfo').add({
-        data: { data: e.detail.userInfo },
-        success: res => {
+      wx.cloud.callFunction({
+        name: 'setUserInfo',
+        data: {
+          avatarUrl: e.detail.userInfo.avatarUrl,
+          city: e.detail.userInfo.city,
+          country: e.detail.userInfo.country,
+          gender: e.detail.userInfo.gender,
+          language: e.detail.userInfo.language,
+          nickName: e.detail.userInfo.nickName,
+          province: e.detail.userInfo.province,
+        },
+        success: function (res) {
+          console.log(res)
           console.log("存入用户信息成功")
         },
+        fail: console.error
       })
       this.lottery()
     }else{
@@ -139,7 +157,7 @@ Page({
     }
   },
 
-  // 抽奖详情
+  // 抽奖
   lottery: function () {
     this.addLotteryRecord()
     // rewardedVideoAd.show().catch(() => {
@@ -179,18 +197,48 @@ Page({
     })
   },
 
-  // 查询用户openID
-  getUserInfo :function(id){
-    var that = this
-    wx.cloud.callFunction({
-      name: 'getUserInfo',
+  // 领取奖品 
+  honoree:function(){
+    const db = wx.cloud.database()
+    Dialog.confirm({
+      title: this.data.lottery_info.title,
+      message: '充值码:'+this.data.lottery_info.CDKEY
+    }).then(() => {
+      wx.setClipboardData({
+        data: this.data.lottery_info.CDKEY,
+        success(res) {
+        }
+      })
+      db.collection('lottery-content').doc(this.data.lottery_info._id).update({
+        data: {
+          isEnd: 'yes'
+        },
+        success: console.log,
+        fail: console.error
+      })
+    }).catch(() => {
+      console.log("2")
+    });
+  },
+
+  // 转发
+  onShareAppMessage: function (ops) {
+    if (ops.from === 'button') {
+      // 来自页面内转发按钮
+      console.log(ops.target)
+    }
+    return {
+      title: 'Steam点卡抽取',
+      path: 'pages/lottery-details/index?id'+this.data.lotteryId,
       success: function (res) {
-        that.setData({
-          _openid: res.result.openid
-        })
-        that.getLotteryRecordSelf(id, res.result.openid)
+        // 转发成功
+        console.log("转发成功:" + JSON.stringify(res));
       },
-      fail: console.error
-    })
-  }
+      fail: function (res) {
+        // 转发失败
+        console.log("转发失败:" + JSON.stringify(res));
+      }
+    }
+  },
+
 })
