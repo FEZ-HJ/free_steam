@@ -45,7 +45,6 @@ class vPush {
    */
   init() {
     this.initUser().then(openid => {
-      console.log('[vpush.init.ok]', openid);
       this.OPEN_ID = openid;
       // 登陆，获取用户头像等信息
       new Promise(RES => {
@@ -73,7 +72,6 @@ class vPush {
           language: info.language,
           sdk: info.SDKVersion
         }).then(ret => {
-          console.log('[vpush.update.ok]', ret);
         });
       });
     }).catch(err => {

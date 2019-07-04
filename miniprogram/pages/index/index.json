@@ -7,5 +7,6 @@
     "van-button": "/dist/button/index",
     "van-tab": "/dist/tab/index",
     "van-tabs": "/dist/tabs/index"
-  }
+  },
+  "enablePullDownRefresh": true
 }

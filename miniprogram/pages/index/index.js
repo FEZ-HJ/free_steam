@@ -6,9 +6,12 @@ Page({
    * 页面的初始数据
    */
   data: {
-    value: '',
-    show:true,
-    swiperCurrent: 0,
+    // 轮播图
+    homepage:null,
+    // 中奖信息
+    honoreeInfo:null,
+    // 限免信息
+    items:null
   },
 
   /**
@@ -17,6 +20,9 @@ Page({
   onLoad: function (options) {
     this.query()
     this.getHomePage()
+  },
+
+  onShow:function(){
     this.getUserInfo()
   },
 
@@ -26,15 +32,17 @@ Page({
       swiperCurrent: e.detail.current,
     })
   },
-  //初始化 
+  //初始化 查询所有限免信息
   query: function () {
+    console.log('开始查询限免信息')
     const db = wx.cloud.database()
     const _ = db.command
     var that = this
     db.collection('jiudaoxiaoyang').orderBy('_id', 'desc').get({
       success: res => {
-        console.log(res.data)
+        wx.stopPullDownRefresh()
         if (res.data.length > 0) {
+          console.log('查询限免信息成功')
           that.setData({
             items: res.data
           })
@@ -140,11 +148,12 @@ Page({
 
 // 查询用户中奖信息
   getUserInfo: function () {
+    console.log('开始查询用户中奖信息')
     var that = this
     wx.cloud.callFunction({
       name: 'queryHonoree',
       success: function (res) {
-        console.log(res)
+        console.log('查询用户中奖信息成功')
         that.setData({
           honoreeInfo: res.result.data
         })
@@ -155,9 +164,16 @@ Page({
 
 // 跳转到中奖页面
   honoreeClick:function(e){
+    console.log('跳转到中奖页面')
     wx.navigateTo({
       url: '../lottery-details/index?id=' + e.currentTarget.dataset.replyType
     })
   },
+
+// 下拉刷新
+  onPullDownRefresh(){
+    console.log('开始下拉刷新')
+    this.query()
+  }
 
 })

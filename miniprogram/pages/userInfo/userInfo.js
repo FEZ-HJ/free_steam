@@ -24,6 +24,7 @@ Page({
     lottery_info:null,
     // 签到记录
     days:null,
+    show: true
   },
 
   onLoad: function (e) {

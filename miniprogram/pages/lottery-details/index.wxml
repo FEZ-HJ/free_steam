@@ -2,7 +2,10 @@
 <van-toast id="van-toast" />
 
 <van-row>
-    <van-col offset="20" span="4" custom-class="light">
+    <van-col span="4" custom-class="light">
+      <van-button type="danger" size='mini' open-type='contact'>客服</van-button>
+    </van-col>
+    <van-col offset="16" span="4" custom-class="light">
       <van-tag mark type="danger" bind:tap="history">抽奖历史</van-tag>
     </van-col>
 </van-row>
