@@ -56,4 +56,12 @@
 
 </van-card>
 
-
+<van-dialog
+  title="客服"
+  message="我要和客服聊一聊"
+  show="{{ show }}"
+  show-cancel-button
+  confirm-button-open-type="contact"
+  bind:close="onClose"
+>
+</van-dialog>

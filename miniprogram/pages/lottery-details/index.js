@@ -24,6 +24,12 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+
+    if(options.id == null){
+      Toast('暂无抽奖活动，请耐心等候')
+      return;
+    }
+
     // 查询当前用户抽奖信息
     this.getLotteryRecordSelf(options.id)
     // 查询用户授权信息
@@ -84,7 +90,6 @@ Page({
         uid: id,
       },
       success: function (res) {
-        console.log(res)
         that.setData({
           lottery_record: res.result.data
         })

@@ -1,7 +1,7 @@
 <van-dialog id="van-dialog" />
 <van-toast id="van-toast" />
 
-<van-row>
+<van-row wx:if='{{lotteryId}}'>
     <van-col span="4" custom-class="light">
       <van-button type="danger" size='mini' open-type='contact'>客服</van-button>
     </van-col>

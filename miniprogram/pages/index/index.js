@@ -11,7 +11,8 @@ Page({
     // 中奖信息
     honoreeInfo:null,
     // 限免信息
-    items:null
+    items:null,
+    show:false
   },
 
   /**
@@ -123,13 +124,21 @@ Page({
       wx.previewImage({
         urls: ['http://www.whoisyours.cn/blog/公众号二维码.png?blog'] // 需要预览的图片http链接列表
       })
+    } else if (id == '998'){
+      this.setData({
+        show:true
+      })
     }else{
       wx.navigateTo({
         url: '../lottery-details/index?id=' + id
       })
     }
   },
-
+  onClose:function(){
+    this.setData({
+      show: false
+    })
+  },
 // 获取首页轮播图
   getHomePage:function(){
     const db = wx.cloud.database()

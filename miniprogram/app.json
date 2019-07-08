@@ -2,8 +2,8 @@
   "pages": [
     "pages/index/index",
     "pages/userInfo/userInfo",
-    "pages/lottery-history/index",
     "pages/lottery-details/index",
+    "pages/lottery-history/index",
     "pages/details/details"
   ],
   "window": {
@@ -32,5 +32,6 @@
       }
     ]
   },
-  "sitemapLocation": "sitemap.json"
+  "sitemapLocation": "sitemap.json",
+  "cloud": true
 }
