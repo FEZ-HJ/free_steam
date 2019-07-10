@@ -36,7 +36,6 @@ Page({
       },
       success(res) {
         wx.stopPullDownRefresh()
-        console.log(res.data)
         var itemsNew = res.data.data.post_list
         for (var i = 0; i < itemsNew.length; i++) {
           itemsNew[i].pic = that.getImage(itemsNew[i].pic)
@@ -62,7 +61,6 @@ Page({
       },
       success(res) {
         wx.stopPullDownRefresh()
-        console.log(res.data)
         var items = res.data.data.post_list
         for (var i = 0; i < items.length; i++) {
           items[i].pic = that.getImage(items[i].pic)

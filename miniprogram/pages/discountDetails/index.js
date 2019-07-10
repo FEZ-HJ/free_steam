@@ -12,16 +12,18 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    var info = wx.getStorageSync('discountDetails')
     this.setData({
-      info: wx.getStorageSync('discountDetails'),
-      content: wx.getStorageSync('discountDetails').brief_content == undefined ? wx.getStorageSync('discountDetails').content :
-        wx.getStorageSync('discountDetails').brief_content.desc
+      info: info,
+      content: info.brief_content == undefined ? info.content : info.brief_content.desc,
+      shortContent: info.brief_content == undefined ? info.content : info.brief_content.desc
     })
 
   },
   unfold: function () {
+    var info = this.data.info
     this.setData({
-      content: this.data.info.content == this.data.content ? this.data.info.brief_content.desc : this.data.info.content,
+      content: info.content == this.data.content ? this.data.shortContent : info.content,
       operation: this.data.operation == '展开' ? '收起' : '展开'
     })
   },
