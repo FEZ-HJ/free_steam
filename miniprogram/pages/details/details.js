@@ -31,7 +31,6 @@ Page({
     })
   },
   unfold: function () {
-    console.log(111)
     this.setData({
       content: this.data.fullContent == this.data.content ? this.data.shortContent : this.data.fullContent,
       operation: this.data.operation == '展开' ? '收起' : '展开'

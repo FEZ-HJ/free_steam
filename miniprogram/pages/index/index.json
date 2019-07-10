@@ -7,7 +7,6 @@
     "van-card": "/dist/card/index",
     "van-button": "/dist/button/index",
     "van-tab": "/dist/tab/index",
-    "van-icon": "/dist/icon/index",
     "van-tabs": "/dist/tabs/index"
   },
   "enablePullDownRefresh": true

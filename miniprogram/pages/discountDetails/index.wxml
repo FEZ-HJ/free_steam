@@ -1,0 +1,33 @@
+<view class="swiper-container">
+<swiper autoplay="false" interval="6000" duration="700" class="swiper">
+    <swiper-item>
+       <image src="{{info.pic}}" class="image" binderror="errorImage"></image>
+    </swiper-item>
+</swiper>
+</view>
+
+<view class="container">
+
+  <view class="head">
+    <text class='title'>{{info.chinese_title}}</text>
+    <text class='author'>{{info.englishName}}</text>
+  </view>
+  
+</view>
+
+<van-panel  status="">
+  <view class='c'> 
+      <view class="e">游戏信息
+        <text class='a'>最大折扣：{{info.max_discount}}%</text>
+        <text class='a'>发售时间：{{info.game_publish_date_show}}</text>
+        <text class='a'>平均时长：{{info.play_time_avg}}小时</text>
+        <text class='a'>游戏评分：{{info.star_avg}}</text>
+        <!-- <text class='a'>游戏语言：{{language}}</text> -->
+      </view>
+    </view>
+    <view class='c'> 
+      <view class="e">游戏简介
+        <text bindtap='unfold' class='a'>{{content}}<text class='content1' bindtap='unfold'>{{operation}}</text></text>
+      </view>
+  </view>
+</van-panel>

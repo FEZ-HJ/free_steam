@@ -1,10 +1,12 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/discount/index",
     "pages/userInfo/userInfo",
     "pages/lottery-details/index",
     "pages/lottery-history/index",
-    "pages/details/details"
+    "pages/details/details",
+    "pages/discountDetails/index"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",
@@ -23,6 +25,12 @@
         "pagePath": "pages/index/index",
         "text": "发现",
         "iconPath": "/images/tab/classic.png"
+      },
+      {
+        "selectedIconPath": "/images/tab/book@highlight.png",
+        "pagePath": "pages/discount/index",
+        "text": "折扣",
+        "iconPath": "/images/tab/book.png"
       },
       {
         "selectedIconPath": "/images/tab/my@highlight.png",

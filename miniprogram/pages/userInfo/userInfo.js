@@ -118,7 +118,8 @@ Page({
     this.addSignDate()
 
     Notify('连续签到7天以上，经验积分奖励翻倍！');
-    Toast('签到成功！');
+    var t = parseInt(this.data.continuousDay) + 1
+    Toast('已连续签到' + t +'天！');
 
     // 增加签到积分 增加签到经验
     if (this.data.continuousDay >= 6) {
