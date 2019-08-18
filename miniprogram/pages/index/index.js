@@ -1,5 +1,9 @@
 // miniprogram/pages/index/index.js
 var util = require('../../utils/util.js')
+import Dialog from '../../dist/dialog/dialog';
+import Notify from '../../dist/notify/notify';
+import Toast from '../../dist/toast/toast';
+const { grades, levels, addMaxScore, addMinScore } = getApp();
 Page({
 
   /**
@@ -12,7 +16,8 @@ Page({
     honoreeInfo:null,
     // 限免信息
     items:null,
-    show:false
+    show:false,
+    signIn:true,
   },
 
   /**
@@ -21,10 +26,19 @@ Page({
   onLoad: function (options) {
     this.query()
     this.getHomePage()
+    this.onLoadUserInfo()
+    this.setDays(util.formatDay(new Date()).substring(0, 7))
+    
   },
 
   onShow:function(){
     this.getUserInfo()
+    // 设置签到按钮展示
+    if (util.formatDay(new Date()) == wx.getStorageSync('isDate')) {
+      this.setData({
+        signIn: false
+      })
+    }
   },
 
 // 轮播图控制方法
@@ -183,6 +197,159 @@ Page({
   onPullDownRefresh(){
     console.log('开始下拉刷新')
     this.query()
-  }
+  },
 
+  onClose() {
+    this.setData({ signIn: false });
+  },
+
+  // 初始化查询用户信息
+  onLoadUserInfo: function () {
+    var that = this
+    wx.getSetting({
+      success: (data) => {
+        if (data.authSetting['scope.userInfo']) {
+          wx.getUserInfo({
+            success: (data) => {
+              console.log("查询用户信息成功")
+              that.setData({
+                userInfo: data.userInfo
+              })
+            }
+          })
+        } else {
+          console.log("用户暂未授权")
+        }
+      }
+    })
+  },
+
+  // 签到
+  customHandler: function () {
+    // 标记今天已经签到完成
+    wx.setStorage({
+      key: 'isDate',
+      data: util.formatDay(new Date())
+    })
+    // 设置签到按钮隐藏
+    this.setData({
+      signIn: false
+    })
+    // 存入签到日期并修改签到记录
+    this.addSignDate()
+
+    Notify('连续签到7天以上，经验积分奖励翻倍！');
+    var t = parseInt(this.data.continuousDay) + 1
+    Toast('已连续签到' + t + '天！');
+
+    // 增加签到积分 增加签到经验
+    if (this.data.continuousDay >= 6) {
+      this.addScore(addMaxScore)
+      this.addRank(addMaxScore)
+    } else {
+      this.addScore(addMinScore)
+      this.addRank(addMinScore)
+    }
+  },
+  // 查询签到日期
+  querySignDate: function () {
+    console.log("开始查询签到日期")
+    var that = this
+    const db = wx.cloud.database()
+    db.collection('signIn').get({
+      success: res => {
+        console.log("查询签到日期成功" + res.data[0].data)
+        wx.setStorageSync("signInData", res.data[0].data)
+        that.setDays(util.formatDay(new Date()).substring(0, 7))
+      },
+      fail: console.error
+    })
+  },
+
+  // 添加签到积分
+  addScore: function (score) {
+    console.log("开始存入签到积分")
+    var that = this
+    wx.cloud.callFunction({
+      name: 'addAndInsertRecord',
+      data: {
+        score: score
+      },
+      success: function (res) {
+        console.log("存入签到积分成功")
+      },
+      fail: console.error
+    })
+  },
+  //  添加等级经验
+  addRank: function (score) {
+    console.log("开始存入签到经验")
+    var that = this
+    wx.cloud.callFunction({
+      name: 'addAndInsertRank',
+      data: {
+        score: score
+      },
+      success: function (res) {
+        console.log("存入签到经验成功")
+      },
+      fail: console.error
+    })
+  },
+  //设置日历日期样式
+  setDays: function (month) {
+    var days = [];
+    var signInData = wx.getStorageSync('signInData')
+    // 获取连续签到天数
+    var j = 0;
+    for (var i = 1; i < 7; i++) {
+      var date = util.preDate(util.formatDay(new Date()), i)
+      if (signInData.indexOf(date) > -1) {
+        j++;
+      } else {
+        break;
+      }
+    }
+    this.setData({
+      days: days,
+      continuousDay: j
+    })
+  },
+  // 存入签到日期
+  addSignDate: function () {
+    console.log("开始存入签到日期")
+    var that = this
+    wx.cloud.callFunction({
+      name: 'addAndInsert',
+      data: {
+        date: util.formatDay(new Date()),
+      },
+      success: function (res) {
+        console.log("存入签到日期成功")
+        that.querySignDate()
+      },
+      fail: console.error
+    })
+  },
+  // 查询用户信息
+  hasGottenUserInfo: function () {
+    this.customHandler()
+    var that = this
+    wx.getSetting({
+      success: (data) => {
+        if (data.authSetting['scope.userInfo']) {
+          wx.getUserInfo({
+            success: (data) => {
+              console.log("查询用户信息成功")
+              that.setData({
+                userInfo: data.userInfo
+              })
+            }
+          })
+        } else {
+          console.log("用户暂未授权")
+        }
+      }
+    })
+  },
 })

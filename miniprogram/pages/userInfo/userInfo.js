@@ -27,16 +27,9 @@ Page({
     show: true
   },
 
-  onLoad: function (e) {
-    //设置日期样式
-    if (wx.getStorageSync('signInData') != ''){
-      this.setDays(util.formatDay(new Date()).substring(0, 7))
-    }else{
-      this.querySignDate()
-    }
-
+  onShow: function(){
     // 设置签到按钮展示
-    if (util.formatDay(new Date()) == wx.getStorageSync('isDate')){
+    if (util.formatDay(new Date()) == wx.getStorageSync('isDate')) {
       this.setData({
         show: false
       })
@@ -45,6 +38,15 @@ Page({
     this.queryScore()
     // 查询签到等级
     this.queryRank()
+  },
+
+  onLoad: function (e) {
+    //设置日期样式
+    if (wx.getStorageSync('signInData') != ''){
+      this.setDays(util.formatDay(new Date()).substring(0, 7))
+    }else{
+      this.querySignDate()
+    }
     // 查询用户信息
     this.onLoadUserInfo()
     // 查询抽奖信息 
@@ -129,7 +131,6 @@ Page({
       this.addScore(addMinScore)
       this.addRank(addMinScore)
     }
-
   },
 
   // 存入签到日期

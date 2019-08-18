@@ -34,6 +34,8 @@
 </swiper>
 </view>
 
+
+
 <van-card wx:for="{{items}}" wx:for-item="item" wx:key="_id"
         num=""
         tag="{{item.factory}}"
@@ -65,3 +67,21 @@
   bind:close="onClose"
 >
 </van-dialog>
+<van-dialog
+  use-slot
+  show="{{ signIn }}"
+  bind:close="onClose"
+  confirmButtonText="取消"
+  bind:getuserinfo="getUserInfo"
+>
+  <vpush-view
+    bind:onClickHandler="customHandler"
+    bind:onGotUserInfo="hasGottenUserInfo"
+    custom-class="mybutton"
+    userInfo="{{userInfo}}"
+  >签到</vpush-view>
+</van-dialog>
+
+<van-dialog id="van-dialog" />
+<van-notify id="van-notify" />
+<van-toast id="van-toast" />
