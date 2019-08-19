@@ -55,6 +55,26 @@ const preDate = (date,day) => {
   return formatDay(new Date(time-day*24*60*60*1000))
 }
 
+// 初始化查询用户信息
+const getUserInfo = (that) => {
+  wx.getSetting({
+    success: (data) => {
+      if (data.authSetting['scope.userInfo']) {
+        wx.getUserInfo({
+          success: (data) => {
+            console.log("查询用户信息成功")
+            that.setData({
+              userInfo: data.userInfo
+            })
+          }
+        })
+      } else {
+        console.log("用户暂未授权")
+      }
+    }
+  })
+}
+
 module.exports = {
   formatTime: formatTime,
   formatNumber: formatNumber,
@@ -62,5 +82,6 @@ module.exports = {
   duration: duration,
   format: format,
   parserDate: parserDate,
+  getUserInfo: getUserInfo,
   preDate: preDate
 }

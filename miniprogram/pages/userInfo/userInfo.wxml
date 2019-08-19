@@ -1,6 +1,6 @@
 <!-- <vpush-checkin bind:onCheckIn="checkIn" /> -->
 
-<view class='body' wx:if="{{show}}">
+<view class='body' wx:if="{{signIn}}">
   <vpush-view
     bind:onClickHandler="customHandler"
     bind:onGotUserInfo="hasGottenUserInfo"
@@ -8,7 +8,7 @@
     userInfo="{{userInfo}}"
   >签到</vpush-view>
 </view>
-<view class='body' wx:if="{{!show}}">
+<view class='body' wx:if="{{!signIn}}">
   <image src="{{userInfo.avatarUrl}}"  class="avatar" />
 </view>
 

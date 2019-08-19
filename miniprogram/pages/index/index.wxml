@@ -1,18 +1,3 @@
-<!-- <vpush-checkin bind:onCheckIn="checkIn" /> -->
-
-<!-- <van-search
-  value="{{value}}"
-  placeholder="请输入搜索关键词"
-  show-action
-  bind:search="onSearch"
-  bind:cancel="onSearch"
-  bind:change="onSearch"
-/> -->
-
-<!-- <van-notice-bar
-  mode="closeable"
-  text="签到积分可兑换steam礼品卡，后续会增加获取积分的方式以及可兑换的礼品"
-/> -->
 <block wx:for="{{honoreeInfo}}" wx:key="_id">
   <van-notice-bar
     scrollable="false"
@@ -21,7 +6,6 @@
     bindtap='honoreeClick'
   />
 </block>
-<!-- <button open-type='contact'>点击进入客服会话</button> -->
 <official-account></official-account>
 
 <view class="swiper-container">
@@ -33,8 +17,6 @@
   </block>
 </swiper>
 </view>
-
-
 
 <van-card wx:for="{{items}}" wx:for-item="item" wx:key="_id"
         num=""
@@ -67,10 +49,11 @@
   bind:close="onClose"
 >
 </van-dialog>
+
 <van-dialog
   use-slot
   show="{{ signIn }}"
-  bind:close="onClose"
+  bind:close="signInClose"
   confirmButtonText="取消"
   bind:getuserinfo="getUserInfo"
 >
