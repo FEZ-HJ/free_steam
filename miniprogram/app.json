@@ -1,10 +1,11 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/setting/setting",
+    "pages/lottery-history/index",
     "pages/discount/index",
     "pages/userInfo/userInfo",
     "pages/lottery-details/index",
-    "pages/lottery-history/index",
     "pages/details/details",
     "pages/discountDetails/index"
   ],

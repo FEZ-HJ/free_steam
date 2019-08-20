@@ -75,6 +75,26 @@ const getUserInfo = (that) => {
   })
 }
 
+// 用户授权
+const saveUserInfo = (e) => {
+    wx.cloud.callFunction({
+      name: 'setUserInfo',
+      data: {
+        avatarUrl: e.detail.userInfo.avatarUrl,
+        city: e.detail.userInfo.city,
+        country: e.detail.userInfo.country,
+        gender: e.detail.userInfo.gender,
+        language: e.detail.userInfo.language,
+        nickName: e.detail.userInfo.nickName,
+        province: e.detail.userInfo.province,
+      },
+      success: function (res) {
+        console.log("存入用户信息成功")
+      },
+      fail: console.error
+    })
+}
+
 module.exports = {
   formatTime: formatTime,
   formatNumber: formatNumber,
@@ -83,5 +103,6 @@ module.exports = {
   format: format,
   parserDate: parserDate,
   getUserInfo: getUserInfo,
+  saveUserInfo: saveUserInfo,
   preDate: preDate
 }

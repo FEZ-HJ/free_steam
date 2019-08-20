@@ -7,7 +7,7 @@ exports.main = async (event, context) => {
   let { OPENID, APPID } = cloud.getWXContext()
 
   return await db.collection('lottery-content').where({
-    _openid: OPENID,
+    openid: OPENID,
     isEnd: _.eq(null)
   }).get()
 }

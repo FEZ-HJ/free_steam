@@ -79,37 +79,6 @@ Page({
     })
   },
 
-  // 查询限免内容 
-  onSearch:function(e){
-    const db = wx.cloud.database()
-    const _ = db.command
-    var that = this
-    var name = e ==undefined ? '' : e.detail
-    db.collection('jiudaoxiaoyang').where({
-      chineseName: db.RegExp({
-        regexp: name,
-        //从搜索栏中获取的value作为规则进行匹配。
-        options: 'i',
-        //大小写不区分
-      })
-    }).orderBy('_id', 'desc').get({
-      success: res => {
-        console.log(res.data)
-        if (res.data.length > 0) {
-          that.setData({
-            items: res.data
-          })
-        }
-      },
-      fail: err => {
-        wx.showToast({
-          icon: 'none',
-          title: '查询记录失败'
-        })
-      }
-    })
-  },
-
 // 转发
   onShareAppMessage: function (ops) {
     if (ops.from === 'button') {
@@ -133,7 +102,13 @@ Page({
 // 轮播图点击
   homepageClick:function(e){
     var id = e.currentTarget.dataset.replyType
-    if(id == '999'){
+    if (this.data.userInfo.avatarUrl == 'https://wx.qlogo.cn/mmopen/vi_32/7Fy64zYiczszwKEqzjOnSFhWequlYPDQsEw8X1eR1lasmpTAH8q7pYoZOiaiao9V8MyAWNcBwq6CY6K5j1TrswVzQ/132' || 
+      this.data.userInfo.avatarUrl == 'https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTI64XUGp3cKv4Gn8SOm6WX7RvgBwErgzWZqFPWqK94XCQZCNjFVsficYZFQ4ukGnqvPrjsG1O4ibDug/132') {
+      wx.navigateTo({
+        url: '../setting/setting'
+      })
+    }
+    else if(id == '999'){
       wx.previewImage({
         urls: ['http://www.whoisyours.cn/blog/公众号二维码.png?blog'] // 需要预览的图片http链接列表
       })

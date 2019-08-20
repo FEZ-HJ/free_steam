@@ -19,9 +19,9 @@
   
   <image src="{{lottery_info.img}}"  class="avatar" />
 
-  <van-button size="normal" round type="danger" bind:click="honoree" wx:if="{{lottery_recordSelf != null && lottery_info._openid == lottery_recordSelf._openid}}">领取奖品</van-button>
+  <van-button size="normal" round type="danger" bind:click="honoree" wx:if="{{lottery_recordSelf != null && lottery_info.openid == lottery_recordSelf._openid}}">领取奖品</van-button>
 
-  <block wx:if="{{lottery_info != null && lottery_info.avatarURL == null}}">
+  <block wx:if="{{lottery_info != null && lottery_info.avatarUrl == null}}">
     <van-button size="normal" type="danger" bind:click="lottery" wx:if="{{userInfo != null}}">参与抽奖</van-button>
     <van-button size="normal" type="danger" wx:if="{{userInfo == null}}" bind:getuserinfo="onGotUserInfo" open-type="getUserInfo">参与抽奖</van-button>
     <view class='text1'>观看完整视频参与抽奖</view>
@@ -30,9 +30,9 @@
 
 </view>
 
-<van-row wx:if="{{lottery_info.avatarURL != null}}">
+<van-row wx:if="{{lottery_info.avatarUrl != null}}">
   <van-col span="2" offset="1" custom-class="light">中奖</van-col>
-  <van-col span="2" custom-class="dark"><image src="{{lottery_info.avatarURL}}"  class="portrait" /></van-col>
+  <van-col span="2" custom-class="dark"><image src="{{lottery_info.avatarUrl}}"  class="portrait" /></van-col>
   <van-col span="14"  custom-class="light">{{lottery_info.nickName}}</van-col>
   <van-col  span="5" custom-class="dark">{{lottery_info.time}}次</van-col>
 </van-row>

@@ -41,6 +41,7 @@ Page({
   },
 
   onLoad: function (e) {
+
     //设置日期样式
     if (wx.getStorageSync('signInData') != ''){
       signInUtil.setDays(this,util.formatDay(new Date()).substring(0, 7))
@@ -77,7 +78,6 @@ Page({
   // 签到
   customHandler: function () {
     signInUtil.signInHome(this)
-    signInUtil.queryScore(this)
     Notify('连续签到7天以上，经验积分奖励翻倍！');
     var t = parseInt(this.data.continuousDay) + 1
     Toast('已连续签到' + t + '天！');
@@ -123,23 +123,7 @@ Page({
       this.setData({
         userInfo: e.detail.userInfo
       })
-      wx.cloud.callFunction({
-        name: 'setUserInfo',
-        data: {
-          avatarUrl: e.detail.userInfo.avatarUrl,
-          city: e.detail.userInfo.city,
-          country: e.detail.userInfo.country,
-          gender: e.detail.userInfo.gender,
-          language: e.detail.userInfo.language,
-          nickName: e.detail.userInfo.nickName,
-          province: e.detail.userInfo.province,
-        },
-        success: function (res) {
-          console.log(res)
-          console.log("存入用户信息成功")
-        },
-        fail: console.error
-      })
+      util.saveUserInfo(e)
       this.lottery()
     } else {
       Toast('授权之后才能参与抽奖哦！');
@@ -152,7 +136,7 @@ Page({
     const _ = db.command
     var that = this
     db.collection('lottery-content').where({
-      avatarURL: _.eq(null)
+      avatarUrl: _.eq(null)
     }).orderBy('_id', 'desc').get({
       success: res => {
         that.setData({
@@ -173,7 +157,7 @@ Page({
       data: {
         nickName: that.data.userInfo.nickName,
         avatarUrl: that.data.userInfo.avatarUrl,
-        uid: "1"
+        uid: that.data.lottery_info[0]._id
       },
       success: function (res) {
         console.log("存入抽奖次数成功")

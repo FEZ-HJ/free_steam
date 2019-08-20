@@ -1,4 +1,5 @@
 // miniprogram/pages/lottery-details/index.js
+var util = require('../../utils/util.js')
 import Toast from '../../dist/toast/toast';
 import Dialog from '../../dist/dialog/dialog';
 let rewardedVideoAd = null
@@ -33,7 +34,7 @@ Page({
     // 查询当前用户抽奖信息
     this.getLotteryRecordSelf(options.id)
     // 查询用户授权信息
-    this.hasGottenUserInfo()
+    util.getUserInfo(this)
     // 查询奖品信息
     this.getLotteryContent(options.id)
     // 查询抽奖记录
@@ -119,42 +120,13 @@ Page({
     })
   },
 
-  // 查询用户信息
-  hasGottenUserInfo: function () {
-    var that = this
-    wx.getUserInfo({
-      success: (data) => {
-        console.log("查询用户信息成功")
-        that.setData({
-          userInfo: data.userInfo
-        })
-      }
-    })
-  },
-
   // 用户授权
   onGotUserInfo: function (e) {
     if (e.detail.userInfo != undefined) {
       this.setData({
         userInfo: e.detail.userInfo
       })
-      wx.cloud.callFunction({
-        name: 'setUserInfo',
-        data: {
-          avatarUrl: e.detail.userInfo.avatarUrl,
-          city: e.detail.userInfo.city,
-          country: e.detail.userInfo.country,
-          gender: e.detail.userInfo.gender,
-          language: e.detail.userInfo.language,
-          nickName: e.detail.userInfo.nickName,
-          province: e.detail.userInfo.province,
-        },
-        success: function (res) {
-          console.log(res)
-          console.log("存入用户信息成功")
-        },
-        fail: console.error
-      })
+      util.saveUserInfo(e)
       this.lottery()
     }else{
       Toast('授权之后才能参与抽奖哦！');
@@ -213,12 +185,9 @@ Page({
         success(res) {
         }
       })
-      db.collection('lottery-content').doc(this.data.lottery_info._id).update({
-        data: {
-          isEnd: 'yes'
-        },
-        success: console.log,
-        fail: console.error
+      wx.setStorage({
+        key: 'lotteryed',
+        data: this.data.lottery_info._id
       })
     }).catch(() => {
       console.log("2")
