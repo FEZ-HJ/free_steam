@@ -6,6 +6,7 @@
     "van-cell-group": "/dist/cell-group/index",
     "van-cell": "/dist/cell/index",
     "van-tab": "/dist/tab/index",
-    "van-tabs": "/dist/tabs/index"
+    "van-tabs": "/dist/tabs/index",
+    "wemark": "/components/wemark/wemark"
   }
 }

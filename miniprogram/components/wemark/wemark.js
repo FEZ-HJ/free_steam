@@ -30,10 +30,6 @@ Component({
     methods: {
         parseMd(){
 			if (this.data.md) {
-        this.setData({
-          md: this.data.md.replace(/_/g, ' \n ')
-        })
-        console.log(this.data.md)
 				var parsedData = parser.parse(this.data.md, {
 					link: this.data.link,
 					highlight: this.data.highlight

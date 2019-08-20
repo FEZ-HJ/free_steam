@@ -6,7 +6,8 @@ Page({
    */
   data: {
     lotteryContent : false,
-    active: 0
+    active: 0,
+    md: ''
   },
   onChange(event) {
     // wx.showToast({
