@@ -17,7 +17,7 @@ Page({
     // 限免信息
     items:null,
     show:false,
-    signIn:true,
+    signIn:false,
   },
 
   /**
@@ -102,8 +102,8 @@ Page({
 // 轮播图点击
   homepageClick:function(e){
     var id = e.currentTarget.dataset.replyType
-    if (this.data.userInfo.avatarUrl == 'https://wx.qlogo.cn/mmopen/vi_32/7Fy64zYiczszwKEqzjOnSFhWequlYPDQsEw8X1eR1lasmpTAH8q7pYoZOiaiao9V8MyAWNcBwq6CY6K5j1TrswVzQ/132' || 
-      this.data.userInfo.avatarUrl == 'https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTI64XUGp3cKv4Gn8SOm6WX7RvgBwErgzWZqFPWqK94XCQZCNjFVsficYZFQ4ukGnqvPrjsG1O4ibDug/132') {
+    if (this.data.userInfo != undefined && (this.data.userInfo.avatarUrl == 'https://wx.qlogo.cn/mmopen/vi_32/7Fy64zYiczszwKEqzjOnSFhWequlYPDQsEw8X1eR1lasmpTAH8q7pYoZOiaiao9V8MyAWNcBwq6CY6K5j1TrswVzQ/132' || 
+      this.data.userInfo.avatarUrl == 'https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTI64XUGp3cKv4Gn8SOm6WX7RvgBwErgzWZqFPWqK94XCQZCNjFVsficYZFQ4ukGnqvPrjsG1O4ibDug/132')) {
       wx.navigateTo({
         url: '../setting/setting'
       })

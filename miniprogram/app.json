@@ -24,13 +24,13 @@
       {
         "selectedIconPath": "/images/tab/classic@highlight.png",
         "pagePath": "pages/index/index",
-        "text": "发现",
+        "text": "限免",
         "iconPath": "/images/tab/classic.png"
       },
       {
         "selectedIconPath": "/images/tab/book@highlight.png",
         "pagePath": "pages/discount/index",
-        "text": "折扣",
+        "text": "史低",
         "iconPath": "/images/tab/book.png"
       },
       {

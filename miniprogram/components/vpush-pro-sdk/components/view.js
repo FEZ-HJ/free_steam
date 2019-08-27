@@ -32,7 +32,7 @@ Component({
    */
   methods: {
     add: function (e) {     
-      vPush.addFormId(e);
+      // vPush.addFormId(e);
       // 回调父层的onClickHandler函数
       this.triggerEvent('onClickHandler', e, {});
     },
