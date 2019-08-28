@@ -55,7 +55,7 @@ Page({
   getInfo(page){
     var that = this
     wx.request({
-      url: 'https://api.xiaoheihe.cn/game/get_game_list_v3/?filter_head=lowest&sort_type=discount&lang=zh-cn&os_type=iOS&os_version=12.3.1&_time=1566827127&version=1.2.79&device_id=8CF0A51-04EF-4BB0-9EEB-18FDFA29E9D5&heybox_id=-1&hkey=800bb5728fd499e75ac55213ec714bcd&include_filter=0&limit=30&offset=' + (page - 1) * 30,
+      url: 'https://api.xiaoheihe.cn/game/get_game_list_v3/?filter_price=lowest_price&filter_tag=all&filter_platform=all&only_chinese=0&show_dlc=0&sort_type=discount&lang=zh-cn&os_type=iOS&os_version=12.3.1&_time=1566997161&version=1.2.79&device_id=8CF0A451-04EF-4BB0-9EEB-18FDFA29E9D5&heybox_id=-1&hkey=55c666afa4f416df170bb4b8dc33cc60&include_filter=0&limit=30&offset=' + (page - 1) * 30,
       // url: 'https://cowlevel.net/search/game-search?per_page=20&page=' + page + '&type=5&q=&platform_support_id=183&sort_type=desc&is_free=0&is_discount=1&is_chinese=0',
       header: {
         'content-type': 'application/json' // 默认值
