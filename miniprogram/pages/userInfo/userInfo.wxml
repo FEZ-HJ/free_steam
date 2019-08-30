@@ -1,12 +1,12 @@
 <!-- <vpush-checkin bind:onCheckIn="checkIn" /> -->
 
 <view class='body' wx:if="{{signIn}}">
-  <vpush-view
+  <vSignIn
     bind:onClickHandler="customHandler"
     bind:onGotUserInfo="hasGottenUserInfo"
     custom-class="mybutton"
     userInfo="{{userInfo}}"
-  >签到</vpush-view>
+  >签到</vSignIn>
 </view>
 <view class='body' wx:if="{{!signIn}}">
   <image src="{{userInfo.avatarUrl}}"  class="avatar" />

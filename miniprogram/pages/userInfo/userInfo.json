@@ -15,7 +15,7 @@
     "van-action-sheet": "/dist/action-sheet/index",
     "van-popup": "/dist/popup/index",
     "van-notify": "/dist/notify/index",
-    "vpush-view": "/components/vpush-pro-sdk/components/view",
+    "vSignIn": "/components/vSignIn/vSignIn",
     "calendar": "/components/calendar/calendar"
   }
 }

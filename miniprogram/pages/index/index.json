@@ -8,7 +8,7 @@
     "van-button": "/dist/button/index",
     "van-tab": "/dist/tab/index",
     "van-action-sheet": "/dist/action-sheet/index",
-    "vpush-view": "/components/vpush-pro-sdk/components/view",
+    "vSignIn": "/components/vSignIn/vSignIn",
     "van-tabs": "/dist/tabs/index"
   },
   "enablePullDownRefresh": true

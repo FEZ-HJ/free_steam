@@ -6,7 +6,6 @@
     bindtap='honoreeClick'
   />
 </block>
-<official-account></official-account>
 
 <view class="swiper-container">
 <swiper autoplay="true" interval="6000" duration="700" class="swiper">
@@ -48,21 +47,6 @@
   confirm-button-open-type="contact"
   bind:close="onClose"
 >
-</van-dialog>
-
-<van-dialog
-  use-slot
-  show="{{ signIn }}"
-  bind:close="signInClose"
-  confirmButtonText="取消"
-  bind:getuserinfo="getUserInfo"
->
-  <vpush-view
-    bind:onClickHandler="customHandler"
-    bind:onGotUserInfo="hasGottenUserInfo"
-    custom-class="mybutton"
-    userInfo="{{userInfo}}"
-  >签到</vpush-view>
 </van-dialog>
 
 <van-dialog id="van-dialog" />

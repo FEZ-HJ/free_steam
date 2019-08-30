@@ -1,5 +1,0 @@
-@import "./_style.wxss";
-
-.hijack-btn {
-  position: fixed;
-}

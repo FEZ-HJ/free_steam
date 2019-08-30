@@ -27,7 +27,7 @@ Page({
     this.query()
     this.getHomePage()
     util.getUserInfo(this)
-    signInUtil.setDays(this,util.formatDay(new Date()).substring(0, 7)) 
+    // signInUtil.setDays(this,util.formatDay(new Date()).substring(0, 7)) 
   },
 
   onShow:function(){
