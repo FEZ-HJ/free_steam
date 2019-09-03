@@ -2,7 +2,7 @@
   position: relative;
 }
 .swiper-container .swiper{
-  height: 426rpx;
+  height: 380rpx;
 }
 .swiper-container .swiper .img{
   position: absolute ;
@@ -32,7 +32,7 @@
 
 .image{
   border-radius: 1%;
-   height: 512rpx;
+   height: 360rpx;
    width: 100%;
 }
 

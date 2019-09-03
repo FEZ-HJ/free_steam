@@ -1,8 +1,5 @@
-
-<!-- <van-tabs active="{{ active }}" sticky bind:change="onChange">
-  <van-tab title="高分"> -->
     <van-card wx:for="{{items}}" wx:for-item="item" wx:key="_id"
-        num=""
+        num="{{item.price.discount}}%折扣"
         tag="{{item.score}}"
         price="{{item.price.lowest_price}}"
         origin-price="{{item.price.current}}"
@@ -22,33 +19,8 @@
       </view>
 
     </van-card>
-  <!-- </van-tab> -->
 
-  <!-- <van-tab title="新品">
-    <van-card wx:for="{{itemsNew}}" wx:for-item="item" wx:key="_id"
-        num=""
-        tag="{{item.star_avg}}"
-        price="{{item.game_prices.data.price}}"
-        origin-price="{{item.game_prices.data.price_off}}"
-        desc="{{item.englishName}}"
-        title="{{item.chinese_title}}"
-        thumb="{{item.pic}}"
-        title-class="title"
-        data-reply-Type="{{item}}"
-        bindtap="details"
-      >
-        <view slot="tags">
-          <van-tag plain type="danger" custom-class="tag" wx:for="{{item.language}}" wx:for-item="tag" wx:key="tag">{{tag.name}}</van-tag>
-        </view>
-      
-      <view slot="footer">
-        <view class='link-top'></view>
-      </view>
-
-    </van-card>
-  </van-tab>
-
-</van-tabs> -->
+  
 
 
 
