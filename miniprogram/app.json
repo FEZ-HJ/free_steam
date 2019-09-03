@@ -1,13 +1,15 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/setting/setting",
-    "pages/lottery-history/index",
+    "pages/indexDetails/details",
+    "pages/strategy/strategy",
+    "pages/strategyList/strategyList",
     "pages/discount/index",
-    "pages/userInfo/userInfo",
-    "pages/lottery-details/index",
-    "pages/details/details",
     "pages/discountDetails/index",
+    "pages/userInfo/userInfo",
+    "pages/setting/setting",
+    "pages/lottery-details/index",
+    "pages/lottery-history/index",
     "components/vSignIn/vSignIn"
   ],
   "window": {
@@ -23,22 +25,28 @@
     "color": "#c7c7c7",
     "list": [
       {
-        "selectedIconPath": "/images/tab/classic@highlight.png",
+        "selectedIconPath": "/images/tab/free@hl.png",
         "pagePath": "pages/index/index",
         "text": "限免",
-        "iconPath": "/images/tab/classic.png"
+        "iconPath": "/images/tab/free.png"
       },
       {
-        "selectedIconPath": "/images/tab/book@highlight.png",
+        "selectedIconPath": "/images/tab/zhekou@hl.png",
         "pagePath": "pages/discount/index",
         "text": "史低",
-        "iconPath": "/images/tab/book.png"
+        "iconPath": "/images/tab/zhekou.png"
       },
       {
-        "selectedIconPath": "/images/tab/my@highlight.png",
+        "selectedIconPath": "/images/tab/zx@hl.png",
+        "pagePath": "pages/strategyList/strategyList",
+        "text": "资讯",
+        "iconPath": "/images/tab/zx.png"
+      },
+      {
+        "selectedIconPath": "/images/tab/user@hl.png",
         "pagePath": "pages/userInfo/userInfo",
         "text": "我的",
-        "iconPath": "/images/tab/my.png"
+        "iconPath": "/images/tab/user.png"
       }
     ]
   },

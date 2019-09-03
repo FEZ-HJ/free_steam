@@ -1,0 +1,16 @@
+<view class="container">
+  
+  <view class="post-card" wx:for="{{content}}" wx:key="postId" animation="{{anp}}">
+    <!-- Navigator页面跳转 -->
+    <navigator url="/pages/strategy/strategy?id={{item._id}}">
+      <view class="post-card-image-link">
+        <image class="img" lazy-load="true" mode="widthFix" src="{{item.coverImage}}"></image>
+      </view>
+      <view class="post-card-content">
+        <view style="margin-left: 10px; color: #cccccc;"> </view>
+        <view class="title">{{item.title}}</view>
+        <view class="summary">{{item.synopsis}}</view>
+      </view>
+    </navigator>
+  </view>
+</view>

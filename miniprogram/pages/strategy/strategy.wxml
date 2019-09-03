@@ -1,0 +1,4 @@
+
+<view style="margin: 10px">
+  <wemark md="{{content}}" link highlight type="wemark"></wemark>
+</view>

@@ -75,7 +75,7 @@ Page({
 // 跳转到详情页面
   collect: function (e) {
     wx.navigateTo({
-      url: '../details/details?id='+ e.currentTarget.dataset.replyType
+      url: '../indexDetails/details?id='+ e.currentTarget.dataset.replyType
     })
   },
 
