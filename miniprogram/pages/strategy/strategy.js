@@ -13,6 +13,9 @@ Page({
    */
   onLoad: function (options) {
     this.query(options.id)
+    this.setData({
+      article_id : options.id
+    })
   },
 
   query: function(id){
