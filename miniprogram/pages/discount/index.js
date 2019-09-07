@@ -17,7 +17,7 @@ Page({
    */
   onLoad: function (options) {
     this.getInfo(1)
-    this.getInfoNew(1)
+    // this.getInfoNew(1)
   },
   getImage(url) {
     // 把现在的图片连接传进来，返回一个不受限制的路径
@@ -27,36 +27,10 @@ Page({
     }
   },
   // https://cowlevel.net/search/game-search?per_page=10&page=1&type=1&platform_support_id=183&sort_type=asc&is_free=0&is_discount=1&is_chinese=0
-  getInfoNew(page){
-    var that = this
-    wx.request({
-      url: 'https://cowlevel.net/search/game-search?per_page=20&page='+page+'&type=1&platform_support_id=183&sort_type=asc&is_free=0&is_discount=1&is_chinese=0',
-      header: {
-        'content-type': 'application/json' // 默认值
-      },
-      success(res) {
-        wx.stopPullDownRefresh()
-        var itemsNew = res.data.data.post_list
-        for (var i = 0; i < itemsNew.length; i++) {
-          itemsNew[i].pic = that.getImage(itemsNew[i].pic)
-          itemsNew[i].englishName = itemsNew[i].url_slug.replace(/_/g, ' ');
-          for (var j = 0; j < itemsNew[i].game_prices.length; j++) {
-            if (itemsNew[i].game_prices[j].data.currency == 'cny') {
-              itemsNew[i].game_prices = itemsNew[i].game_prices[j]
-            }
-          }
-        }
-        that.setData({
-          itemsNew: that.data.itemsNew.concat(itemsNew)
-        })
-      }
-    })
-  },
   getInfo(page){
     var that = this
     wx.request({
       url: 'https://api.xiaoheihe.cn/game/get_game_list_v3/?filter_price=lowest_price&filter_tag=all&filter_platform=all&only_chinese=0&show_dlc=0&sort_type=discount&lang=zh-cn&os_type=iOS&os_version=12.3.1&_time=1566997161&version=1.2.79&device_id=8CF0A451-04EF-4BB0-9EEB-18FDFA29E9D5&heybox_id=-1&hkey=55c666afa4f416df170bb4b8dc33cc60&include_filter=0&limit=30&offset=' + (page - 1) * 30,
-      // url: 'https://cowlevel.net/search/game-search?per_page=20&page=' + page + '&type=5&q=&platform_support_id=183&sort_type=desc&is_free=0&is_discount=1&is_chinese=0',
       header: {
         'content-type': 'application/json' // 默认值
       },
@@ -64,15 +38,6 @@ Page({
         console.log(res)
         wx.stopPullDownRefresh()
         var items = res.data.result.games
-        // for (var i = 0; i < items.length; i++) {
-        //   items[i].pic = that.getImage(items[i].pic)
-        //   items[i].englishName = items[i].url_slug.replace(/_/g, ' ')
-        //   for (var j = 0; j < items[i].game_prices.length; j++) {
-        //     if (items[i].game_prices[j].data.currency == 'cny') {
-        //       items[i].game_prices = items[i].game_prices[j]
-        //     }
-        //   }
-        // }
         that.setData({
           items: that.data.items.concat(items)
         })

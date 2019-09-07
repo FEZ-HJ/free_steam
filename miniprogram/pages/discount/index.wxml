@@ -1,24 +1,31 @@
-    <van-card wx:for="{{items}}" wx:for-item="item" wx:key="_id"
-        num="{{item.price.discount}}%折扣"
-        tag="{{item.score}}"
-        price="{{item.price.lowest_price}}"
-        origin-price="{{item.price.current}}"
-        desc="{{item.price.deadline_date}}"
-        title="{{item.name}}"
-        thumb="{{item.image}}"
-        title-class="title"
-        data-reply-Type="{{item}}"
-        bindtap="details"
-      >
-        <view slot="tags">
-          <van-tag plain type="danger" custom-class="tag" wx:for="{{item.genres}}" wx:for-item="tag" wx:key="tag">{{tag}}</van-tag>
-        </view>
+<block wx:for="{{items}}" wx:for-item="item" wx:key="_id" wx:for-index="idx">
       
-      <view slot="footer">
-        <view class='link-top'></view>
-      </view>
+  <van-card 
+    num="{{item.price.discount}}%折扣"
+    tag="{{item.score}}"
+    price="{{item.price.lowest_price}}"
+    origin-price="{{item.price.current}}"
+    desc="{{item.price.deadline_date}}"
+    title="{{item.name}}"
+    thumb="{{item.image}}"
+    title-class="title"
+    data-reply-Type="{{item}}"
+    bindtap="details"
+  >
+    <view slot="tags">
+      <van-tag plain type="danger" custom-class="tag" wx:for="{{item.genres}}" wx:for-item="tag" wx:key="tag">{{tag}}</van-tag>
+    </view>
+  
+    <view slot="footer">
+      <view class='link-top'></view>
+    </view>
 
-    </van-card>
+  </van-card>
+
+  <ad wx:if="{{(idx+1)%10 == 0 }}" unit-id="adunit-f483f5379540307e"></ad>
+
+</block>
+    
 
   
 

@@ -45,7 +45,7 @@ Page({
     })
     // 创建广告
     if (wx.createRewardedVideoAd) {
-      rewardedVideoAd = wx.createRewardedVideoAd({ adUnitId: 'adunit-4bf71ea0625f3676' })
+      rewardedVideoAd = wx.createRewardedVideoAd({ adUnitId: 'adunit-2d7779a83a4c99d6' })
       rewardedVideoAd.onLoad(() => {
         console.log('onLoad event emit')
       })
@@ -135,15 +135,15 @@ Page({
 
   // 抽奖
   lottery: function () {
-    this.addLotteryRecord()
-    // rewardedVideoAd.show().catch(() => {
-    //   // 失败重试
-    //   rewardedVideoAd.load()
-    //     .then(() => rewardedVideoAd.show())
-    //     .catch(err => {
-    //       console.log('激励视频 广告显示失败')
-    //     })
-    // })
+    // this.addLotteryRecord()
+    rewardedVideoAd.show().catch(() => {
+      // 失败重试
+      rewardedVideoAd.load()
+        .then(() => rewardedVideoAd.show())
+        .catch(err => {
+          console.log('激励视频 广告显示失败')
+        })
+    })
   },
 
   // 存入抽奖次数
