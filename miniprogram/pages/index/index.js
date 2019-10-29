@@ -16,8 +16,6 @@ Page({
     honoreeInfo:null,
     // 限免信息
     items:null,
-    show:false,
-    signIn:false,
   },
 
   /**
@@ -27,17 +25,6 @@ Page({
     this.query()
     this.getHomePage()
     util.getUserInfo(this)
-    // signInUtil.setDays(this,util.formatDay(new Date()).substring(0, 7)) 
-  },
-
-  onShow:function(){
-    this.queryHonoree()
-    // 设置签到按钮展示
-    if (util.formatDay(new Date()) == wx.getStorageSync('isDate')) {
-      this.setData({
-        signIn: false
-      })
-    }
   },
 
 // 轮播图控制方法
@@ -46,30 +33,24 @@ Page({
       swiperCurrent: e.detail.current,
     })
   },
+
   //初始化 查询所有限免信息
   query: function () {
     console.log('开始查询限免信息')
-    const db = wx.cloud.database()
-    const _ = db.command
     var that = this
-    db.collection('jiudaoxiaoyang').orderBy('_id', 'desc').get({
-      success: res => {
-        wx.stopPullDownRefresh()
-        if (res.data.length > 0) {
-          console.log('查询限免信息成功')
-          that.setData({
-            items: res.data
-          })
-        }
+    wx.request({
+      url: 'https://whoisyours.cn/steamfree/freeGame/findAll?page=1&limit=10',
+      header: {
+        'content-type': 'application/json' // 默认值
       },
-      fail: err => {
-        wx.showToast({
-          icon: 'none',
-          title: '查询记录失败'
+      success(res) {
+        console.log('限免信息:')
+        console.log(res.data.data)
+        that.setData({
+          items: res.data.data
         })
-        console.error('[数据库] [查询记录] 失败：', err)
       }
-    })
+    }) 
   },
 
 // 跳转到详情页面
@@ -102,7 +83,7 @@ Page({
 // 轮播图点击
   homepageClick:function(e){
     var id = e.currentTarget.dataset.replyType
-    if (this.data.userInfo != undefined && (this.data.userInfo.avatarUrl == 'https://wx.qlogo.cn/mmopen/vi_32/7Fy64zYiczszwKEqzjOnSFhWequlYPDQsEw8X1eR1lasmpTAH8q7pYoZOiaiao9V8MyAWNcBwq6CY6K5j1TrswVzQ/132' || 
+    if (this.data.userInfo != undefined && (this.data.userInfo.avatarUrl ==             'https://wx.qlogo.cn/mmopen/vi_32/7Fy64zYiczszwKEqzjOnSFhWequlYPDQsEw8X1eR1lasmpTAH8q7pYoZOiaiao9V8MyAWNcBwq6CY6K5j1TrswVzQ/132' || 
       this.data.userInfo.avatarUrl == 'https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTI64XUGp3cKv4Gn8SOm6WX7RvgBwErgzWZqFPWqK94XCQZCNjFVsficYZFQ4ukGnqvPrjsG1O4ibDug/132')) {
       wx.navigateTo({
         url: '../setting/setting'
@@ -122,11 +103,13 @@ Page({
       })
     }
   },
+
   onClose:function(){
     this.setData({
       show: false
     })
   },
+
 // 获取首页轮播图
   getHomePage:function(){
     const db = wx.cloud.database()
@@ -143,53 +126,10 @@ Page({
     })
   },
 
-// 查询用户中奖信息
-  queryHonoree: function () {
-    console.log('开始查询用户中奖信息')
-    var that = this
-    wx.cloud.callFunction({
-      name: 'queryHonoree',
-      success: function (res) {
-        console.log('查询用户中奖信息成功')
-        that.setData({
-          honoreeInfo: res.result.data
-        })
-      },
-      fail: console.error
-    })
-  },
-
-// 跳转到中奖页面
-  honoreeClick:function(e){
-    console.log('跳转到中奖页面')
-    wx.navigateTo({
-      url: '../lottery-details/index?id=' + e.currentTarget.dataset.replyType
-    })
-  },
-
 // 下拉刷新
   onPullDownRefresh(){
     console.log('开始下拉刷新')
     this.query()
   },
-
-  signInClose() {
-    this.setData({ signIn: false });
-  },
-
-  // 签到
-  customHandler: function () {
-    signInUtil.signInHome(this)
-    Notify('连续签到7天以上，经验积分奖励翻倍！');
-    var t = parseInt(this.data.continuousDay) + 1
-    Toast('已连续签到' + t + '天！');
-  },
-
-  // 查询用户信息并签到
-  hasGottenUserInfo: function () {
-    signInUtil.signInHome(this)
-    util.getUserInfo(this)
-  },
-
 
 })

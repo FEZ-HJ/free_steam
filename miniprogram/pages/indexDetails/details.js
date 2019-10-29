@@ -37,38 +37,32 @@ Page({
     })
   },
   query: function (options) {
-    const db = wx.cloud.database()
-    const _ = db.command
     var that = this
-    db.collection('jiudaoxiaoyang').where({
-      _id: _.eq(options.id)
-    }).get({
-      success: res => {
+    wx.request({
+      url: 'https://whoisyours.cn/steamfree/freeGame/findById?id=' + options.id ,
+      header: {
+        'content-type': 'application/json' // 默认值
+      },
+      success(res) {
+        console.log('查询游戏详细信息:')
         console.log(res.data)
-        if (res.data.length > 0) {
+        if (res.data != undefined) {
           that.setData({
-            fullContent: res.data[0].content,
-            shortContent: res.data[0].content.substring(0, 120),
-            content: res.data[0].content.substring(0, 120),
-            title: res.data[0].chineseName,
-            desc: res.data[0].englishName,
-            language: res.data[0].language,
-            tag: res.data[0].tag,
-            date: res.data[0].saleDate,
-            slider: res.data[0].images,
-            allAssess: res.data[0].allAssess,
-            assess: res.data[0].assess,
+            fullContent: res.data.content,
+            shortContent: res.data.content.substring(0, 120),
+            content: res.data.content.substring(0, 120),
+            title: res.data.chineseName,
+            desc: res.data.englishName,
+            language: res.data.language,
+            tag: res.data.tag,
+            date: res.data.saleDate,
+            slider: res.data.images,
+            allAssess: res.data.allAssess,
+            assess: res.data.assess,
           })
         }
-      },
-      fail: err => {
-        wx.showToast({
-          icon: 'none',
-          title: '查询记录失败'
-        })
-        console.error('[数据库] [查询记录] 失败：', err)
       }
-    })
+    }) 
   },
 
   onShareAppMessage: function () {

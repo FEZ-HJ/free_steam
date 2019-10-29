@@ -1,12 +1,3 @@
-<block wx:for="{{honoreeInfo}}" wx:key="_id">
-  <van-notice-bar
-    scrollable="false"
-    text="恭喜中奖！！!{{item.title}}。点击领取奖品"
-    data-reply-Type="{{item._id}}"
-    bindtap='honoreeClick'
-  />
-</block>
-
 <view class="swiper-container">
 <swiper autoplay="true" interval="6000" duration="700" class="swiper">
   <block wx:for="{{homepage}}"  wx:key="unique">
@@ -27,7 +18,7 @@
           title="{{item.chineseName}}"
           thumb="{{item.rowImage}}"
           title-class="title"
-          data-reply-Type="{{item._id}}"
+          data-reply-Type="{{item.id}}"
           bindtap="collect"
         >
           <view slot="tags">
@@ -42,28 +33,6 @@
 
   <ad wx:if="{{(idx+1)%10 == 0 }}" unit-id="adunit-6bdb788693381577"></ad>
 </block>
-
-<!-- <van-card wx:for="{{items}}" wx:for-item="item" wx:key="_id"
-        num=""
-        tag="{{item.factory}}"
-        price="{{item.newPrice}}"
-        origin-price="{{item.price}}"
-        desc="{{item.englishName}}"
-        title="{{item.chineseName}}"
-        thumb="{{item.rowImage}}"
-        title-class="title"
-        data-reply-Type="{{item._id}}"
-        bindtap="collect"
-      >
-        <view slot="tags">
-          <van-tag plain type="danger" custom-class="tag" wx:for="{{item.type}}" wx:for-item="tag" wx:key="tag">{{tag}}</van-tag>
-        </view>
-      
-      <view slot="footer">
-        <view class='link-top'></view>
-      </view>
-
-</van-card> -->
 
 <van-dialog
   title="客服"

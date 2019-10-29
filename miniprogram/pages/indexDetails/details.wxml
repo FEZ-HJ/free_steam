@@ -2,17 +2,7 @@
   <swiper autoplay="auto" interval="5000" duration="500" current="{{swiperCurrent}}" bindchange="swiperChange" class="swiper">
     <block wx:for="{{slider}}" wx:key="unique">
       <swiper-item>
-          <video class="img" wx:if="{{item.type == 'video'}}"
-            id="myVideo"
-            src="{{item.url}}"
-            danmu-list="{{danmuList}}"
-            enable-danmu
-            danmu-btn
-            controls
-          ></video>
-          
-          <image wx:if="{{item.type == 'image'}}" src="{{item.url}}" class="img"></image>
-
+          <image src="{{item}}" class="img"></image>
       </swiper-item>
     </block>
   </swiper>
