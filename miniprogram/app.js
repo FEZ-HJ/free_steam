@@ -5,11 +5,15 @@ const levels = [0, 120, 480, 840, 1320, 1920, 2880, 4200, 5880, 7920, 10320, 130
 const addMaxScore = 100;
 const addMinScore = 50;
 
+const URL = "http://localhost/steamfree/";
+
+
 App({
   grades: grades,
   levels: levels,
   addMaxScore: addMaxScore,
   addMinScore: addMinScore,
+  URL: URL,
   onLaunch: function () {
     
     if (!wx.cloud) {

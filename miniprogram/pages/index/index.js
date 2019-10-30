@@ -1,4 +1,5 @@
 // miniprogram/pages/index/index.js
+const { URL } = getApp();
 var util = require('../../utils/util.js')
 var signInUtil = require('../../utils/signIn.js')
 import Dialog from '../../dist/dialog/dialog';
@@ -39,10 +40,7 @@ Page({
     console.log('开始查询限免信息')
     var that = this
     wx.request({
-      url: 'https://whoisyours.cn/steamfree/freeGame/findAll?page=1&limit=10',
-      header: {
-        'content-type': 'application/json' // 默认值
-      },
+      url: URL+ 'freeGame/findAll?page=1&limit=10',
       success(res) {
         console.log('限免信息:')
         console.log(res.data.data)

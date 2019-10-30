@@ -1,5 +1,6 @@
 var util = require('../../utils/util.js')
 var signInUtil = require('../../utils/signIn.js')
+var lotteryUtil = require('../../utils/lottery.js')
 import Dialog from '../../dist/dialog/dialog';
 import Notify from '../../dist/notify/notify';
 import Toast from '../../dist/toast/toast';
@@ -28,30 +29,17 @@ Page({
   },
 
   onShow: function(){
-    // 设置签到按钮展示
-    if (util.formatDay(new Date()) == wx.getStorageSync('isDate')) {
-      this.setData({
-        signIn: false
-      })
-    }
-    // 查询签到积分
-    signInUtil.queryScore(this)
-    // 查询签到等级
-    signInUtil.queryRank(this)
+    console.log(util.saveUserInfo(this))
+
+    // 查询签到信息
+    signInUtil.getSignInfo(this)
   },
 
   onLoad: function (e) {
-
-    //设置日期样式
-    if (wx.getStorageSync('signInData') != ''){
-      signInUtil.setDays(this,util.formatDay(new Date()).substring(0, 7))
-    }else{
-      signInUtil.querySignDate(this)
-    }
     // 查询用户信息
     util.getUserInfo(this)
     // 查询抽奖信息 
-    this.getLotteryContent()
+    lotteryUtil.getLotteryContent(this)
 
     // 创建广告
     if (wx.createRewardedVideoAd) {
@@ -77,7 +65,7 @@ Page({
 
   // 签到
   customHandler: function () {
-    signInUtil.signInHome(this)
+    signInUtil.singn(this)
     Notify('连续签到7天以上，经验积分奖励翻倍！');
     var t = parseInt(this.data.continuousDay) + 1
     Toast('已连续签到' + t + '天！');
@@ -92,7 +80,7 @@ Page({
 
   // 查询用户信息
   hasGottenUserInfo:function(){
-    signInUtil.signInHome(this)
+    signInUtil.singn(this)
     util.getUserInfo(this)
   },
 

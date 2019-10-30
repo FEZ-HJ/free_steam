@@ -1,3 +1,5 @@
+const { URL } = getApp();
+
 // 返回yyyy-mm-dd HH:mm:ss
 const formatTime = date => {
   const year = date.getFullYear()
@@ -75,24 +77,44 @@ const getUserInfo = (that) => {
   })
 }
 
-// 用户授权
-const saveUserInfo = (e) => {
+// 获取用户的openID
+const getOpenId = () => {
+  var openId = wx.getStorageSync('openId')
+  console.log(openId)
+  if (openId == '') {
     wx.cloud.callFunction({
-      name: 'setUserInfo',
-      data: {
-        avatarUrl: e.detail.userInfo.avatarUrl,
-        city: e.detail.userInfo.city,
-        country: e.detail.userInfo.country,
-        gender: e.detail.userInfo.gender,
-        language: e.detail.userInfo.language,
-        nickName: e.detail.userInfo.nickName,
-        province: e.detail.userInfo.province,
-      },
+      name: 'getOpenId',
       success: function (res) {
-        console.log("存入用户信息成功")
+        console.log(res)
+        openId = res.result.OPENID
+        console.log('查询用户openID成功')
+        wx.setStorage({
+          key: "openId",
+          data: openId
+        })
+        return openId
       },
       fail: console.error
     })
+  }
+  return openId
+}
+
+// 用户授权
+const saveUserInfo = (e) => {
+  wx.request({
+    url: URL + 'user/insert',
+    method: 'POST',
+    data:{
+      openId: getOpenId(),
+      avatarUrl: e.detail.userInfo.avatarUrl,
+      nickName: e.detail.userInfo.nickName,
+    },
+    success(res) {
+      console.log('保存用户信息成功:')
+      console.log(res.data)
+    }
+  }) 
 }
 
 module.exports = {
