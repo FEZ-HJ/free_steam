@@ -126,5 +126,6 @@ module.exports = {
   parserDate: parserDate,
   getUserInfo: getUserInfo,
   saveUserInfo: saveUserInfo,
-  preDate: preDate
+  preDate: preDate,
+  getOpenId: getOpenId
 }

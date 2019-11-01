@@ -13,9 +13,9 @@
 </view>
 
 <van-collapse value="{{ activeNames }}" bind:change="onChange" accordion>
-  <van-collapse-item title="等级：{{rank}}级" name="1" icon="gem">
+  <!-- <van-collapse-item title="等级：{{rank}}级" name="1" icon="gem">
       <van-progress percentage="{{progress}}" />
-  </van-collapse-item>
+  </van-collapse-item> -->
 
   <van-collapse-item title="积分：{{money}}" name="2" icon="point-gift">
 
@@ -59,12 +59,12 @@
     is-link
     title="抽奖活动"
     link-type="navigateTo"
-    url="/pages/lottery-details/index?id={{item._id}}"
+    url="/pages/lottery-details/index?id={{item.id}}"
     value="详情"
   />
-  <van-panel title="观看完整视频参与抽奖" desc="参与次数越多抽中概率越大" status="{{item.desc}}" use-footer-slot header-class="img">
+  <van-panel  status="{{item.desc}}" use-footer-slot header-class="img">
     <van-cell title="{{item.title}}">
-      <van-button size="small" type="danger" round bind:click="lottery" wx:if="{{userInfo != null}}">参与抽奖</van-button>
+      <van-button size="small" type="danger" data-reply-Type="{{item.id}}" round bind:click="lottery" wx:if="{{userInfo != null}}">参与抽奖</van-button>
       <van-button size="small" type="danger" round wx:if="{{userInfo == null}}" bind:getuserinfo="onGotUserInfo" open-type="getUserInfo">参与抽奖</van-button>
     </van-cell>
   </van-panel>

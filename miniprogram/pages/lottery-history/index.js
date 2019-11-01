@@ -1,4 +1,6 @@
 // miniprogram/pages/lottery-history/index.js
+var lotteryUtil = require('../../utils/lottery.js')
+
 Page({
 
   /**
@@ -12,23 +14,8 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.getLotteryContent()
+    lotteryUtil.getAllLotteryContent(0,20,this)
 
-  },
-
-  getLotteryContent: function () {
-    const db = wx.cloud.database()
-    const _ = db.command
-    var that = this
-    db.collection('lottery-content').orderBy('sort','desc').get({
-      success: res => {
-        that.setData({
-          lottery_info: res.data
-        })
-        console.log("查询抽奖信息成功")
-      },
-      fail: console.error
-    })
   },
 
   skipContent: function(e){

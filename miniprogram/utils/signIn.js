@@ -6,7 +6,7 @@ const { URL } = getApp();
 // 今日是否签到
 const getSignInfo = (that) => {
   wx.request({
-    url: URL + 'signIn/getRecord?openId=1',
+    url: URL + 'signIn/getRecord?openId=' + util.getOpenId(),
     success(res) {
       console.log('查询签到信息:')
       console.log(res.data)
@@ -18,11 +18,7 @@ const getSignInfo = (that) => {
 // 签到
 const singn = (that) =>{
   wx.request({
-    url: URL + 'signIn/in',
-    data:{
-      openId : 1
-    },
-    method: 'POST',
+    url: URL + 'signIn/in?openId=' + util.getOpenId(),
     success(res) {
       console.log('存入签到信息成功：')
       console.log(res.data)
@@ -49,7 +45,7 @@ const setInfo = (res,that) =>{
     }
   }
   var signIn = true
-  if (res.data.signInRecords.indexOf(util.formatDay(new Date()) >= 0)) {
+  if (res.data.signInRecords.indexOf(util.formatDay(new Date())) >= 0) {
     signIn = false
   }
 

@@ -29,8 +29,6 @@ Page({
   },
 
   onShow: function(){
-    console.log(util.saveUserInfo(this))
-
     // 查询签到信息
     signInUtil.getSignInfo(this)
   },
@@ -40,7 +38,6 @@ Page({
     util.getUserInfo(this)
     // 查询抽奖信息 
     lotteryUtil.getLotteryContent(this)
-
     // 创建广告
     if (wx.createRewardedVideoAd) {
       rewardedVideoAd = wx.createRewardedVideoAd({ adUnitId: 'adunit-edff7554604c2e77' })
@@ -54,7 +51,7 @@ Page({
         // 用户点击了【关闭广告】按钮
         if (res && res.isEnded) {
           // 正常播放结束，可以下发游戏奖励
-          this.addLotteryRecord()
+          lotteryUtil.addLotteryRecord(this, this.data.lotteryId)
         } else {
           Toast('观看完整广告才可参与抽奖！');
         }
@@ -93,8 +90,10 @@ Page({
   },
 
   // 抽奖
-  lottery:function(){
-    // this.addLotteryRecord()
+  lottery:function(e){
+    this.setData({
+      lotteryId: e.currentTarget.dataset.replyType
+    })
     rewardedVideoAd.show().catch(() => {
       // 失败重试
       rewardedVideoAd.load()
@@ -116,42 +115,6 @@ Page({
     } else {
       Toast('授权之后才能参与抽奖哦！');
     }
-  },
-
-  // 查询抽奖信息 
-  getLotteryContent: function () {
-    const db = wx.cloud.database()
-    const _ = db.command
-    var that = this
-    db.collection('lottery-content').where({
-      avatarUrl: _.eq(null)
-    }).orderBy('_id', 'desc').get({
-      success: res => {
-        that.setData({
-          lottery_info: res.data
-        })
-        console.log("查询抽奖信息成功")
-      },
-      fail: console.error
-    })
-  },
-
-  // 存入抽奖次数
-  addLotteryRecord: function(){
-    console.log("开始存入抽奖次数")
-    var that = this
-    wx.cloud.callFunction({
-      name: 'addAndInsertLotteryRecord',
-      data: {
-        nickName: that.data.userInfo.nickName,
-        avatarUrl: that.data.userInfo.avatarUrl,
-        uid: that.data.lottery_info[0]._id
-      },
-      success: function (res) {
-        console.log("存入抽奖次数成功")
-      },
-      fail: console.error
-    })
   }
 
 });
