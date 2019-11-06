@@ -6,6 +6,7 @@ import Notify from '../../dist/notify/notify';
 import Toast from '../../dist/toast/toast';
 
 let rewardedVideoAd = null
+let signInoAd = null
 
 Page({
   data:{
@@ -40,7 +41,14 @@ Page({
     lotteryUtil.getLotteryContent(this)
     // 创建广告
     if (wx.createRewardedVideoAd) {
-      rewardedVideoAd = wx.createRewardedVideoAd({ adUnitId: 'adunit-edff7554604c2e77' })
+      rewardedVideoAd = wx.createRewardedVideoAd({ 
+        adUnitId: 'adunit-edff7554604c2e77',
+        multiton: true
+        })
+      signInoAd = wx.createRewardedVideoAd({ 
+        adUnitId: 'adunit-edff7554604c2e77',
+        multiton: true
+        })
       rewardedVideoAd.onLoad(() => {
         console.log('onLoad event emit')
       })
@@ -56,16 +64,32 @@ Page({
           Toast('观看完整广告才可参与抽奖！');
         }
       })
+      signInoAd.onClose((res) => {
+        // 用户点击了【关闭广告】按钮
+        if (res && res.isEnded) {
+          // 正常播放结束，可以下发游戏奖励
+          signInUtil.singn(this)
+          Notify('连续签到7天以上，经验积分奖励翻倍！');
+          // var t = parseInt(this.data.continuousDay) + 1
+          // Toast('已连续签到' + t + '天！');
+        } else {
+          Toast('观看完整广告才可参与抽奖！');
+        }
+      })
     }
 
   },
 
   // 签到
   customHandler: function () {
-    signInUtil.singn(this)
-    Notify('连续签到7天以上，经验积分奖励翻倍！');
-    var t = parseInt(this.data.continuousDay) + 1
-    Toast('已连续签到' + t + '天！');
+    signInoAd.show().catch(() => {
+      // 失败重试
+      signInoAd.load()
+        .then(() => signInoAd.show())
+        .catch(err => {
+          console.log('激励视频 广告显示失败')
+        })
+    })
   },
 
   // 下拉展示

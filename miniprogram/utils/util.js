@@ -59,22 +59,46 @@ const preDate = (date,day) => {
 
 // 初始化查询用户信息
 const getUserInfo = (that) => {
-  wx.getSetting({
-    success: (data) => {
-      if (data.authSetting['scope.userInfo']) {
-        wx.getUserInfo({
-          success: (data) => {
-            console.log("查询用户信息成功")
-            that.setData({
-              userInfo: data.userInfo
-            })
-          }
-        })
-      } else {
-        console.log("用户暂未授权")
+  var userInfo = wx.getStorageSync('userInfo')
+  if (userInfo == ''){
+    wx.getSetting({
+      success: (data) => {
+        if (data.authSetting['scope.userInfo']) {
+          wx.getUserInfo({
+            success: (data) => {
+              console.log("查询用户信息成功")
+              wx.setStorage({
+                key: "userInfo",
+                data: data.userInfo
+              })
+              that.setData({
+                userInfo: data.userInfo
+              })
+              wx.request({
+                url: URL + 'user/insert',
+                method: 'POST',
+                data: {
+                  openId: getOpenId(),
+                  avatarUrl: data.userInfo.userInfo.avatarUrl,
+                  nickName: data.userInfo.userInfo.nickName,
+                },
+                success(res) {
+                  console.log('保存用户信息成功:')
+                  console.log(res.data)
+                }
+              }) 
+            }
+          })
+        } else {
+          console.log("用户暂未授权")
+        }
       }
-    }
-  })
+    })
+  }else{
+    that.setData({
+      userInfo: userInfo
+    })
+  }
 }
 
 // 获取用户的openID

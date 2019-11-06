@@ -1,5 +1,5 @@
 var util = require('../../utils/util.js')
-
+const { URL } = getApp();
 Component({
   /**
    * 组件的属性列表
@@ -32,18 +32,17 @@ Component({
     add: function (e) {
       // 回调父层的onClickHandler函数
       this.triggerEvent('onClickHandler', e, {});
-      wx.cloud.callFunction({
-        name: 'pushHandler',
+      wx.request({
+        url: URL + 'push/insert',
+        method: 'POST',
         data: {
-          formId: e.detail.formId,
-          date: util.formatDay(new Date()),
-          type: 'signIn'
+          openId: util.getOpenId(),
+          formId: e.detail.formId
         },
-        success: function (res) {
-          console.log("存入FormId成功")
-        },
-        fail: console.error
-      })
+        success(res) {
+          console.log('保存表单ID成功:')
+        }
+      }) 
     },
     onGotUserInfo: function (e) {
       if (e.detail.userInfo != undefined) {

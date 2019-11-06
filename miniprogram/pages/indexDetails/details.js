@@ -1,3 +1,4 @@
+const { URL } = getApp();
 Page({
   data: {
     slider: [
@@ -39,7 +40,7 @@ Page({
   query: function (options) {
     var that = this
     wx.request({
-      url: 'https://whoisyours.cn/steamfree/freeGame/findById?id=' + options.id ,
+      url: URL + 'freeGame/findById?id=' + options.id ,
       header: {
         'content-type': 'application/json' // 默认值
       },

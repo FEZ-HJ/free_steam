@@ -41,13 +41,14 @@ Page({
     console.log('开始查询限免信息')
     var that = this
     wx.request({
-      url: URL+ 'freeGame/findAll?page=1&limit=10',
+      url: URL+ 'freeGame/findAll?page=1&limit=100',
       success(res) {
         console.log('限免信息:')
         console.log(res.data.data)
         that.setData({
           items: res.data.data
         })
+        wx.stopPullDownRefresh();
       }
     }) 
   },
