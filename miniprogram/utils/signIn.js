@@ -52,7 +52,7 @@ const setInfo = (res,that) =>{
   that.setData({
     days: days,
     signIn: signIn,
-    money: res.data.exp.canUse
+    money: res.data.exp == undefined ? 0 : res.data.exp.canUse
   })
 }
 

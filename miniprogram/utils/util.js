@@ -79,8 +79,8 @@ const getUserInfo = (that) => {
                 method: 'POST',
                 data: {
                   openId: getOpenId(),
-                  avatarUrl: data.userInfo.userInfo.avatarUrl,
-                  nickName: data.userInfo.userInfo.nickName,
+                  avatarUrl: data.userInfo.avatarUrl,
+                  nickName: data.userInfo.nickName,
                 },
                 success(res) {
                   console.log('保存用户信息成功:')
