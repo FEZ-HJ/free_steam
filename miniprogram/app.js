@@ -6,7 +6,7 @@ const addMaxScore = 100;
 const addMinScore = 50;
 
 // const URL = "http://localhost/steamfree/";
-const URL = "http://116.62.185.83/steamfree/";
+const URL = "https://steamfree.online/steamfree/";
 
 
 App({
