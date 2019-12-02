@@ -73,7 +73,7 @@ Page({
           // var t = parseInt(this.data.continuousDay) + 1
           // Toast('已连续签到' + t + '天！');
         } else {
-          Toast('观看完整广告才可参与抽奖！');
+          Toast('观看完整广告才可签到！');
         }
       })
     }
