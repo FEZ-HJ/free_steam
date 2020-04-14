@@ -3,20 +3,49 @@
   <view class="prize">
 
     <view class="head">
-      <text class='title'>巫师3</text>
-      <text class='author'>满600人即刻开奖</text>
+      <text class='title'>{{lottery_info.title}}</text>
+      <text class='author'>{{lottery_info.desc}}</text>
     </view>
     
-    <image src="https://media.st.dl.eccdnx.com/steam/apps/645402/header.jpg?t=1555974831"  class="avatar" />
+    <image src="{{lottery_info.img}}"  class="avatar" />
 
   </view>
 
-  <view class="lottery">
+  <view wx:if="{{!lottery_self_info.isComplete}}" class="lottery">
     <view class='lottery-button'> 抽奖 </view>
   </view>
 
-  <view class="record">
-  
+  <view wx:if="{{lottery_self_info.isComplete}}" class="lottery">
+    <view class="help">
+      <text class='title'>好友助力</text>
+      <text class='author'>邀请好友提高中奖率</text>
+    </view> 
+    <view class="share">
+      <van-button plain round  type="info" open-type="share">邀请好友</van-button>
+    </view> 
+    <van-divider customStyle="margin-top: 0"/>
+    <view>
+      <block wx:for="{{lottery_self_info.invited}}"  wx:key="index">
+        <image wx:if="{{index < 5}}" src="{{item}}"  class="headImg" />
+      </block>
+      <view wx:for="{{6 - lottery_self_info.invited.length}}" class="invite" wx:key="index">?</view>
+      <view wx:if="{{lottery_self_info.invited.length > 6}}" class="invite">{{lottery_self_info.invited.length}}</view>
+    </view>
   </view>
+
+  <view class="record">
+    <view class="all-head">
+      <text class='title'>全部参与</text>
+    </view>
+    <view class="all">
+      <block wx:for="{{lottery_info.attended}}"  wx:key="index">
+        <image wx:if="{{index < 5}}" src="{{item}}"  class="headImg" />
+      </block>
+      <view wx:for="{{6 - lottery_info.attended.length}}" class="invite" wx:key="index">?</view>
+      <view wx:if="{{lottery_info.attended.length > 6}}" class="invite">{{lottery_info.attended.length}}</view>
+    </view>
+  </view>
+
+  <ad unit-id="adunit-c0a9cac207cafbb9" ad-type="video" ad-theme="white"></ad>
 
 </view>
