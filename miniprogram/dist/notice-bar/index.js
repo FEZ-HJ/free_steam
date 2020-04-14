@@ -5,7 +5,12 @@ VantComponent({
     props: {
         text: {
             type: String,
-            value: ''
+            value: '',
+            observer() {
+                wx.nextTick(() => {
+                    this.init();
+                });
+            },
         },
         mode: {
             type: String,
@@ -21,11 +26,16 @@ VantComponent({
         },
         delay: {
             type: Number,
-            value: 0
+            value: 1
         },
         speed: {
             type: Number,
-            value: 50
+            value: 50,
+            observer() {
+                wx.nextTick(() => {
+                    this.init();
+                });
+            }
         },
         scrollable: {
             type: Boolean,
@@ -42,23 +52,13 @@ VantComponent({
         backgroundColor: {
             type: String,
             value: BG_COLOR
-        }
+        },
+        wrapable: Boolean
     },
     data: {
-        show: true,
-        hasRightIcon: false
-    },
-    watch: {
-        text() {
-            this.set({}, this.init);
-        }
+        show: true
     },
     created() {
-        if (this.data.mode) {
-            this.set({
-                hasRightIcon: true
-            });
-        }
         this.resetAnimation = wx.createAnimation({
             duration: 0,
             timingFunction: 'linear'
@@ -71,7 +71,7 @@ VantComponent({
         init() {
             Promise.all([
                 this.getRect('.van-notice-bar__content'),
-                this.getRect('.van-notice-bar__content-wrap')
+                this.getRect('.van-notice-bar__wrap')
             ]).then((rects) => {
                 const [contentRect, wrapRect] = rects;
                 if (contentRect == null ||
@@ -98,14 +98,14 @@ VantComponent({
         scroll() {
             this.timer && clearTimeout(this.timer);
             this.timer = null;
-            this.set({
+            this.setData({
                 animationData: this.resetAnimation
                     .translateX(this.wrapWidth)
                     .step()
                     .export()
             });
             setTimeout(() => {
-                this.set({
+                this.setData({
                     animationData: this.animation
                         .translateX(-this.contentWidth)
                         .step()
@@ -119,7 +119,7 @@ VantComponent({
         onClickIcon() {
             this.timer && clearTimeout(this.timer);
             this.timer = null;
-            this.set({ show: false });
+            this.setData({ show: false });
         },
         onClick(event) {
             this.$emit('click', event);

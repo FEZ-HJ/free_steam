@@ -1,54 +1,54 @@
 <van-dialog id="van-dialog" />
 <van-toast id="van-toast" />
 
-<van-row wx:if='{{lotteryId}}'>
+<!-- <van-row wx:if='{{lotteryId}}'>
     <van-col span="4" custom-class="light">
       <van-button type="danger" size='mini' open-type='contact'>客服</van-button>
     </van-col>
-    <van-col offset="16" span="4" custom-class="light">
+     <van-col offset="16" span="4" custom-class="light">
       <van-tag mark type="danger" bind:tap="history">抽奖历史</van-tag>
-    </van-col>
-</van-row>
+    </van-col> 
+ </van-row> -->
 
 <view class="container">
 
   <view class="head">
     <text class='title'>{{lottery_info.title}}</text>
-    <text class='author'>{{lottery_info.desc}}</text>
+    <text class='author'>{{lottery_info.description}}</text>
   </view>
   
   <image src="{{lottery_info.img}}"  class="avatar" />
+
+</view>
 
   <van-button size="normal" round type="danger" bind:click="honoree" wx:if="{{lottery_recordSelf != '' && lottery_info.openId == lottery_recordSelf.openId}}">领取奖品</van-button>
 
   <block wx:if="{{lottery_info != '' && lottery_info.avatarUrl == ''}}">
     <van-button size="normal" type="danger" bind:click="lottery" wx:if="{{userInfo != null}}">参与抽奖</van-button>
     <van-button size="normal" type="danger" wx:if="{{userInfo == null}}" bind:getuserinfo="onGotUserInfo" open-type="getUserInfo">参与抽奖</van-button>
-    <view class='text1'>观看完整视频参与抽奖</view>
-    <view class='text2'>观看次数越多中奖几率越大</view>
+    <view class='text2'>观看完整视频参与抽奖</view>
   </block>
 
-</view>
 
-<van-row wx:if="{{lottery_info.avatarUrl != null && lottery_info.avatarUrl != ''}}">
+<!-- <van-row wx:if="{{lottery_info.avatarUrl != null && lottery_info.avatarUrl != ''}}">
   <van-col span="2" offset="1" custom-class="light">中奖</van-col>
   <van-col span="2" custom-class="dark"><image src="{{lottery_info.avatarUrl}}"  class="portrait" /></van-col>
   <van-col span="14"  custom-class="light">{{lottery_info.nickName}}</van-col>
   <van-col  span="5" custom-class="dark">{{lottery_info.time}}次</van-col>
-</van-row>
+</van-row> -->
 
-<van-row wx:if="{{lottery_recordSelf != ''}}">
+<!-- <van-row wx:if="{{lottery_recordSelf != ''}}">
   <van-col span="2" offset="1" custom-class="light">我的</van-col>
   <van-col span="2" custom-class="dark"><image src="{{lottery_recordSelf.avatarUrl}}" class="portrait" /></van-col>
   <van-col span="14"  custom-class="light">{{lottery_recordSelf.nickName}}</van-col>
   <van-col  span="5" custom-class="dark">{{lottery_recordSelf.time}}次</van-col>
-</van-row>
+</van-row> -->
 
-<block wx:for="{{lottery_record}}" wx:key="_openid">
+<!-- <block wx:for="{{lottery_record}}" wx:key="_openid">
   <van-row>
     <van-col span="2" offset="1" custom-class="light">{{index+1}}</van-col>
     <van-col span="2" custom-class="dark"><image src="{{item.avatarUrl}}"  class="portrait" /></van-col>
     <van-col span="14" custom-class="light">{{item.nickName}}</van-col>
     <van-col  span="5" custom-class="dark">{{item.time}}次</van-col>
   </van-row>
-</block>
+</block> -->

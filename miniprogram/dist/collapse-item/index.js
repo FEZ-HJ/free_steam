@@ -1,12 +1,11 @@
 import { VantComponent } from '../common/component';
+const nextTick = () => new Promise(resolve => setTimeout(resolve, 20));
 VantComponent({
     classes: ['title-class', 'content-class'],
     relation: {
         name: 'collapse',
         type: 'ancestor',
-        linked(parent) {
-            this.parent = parent;
-        }
+        current: 'collapse-item',
     },
     props: {
         name: null,
@@ -15,6 +14,7 @@ VantComponent({
         icon: String,
         label: String,
         disabled: Boolean,
+        clickable: Boolean,
         border: {
             type: Boolean,
             value: true
@@ -26,49 +26,52 @@ VantComponent({
     },
     data: {
         contentHeight: 0,
-        expanded: false
+        expanded: false,
+        transition: false
     },
-    beforeCreate() {
-        this.animation = wx.createAnimation({
-            duration: 300,
-            timingFunction: 'ease-in-out'
+    mounted() {
+        this.updateExpanded()
+            .then(nextTick)
+            .then(() => {
+            const data = { transition: true };
+            if (this.data.expanded) {
+                data.contentHeight = 'auto';
+            }
+            this.setData(data);
         });
     },
     methods: {
         updateExpanded() {
             if (!this.parent) {
-                return null;
+                return Promise.resolve();
             }
-            const { value, accordion, items } = this.parent.data;
+            const { value, accordion } = this.parent.data;
+            const { children = [] } = this.parent;
             const { name } = this.data;
-            const index = items.indexOf(this);
+            const index = children.indexOf(this);
             const currentName = name == null ? index : name;
             const expanded = accordion
                 ? value === currentName
-                : value.some(name => name === currentName);
+                : (value || []).some((name) => name === currentName);
+            const stack = [];
             if (expanded !== this.data.expanded) {
-                this.updateStyle(expanded);
+                stack.push(this.updateStyle(expanded));
             }
-            this.set({ index, expanded });
+            stack.push(this.set({ index, expanded }));
+            return Promise.all(stack);
         },
         updateStyle(expanded) {
-            this.getRect('.van-collapse-item__content').then(res => {
-                const animationData = this.animation
-                    .height(expanded ? res.height : 0)
-                    .step()
-                    .export();
+            return this.getRect('.van-collapse-item__content')
+                .then((rect) => rect.height)
+                .then((height) => {
                 if (expanded) {
-                    this.set({ animationData });
-                }
-                else {
-                    this.set({
-                        contentHeight: res.height + 'px'
-                    }, () => {
-                        setTimeout(() => {
-                            this.set({ animationData });
-                        }, 20);
+                    return this.set({
+                        contentHeight: height ? `${height}px` : 'auto'
                     });
                 }
+                return this.set({ contentHeight: `${height}px` })
+                    .then(nextTick)
+                    .then(() => this.set({ contentHeight: 0 }));
             });
         },
         onClick() {
@@ -76,13 +79,13 @@ VantComponent({
                 return;
             }
             const { name, expanded } = this.data;
-            const index = this.parent.data.items.indexOf(this);
+            const index = this.parent.children.indexOf(this);
             const currentName = name == null ? index : name;
             this.parent.switch(currentName, !expanded);
         },
         onTransitionEnd() {
             if (this.data.expanded) {
-                this.set({
+                this.setData({
                     contentHeight: 'auto'
                 });
             }

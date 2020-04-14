@@ -1,15 +1,13 @@
 {
   "pages": [
+    "pages/test/test",
     "pages/index/index",
     "pages/indexDetails/details",
-    "pages/strategy/strategy",
-    "pages/strategyList/strategyList",
     "pages/discount/index",
     "pages/discountDetails/index",
-    "pages/userInfo/userInfo",
-    "pages/setting/setting",
+    "pages/lottery/lottery",
     "pages/lottery-details/index",
-    "pages/lottery-history/index",
+    "pages/userInfo/userInfo",
     "components/vSignIn/vSignIn"
   ],
   "window": {
@@ -26,7 +24,7 @@
     "list": [
       {
         "selectedIconPath": "/images/tab/free@hl.png",
-        "pagePath": "pages/index/index",
+        "pagePath": "pages/test/test",
         "text": "限免",
         "iconPath": "/images/tab/free.png"
       },
@@ -37,10 +35,10 @@
         "iconPath": "/images/tab/zhekou.png"
       },
       {
-        "selectedIconPath": "/images/tab/zx@hl.png",
-        "pagePath": "pages/strategyList/strategyList",
-        "text": "资讯",
-        "iconPath": "/images/tab/zx.png"
+        "selectedIconPath": "/images/tab/cj@hl.png",
+        "pagePath": "pages/lottery/lottery",
+        "text": "抽奖",
+        "iconPath": "/images/tab/cj.png"
       },
       {
         "selectedIconPath": "/images/tab/user@hl.png",

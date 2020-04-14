@@ -1,7 +1,0 @@
-<!-- <van-panel title="奖品：Steam30元点卡" desc="参与次数越多抽中概率越大" status="07-05 21:00开奖" >
-  
-</van-panel> -->
-<block wx:for="{{lottery_info}}" wx:key="_id">
-  <van-panel wx:if="{{item.avatarUrl == ''}}" data-reply-Type="{{item.id}}" title="{{item.title}}" desc="{{item.desc}}" status="进行中" bind:tap="skipContent"></van-panel>
-  <van-panel wx:if="{{item.avatarUrl != ''}}" data-reply-Type="{{item.id}}" title="{{item.title}}" desc="{{item.desc}}" bind:tap="skipContent"></van-panel>
-</block>

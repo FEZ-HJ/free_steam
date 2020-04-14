@@ -1,39 +1,27 @@
 import { VantComponent } from '../common/component';
-function isSimple(columns) {
-    return columns.length && !columns[0].values;
-}
+import { pickerProps } from './shared';
 VantComponent({
     classes: ['active-class', 'toolbar-class', 'column-class'],
-    props: {
-        title: String,
-        loading: Boolean,
-        showToolbar: Boolean,
-        confirmButtonText: String,
-        cancelButtonText: String,
-        visibleItemCount: {
-            type: Number,
-            value: 5
-        },
-        valueKey: {
+    props: Object.assign(Object.assign({}, pickerProps), { valueKey: {
             type: String,
             value: 'text'
-        },
-        itemHeight: {
+        }, toolbarPosition: {
+            type: String,
+            value: 'top'
+        }, defaultIndex: {
             type: Number,
-            value: 44
-        },
-        columns: {
+            value: 0
+        }, columns: {
             type: Array,
             value: [],
             observer(columns = []) {
-                this.simple = isSimple(columns);
+                this.simple = columns.length && !columns[0].values;
                 this.children = this.selectAllComponents('.van-picker__column');
                 if (Array.isArray(this.children) && this.children.length) {
                     this.setColumns().catch(() => { });
                 }
             }
-        }
-    },
+        } }),
     beforeCreate() {
         this.children = [];
     },
@@ -89,7 +77,7 @@ VantComponent({
         setColumnValue(index, value) {
             const column = this.getColumn(index);
             if (column == null) {
-                return Promise.reject('setColumnValue: 对应列不存在');
+                return Promise.reject(new Error('setColumnValue: 对应列不存在'));
             }
             return column.setValue(value);
         },
@@ -101,7 +89,7 @@ VantComponent({
         setColumnIndex(columnIndex, optionIndex) {
             const column = this.getColumn(columnIndex);
             if (column == null) {
-                return Promise.reject('setColumnIndex: 对应列不存在');
+                return Promise.reject(new Error('setColumnIndex: 对应列不存在'));
             }
             return column.setIndex(optionIndex);
         },
@@ -113,7 +101,7 @@ VantComponent({
         setColumnValues(index, options, needReset = true) {
             const column = this.children[index];
             if (column == null) {
-                return Promise.reject('setColumnValues: 对应列不存在');
+                return Promise.reject(new Error('setColumnValues: 对应列不存在'));
             }
             const isSame = JSON.stringify(column.data.options) === JSON.stringify(options);
             if (isSame) {

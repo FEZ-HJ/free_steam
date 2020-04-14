@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "van-image": "/dist/image/index",
+    "van-panel": "/dist/panel/index"
+  }
+}

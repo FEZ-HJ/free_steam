@@ -53,26 +53,8 @@
 
 </van-collapse>
 
-<block wx:for="{{lottery_info}}" wx:key="_id">
-  <van-cell
-    icon="hot"
-    is-link
-    title="抽奖活动"
-    link-type="navigateTo"
-    url="/pages/lottery-details/index?id={{item.id}}"
-    value="详情"
-  />
-  <van-panel  status="{{item.desc}}" use-footer-slot header-class="img">
-    <van-cell title="{{item.title}}">
-      <van-button size="small" type="danger" data-reply-Type="{{item.id}}" round bind:click="lottery" wx:if="{{userInfo != null}}">参与抽奖</van-button>
-      <van-button size="small" type="danger" round wx:if="{{userInfo == null}}" bind:getuserinfo="onGotUserInfo" open-type="getUserInfo">参与抽奖</van-button>
-    </van-cell>
-  </van-panel>
-</block>
-
-
-
 <van-dialog id="van-dialog" />
 <van-notify id="van-notify" />
 <van-toast id="van-toast" />
 
+<ad unit-id="adunit-c0a9cac207cafbb9" ad-type="video" ad-theme="white"></ad>

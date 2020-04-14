@@ -1,0 +1,70 @@
+.global{
+  background-color: #F1F1F1;
+  width: 100%;
+  min-height: 1334rpx;
+  overflow:hidden;
+}
+
+.prize{
+  background-color: #fff;
+  border-radius: 20rpx;
+  width: 700rpx;
+  height: 447rpx;
+  margin-left: 25rpx;
+  margin-top: 50rpx;
+}
+
+.lottery{
+  background-color: #fff;
+  border-radius: 20rpx;
+  width: 700rpx;
+  height: 300rpx;
+  margin-left: 25rpx;
+  margin-top: 50rpx;
+  overflow:hidden;
+}
+
+.record{
+  background-color: #fff;
+  border-radius: 20rpx;
+  width: 700rpx;
+  height: 200rpx;
+  margin-left: 25rpx;
+  margin-top: 50rpx;
+}
+
+.head {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 120rpx;
+}
+
+.title {
+  color: #2f2f2f;
+  margin-top: 20rpx;
+  font-size: 38rpx;
+  font-weight: 600;
+}
+
+.author {
+  font-size: 28rpx;
+  color: #999;
+}
+
+.avatar{
+  width:700rpx;
+  height:327rpx;
+  border-radius: 0rpx 0rpx 20rpx 20rpx;
+}
+
+.lottery-button{
+  width: 150rpx;
+  height: 150rpx;
+  border-radius: 50%;
+  background-color: blue;
+  margin-top: 75rpx;
+  margin-left: 275rpx;
+  text-align: center;
+}

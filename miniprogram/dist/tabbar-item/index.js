@@ -2,28 +2,47 @@ import { VantComponent } from '../common/component';
 VantComponent({
     props: {
         info: null,
+        name: null,
         icon: String,
         dot: Boolean
     },
     relation: {
         name: 'tabbar',
-        type: 'ancestor'
+        type: 'ancestor',
+        current: 'tabbar-item',
     },
     data: {
         active: false
     },
     methods: {
         onClick() {
-            const parent = this.getRelationNodes('../tabbar/index')[0];
-            if (parent) {
-                parent.onChange(this);
+            if (this.parent) {
+                this.parent.onChange(this);
             }
             this.$emit('click');
         },
-        setActive({ active, color }) {
-            if (this.data.active !== active) {
-                this.set({ active, color });
+        updateFromParent() {
+            const { parent } = this;
+            if (!parent) {
+                return;
             }
+            const index = parent.children.indexOf(this);
+            const parentData = parent.data;
+            const { data } = this;
+            const active = (data.name || index) === parentData.active;
+            const patch = {};
+            if (active !== data.active) {
+                patch.active = active;
+            }
+            if (parentData.activeColor !== data.activeColor) {
+                patch.activeColor = parentData.activeColor;
+            }
+            if (parentData.inactiveColor !== data.inactiveColor) {
+                patch.inactiveColor = parentData.inactiveColor;
+            }
+            return Object.keys(patch).length > 0
+                ? this.set(patch)
+                : Promise.resolve();
         }
     }
 });

@@ -1,6 +1,5 @@
 import { VantComponent } from '../common/component';
 import { transition } from '../mixins/transition';
-import { iphonex } from '../mixins/iphonex';
 VantComponent({
     classes: [
         'enter-class',
@@ -8,16 +7,19 @@ VantComponent({
         'enter-to-class',
         'leave-class',
         'leave-active-class',
-        'leave-to-class'
+        'leave-to-class',
+        'close-icon-class'
     ],
-    mixins: [transition(false), iphonex],
+    mixins: [transition(false)],
     props: {
+        round: Boolean,
+        closeable: Boolean,
+        customStyle: String,
+        overlayStyle: String,
         transition: {
             type: String,
             observer: 'observeClass'
         },
-        customStyle: String,
-        overlayStyle: String,
         zIndex: {
             type: Number,
             value: 100
@@ -25,6 +27,14 @@ VantComponent({
         overlay: {
             type: Boolean,
             value: true
+        },
+        closeIcon: {
+            type: String,
+            value: 'cross'
+        },
+        closeIconPosition: {
+            type: String,
+            value: 'top-right'
         },
         closeOnClickOverlay: {
             type: Boolean,
@@ -34,12 +44,23 @@ VantComponent({
             type: String,
             value: 'center',
             observer: 'observeClass'
+        },
+        safeAreaInsetBottom: {
+            type: Boolean,
+            value: true
+        },
+        safeAreaInsetTop: {
+            type: Boolean,
+            value: false
         }
     },
     created() {
         this.observeClass();
     },
     methods: {
+        onClickCloseIcon() {
+            this.$emit('close');
+        },
         onClickOverlay() {
             this.$emit('click-overlay');
             if (this.data.closeOnClickOverlay) {
@@ -48,10 +69,13 @@ VantComponent({
         },
         observeClass() {
             const { transition, position } = this.data;
-            this.updateClasses(transition || position);
+            const updateData = {
+                name: transition || position
+            };
             if (transition === 'none') {
-                this.set({ duration: 0 });
+                updateData.duration = 0;
             }
+            this.setData(updateData);
         }
     }
 });

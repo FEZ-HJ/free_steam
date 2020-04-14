@@ -1,0 +1,17 @@
+<block wx:for="{{lottery_info}}" wx:key="id">
+  <van-panel title="{{item.title}}" desc="{{item.desc}}" status="{{item.status}}">
+    <view class="img">
+      <van-image
+        bind:tap="skipContent"
+        width="686rpx"
+        height="300rpx"
+        src="{{item.img}}"
+        data-reply-Type="{{item.id}}"
+      />
+    </view>
+  </van-panel>
+</block>
+
+
+
+

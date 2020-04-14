@@ -1,13 +1,18 @@
 import { VantComponent } from '../common/component';
+function emit(target, value) {
+    target.$emit('input', value);
+    target.$emit('change', value);
+}
 VantComponent({
     field: true,
     relation: {
         name: 'checkbox-group',
-        type: 'ancestor'
+        type: 'ancestor',
+        current: 'checkbox',
     },
     classes: ['icon-class', 'label-class'],
     props: {
-        value: null,
+        value: Boolean,
         disabled: Boolean,
         useIconSlot: Boolean,
         checkedColor: String,
@@ -16,50 +21,54 @@ VantComponent({
         shape: {
             type: String,
             value: 'round'
+        },
+        iconSize: {
+            type: null,
+            value: 20
         }
+    },
+    data: {
+        parentDisabled: false
     },
     methods: {
         emitChange(value) {
-            const parent = this.getRelationNodes('../checkbox-group/index')[0];
-            if (parent) {
-                this.setParentValue(parent, value);
+            if (this.parent) {
+                this.setParentValue(this.parent, value);
             }
             else {
-                this.$emit('input', value);
-                this.$emit('change', value);
+                emit(this, value);
             }
         },
         toggle() {
-            if (!this.data.disabled) {
-                this.emitChange(!this.data.value);
+            const { parentDisabled, disabled, value } = this.data;
+            if (!disabled && !parentDisabled) {
+                this.emitChange(!value);
             }
         },
         onClickLabel() {
-            if (!this.data.disabled && !this.data.labelDisabled) {
-                this.emitChange(!this.data.value);
+            const { labelDisabled, parentDisabled, disabled, value } = this.data;
+            if (!disabled && !labelDisabled && !parentDisabled) {
+                this.emitChange(!value);
             }
         },
         setParentValue(parent, value) {
             const parentValue = parent.data.value.slice();
             const { name } = this.data;
+            const { max } = parent.data;
             if (value) {
-                if (parent.data.max && parentValue.length >= parent.data.max) {
+                if (max && parentValue.length >= max) {
                     return;
                 }
-                /* istanbul ignore else */
                 if (parentValue.indexOf(name) === -1) {
                     parentValue.push(name);
-                    parent.$emit('input', parentValue);
-                    parent.$emit('change', parentValue);
+                    emit(parent, parentValue);
                 }
             }
             else {
                 const index = parentValue.indexOf(name);
-                /* istanbul ignore else */
                 if (index !== -1) {
                     parentValue.splice(index, 1);
-                    parent.$emit('input', parentValue);
-                    parent.$emit('change', parentValue);
+                    emit(parent, parentValue);
                 }
             }
         }
