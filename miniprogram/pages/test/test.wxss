@@ -63,8 +63,10 @@
   width: 150rpx;
   height: 150rpx;
   border-radius: 50%;
-  background-color: blue;
+  background-color: black;
   margin-top: 75rpx;
   margin-left: 275rpx;
   text-align: center;
+  line-height: 150rpx;
+  color: white;
 }
