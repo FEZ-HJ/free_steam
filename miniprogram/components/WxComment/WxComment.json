@@ -1,9 +1,0 @@
-{
-  "component": true,
-  "usingComponents": {
-    "van-search": "/dist/search/index",
-    "van-button": "/dist/button/index",
-    "van-action-sheet": "/dist/action-sheet/index",
-    "van-icon": "/dist/icon/index"
-  }
-}

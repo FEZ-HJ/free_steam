@@ -1,0 +1,17 @@
+.portrait{
+  width:70rpx;
+  height:70rpx;
+  border-radius: 50%;
+}
+
+.dark,
+.light {
+  color: black;
+  font-size: 13px;
+  line-height: 70rpx;
+  text-align: center;
+}
+
+.listClass{
+  margin-bottom: 30rpx;
+}

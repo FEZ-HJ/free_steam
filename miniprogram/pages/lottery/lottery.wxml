@@ -4,7 +4,7 @@
       <van-image
         bind:tap="skipContent"
         width="686rpx"
-        height="300rpx"
+        height="320rpx"
         src="{{item.img}}"
         data-reply-Type="{{item.id}}"
       />

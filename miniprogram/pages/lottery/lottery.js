@@ -10,14 +10,14 @@ Page({
         title: '巫师3',
         desc: '满600人即刻开奖',
         status: '进行中',
-        img: 'https://img.yzcdn.cn/vant/cat.jpeg'
+        img: 'https://media.st.dl.eccdnx.com/steam/apps/292030/header.jpg?t=1581375222'
       },
       {
         id: '2',
         title: '刺客信条2',
         desc: '满300人即刻开奖',
         status: '进行中',
-        img: 'https://img.yzcdn.cn/vant/cat.jpeg'
+        img: 'https://media.st.dl.eccdnx.com/steam/apps/33230/header.jpg?t=1542638260'
       },
     ],
   },

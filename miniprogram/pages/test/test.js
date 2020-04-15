@@ -1,83 +1,127 @@
+var util = require('../../utils/util.js')
+import Toast from '../../dist/toast/toast';
+import Dialog from '../../dist/dialog/dialog';
+let rewardedVideoAd = null
+
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    lottery_info:{
-      title: '巫师3',
-      desc: '满600人即刻开奖',
-      img: 'https://media.st.dl.eccdnx.com/steam/apps/292030/header.jpg?t=1581375222',
-      attended: [
+    activeNames: ['1','2','3','4'],//图文教程下拉框打开
+    secretKey: '',                 //输入的密钥--双向绑定
+    isBorder : false,              //无边框
+    isCourse: false,               //密钥获取教程页面是否打开
+    lottery_info:{                 //奖品信息
+      title: '巫师3',              //奖品标题
+      desc: '满600人即刻开奖',      //奖品描述
+      img: 'https://media.st.dl.eccdnx.com/steam/apps/292030/header.jpg?t=1581375222',//奖品图片
+      isAd: true,                  //是否是密钥抽奖
+      secretKey: 'Python',         //密钥
+      attended: [                  //参与抽奖的人员头像
         'https://wx.qlogo.cn/mmopen/vi_32/n3E9esUk5rpibaOVus5OLMBuwzqtXQkmm00VfpCVj8zS9X8kVzMVWZzT2phUadVan3wrj6yRqWiaZC1AGoolC2ibA/132',
         'https://thirdwx.qlogo.cn/mmopen/vi_32/Q3auHgzwzM4pfOnQ0H4YzgQpjYw5mBxabDFhnN9UzOFvhOCD1qhRLiaGyiagVHLs3KMgxXE7Niciccmerb7LBggUkw/132',
+        'https://wx.qlogo.cn/mmopen/vi_32/Ee3rJFn8tPxGwq8Vlzr0OaUfnbUHyCJt2wFzFTFgI7iaIg42hrfaaIPPRtAvXqL3Gclrl2Du9RTSXtnvIDSOlCg/132',
+        'https://wx.qlogo.cn/mmopen/vi_32/Ee3rJFn8tPxGwq8Vlzr0OaUfnbUHyCJt2wFzFTFgI7iaIg42hrfaaIPPRtAvXqL3Gclrl2Du9RTSXtnvIDSOlCg/132',
+        'https://wx.qlogo.cn/mmopen/vi_32/Ee3rJFn8tPxGwq8Vlzr0OaUfnbUHyCJt2wFzFTFgI7iaIg42hrfaaIPPRtAvXqL3Gclrl2Du9RTSXtnvIDSOlCg/132',
         'https://wx.qlogo.cn/mmopen/vi_32/Ee3rJFn8tPxGwq8Vlzr0OaUfnbUHyCJt2wFzFTFgI7iaIg42hrfaaIPPRtAvXqL3Gclrl2Du9RTSXtnvIDSOlCg/132',
         'https://wx.qlogo.cn/mmopen/vi_32/8p9dyJCvCMccsjVomaP9C4x4OWia1siajjRlLb9N0ZUPudfRjGUholbm2ickloEWIMexKU8gepPib7tImEG9h7suYw/132'
       ]
     },
-    lottery_self_info:{
-      isComplete: true,
-      invited: [
+    lottery_self_info:{            //个人的抽奖详情
+      isComplete: false,           //是否已经参加过抽奖
+      invited: [                   //邀请的人员头像
         'https://wx.qlogo.cn/mmopen/vi_32/n3E9esUk5rpibaOVus5OLMBuwzqtXQkmm00VfpCVj8zS9X8kVzMVWZzT2phUadVan3wrj6yRqWiaZC1AGoolC2ibA/132',
         'https://thirdwx.qlogo.cn/mmopen/vi_32/Q3auHgzwzM4pfOnQ0H4YzgQpjYw5mBxabDFhnN9UzOFvhOCD1qhRLiaGyiagVHLs3KMgxXE7Niciccmerb7LBggUkw/132',
-        'https://wx.qlogo.cn/mmopen/vi_32/Ee3rJFn8tPxGwq8Vlzr0OaUfnbUHyCJt2wFzFTFgI7iaIg42hrfaaIPPRtAvXqL3Gclrl2Du9RTSXtnvIDSOlCg/132',
-        'https://wx.qlogo.cn/mmopen/vi_32/Ee3rJFn8tPxGwq8Vlzr0OaUfnbUHyCJt2wFzFTFgI7iaIg42hrfaaIPPRtAvXqL3Gclrl2Du9RTSXtnvIDSOlCg/132',
         'https://wx.qlogo.cn/mmopen/vi_32/Ee3rJFn8tPxGwq8Vlzr0OaUfnbUHyCJt2wFzFTFgI7iaIg42hrfaaIPPRtAvXqL3Gclrl2Du9RTSXtnvIDSOlCg/132',
         'https://wx.qlogo.cn/mmopen/vi_32/Ee3rJFn8tPxGwq8Vlzr0OaUfnbUHyCJt2wFzFTFgI7iaIg42hrfaaIPPRtAvXqL3Gclrl2Du9RTSXtnvIDSOlCg/132',
         'https://wx.qlogo.cn/mmopen/vi_32/8p9dyJCvCMccsjVomaP9C4x4OWia1siajjRlLb9N0ZUPudfRjGUholbm2ickloEWIMexKU8gepPib7tImEG9h7suYw/132'
       ]
     },
   },
-
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
     console.log(options.openId)
-  },
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
+    if (wx.createRewardedVideoAd) {
+      rewardedVideoAd = wx.createRewardedVideoAd({
+        adUnitId: 'adunit-edff7554604c2e77',
+        multiton: true
+      })
+      rewardedVideoAd.onLoad(() => {
+        console.log('onLoad event emit')
+      })
+      rewardedVideoAd.onError((err) => {
+        console.log('onError event emit', err)
+      })
+      rewardedVideoAd.onClose((res) => {
+        if (res && res.isEnded) {
+          // TODO 正常播放结束，可以下发游戏奖励
+          // lotteryUtil.addLotteryRecord(this, this.data.lotteryId)
+          Toast('抽奖成功');
+          this.setData({
+            lottery_self_info: {
+              isComplete : true,
+              invited: this.data.lottery_self_info.invited
+            }
+          })
+        } else {
+          Toast('观看完整广告才可参与抽奖！');
+        }
+      })
+    }
 
   },
 
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
+// 检验密钥
+  onConfirm: function(){
+    if (this.data.secretKey == this.data.lottery_info.secretKey){
+      this.lottery(); 
+    }else{
+      Toast('请输入正确的密钥！');
+    }
   },
 
+  // 抽奖 分为密钥抽奖和普通抽奖
+  lotteryClick: function () {
+    // 如果是密钥抽奖，则先检测密钥
+    if (this.data.lottery_info.isAd){
+      this.setData({
+        show: true
+      })
+      return;
+    }
+    this.lottery();  
+  },
+
+// 获取用户推送授权并看广告
+  lottery: function(){
+    // 获取推送权限请求
+    wx.requestSubscribeMessage({
+      tmplIds: ['WLEUt7RlWpbMCi3-A_hT-uRq5w3hGInxbKRhZ42SZT0'],
+      success(res) {
+        console.log(res)
+      }
+    })
+
+    // 观看广告，参与抽奖
+    rewardedVideoAd.show().catch(() => {
+      rewardedVideoAd.load()
+        .then(() => rewardedVideoAd.show())
+        .catch(err => {
+          console.log('激励视频 广告显示失败')
+        })
+    })
+  },
+
+  // 用户授权信息之后，保存用户信息，抽奖
+  hasGottenUserInfo: function () {
+    util.getUserInfo(this)
+    this.lotteryClick();
+  },
   /**
    * 用户点击右上角分享
    */
@@ -86,5 +130,41 @@ Page({
       title: this.data.lottery_info.title,
       path: '/pages/test/test?openId=123'
     }
+  },
+
+// 密钥双向绑定
+  secretKeyOnchange(event) {
+    this.setData({
+      secretKey: event.detail
+    })
+  },
+
+// 打开密钥获取页面
+  course(){
+    this.setData({
+      isCourse: true
+    })
+  },
+
+// 关闭密钥获取页面
+  courseClose(){
+    this.setData({
+      isCourse : false
+    })
+  },
+
+// 跳转到图文详情教程
+  courseDetails(){
+    wx.navigateTo({
+      url: '../course/course'
+    })
+  },
+
+  // 跳转到抽奖人员详情页面
+  lotteryPeopleList(){
+    wx.navigateTo({
+      url: '../lottery-people-list/lottery-people-list'
+    })
   }
+
 })

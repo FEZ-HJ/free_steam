@@ -31,25 +31,15 @@ Component({
   methods: {
     add: function (e) {
       // 回调父层的onClickHandler函数
+      // 获取登录信息前不调用
       this.triggerEvent('onClickHandler', e, {});
-      wx.request({
-        url: URL + 'push/insert',
-        method: 'POST',
-        data: {
-          openId: util.getOpenId(),
-          formId: e.detail.formId
-        },
-        success(res) {
-          console.log('保存表单ID成功:')
-        }
-      }) 
     },
     onGotUserInfo: function (e) {
+      // 获取登录信息后不调用
       if (e.detail.userInfo != undefined) {
         util.saveUserInfo(e)
         this.triggerEvent('onGotUserInfo', e, {});
       }
     },
-
   }
 })
