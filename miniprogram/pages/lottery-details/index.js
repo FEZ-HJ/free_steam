@@ -1,50 +1,44 @@
-// miniprogram/pages/lottery-details/index.js
+var prizeUtil = require('../../utils/lottery.js')
 var util = require('../../utils/util.js')
-var lotteryUtil = require('../../utils/lottery.js')
 import Toast from '../../dist/toast/toast';
 import Dialog from '../../dist/dialog/dialog';
 let rewardedVideoAd = null
+
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    // 奖品ID
-    lotteryId: '',
-    // 用户信息
-    userInfo:null,
-    // 奖品信息
-    lottery_info:null,
-    // 当前用户抽奖记录
-    lottery_recordSelf:null,
-    // 抽奖记录
-    lottery_record:null
+    activeNames: ['1','2','3','4'],//图文教程下拉框打开
+    secretKey: '',                 //输入的密钥--双向绑定
+    isBorder : false,              //无边框
+    isCourse: false,               //密钥获取教程页面是否打开
+    lottery_info:{                 //奖品信息
+      title: '巫师3',              //奖品标题
+      desc: '满600人即刻开奖',      //奖品描述
+      img: 'https://media.st.dl.eccdnx.com/steam/apps/292030/header.jpg?t=1581375222',//奖品图片
+      isAd: true,                  //是否是密钥抽奖
+      secretKey: 'Python',         //密钥
+    }
   },
-
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
-    if(options.id == null){
-      Toast('暂无抽奖活动，请耐心等候')
-      return;
-    }
-
-    // 查询当前用户抽奖信息
-    lotteryUtil.getLotteryRecordSelf(options.id,this)
-    // 查询用户授权信息
-    util.getUserInfo(this)
-    // 查询奖品信息和抽奖记录
-    lotteryUtil.getContentAndRecord(options.id,this)
-    // 奖品ID
     this.setData({
-      lotteryId: options.id
+      prizeId : options.id
     })
-    // 创建广告
+
+    prizeUtil.getPrizeDetail(options.id,this);
+
+    console.log(options.openId)
+
     if (wx.createRewardedVideoAd) {
-      rewardedVideoAd = wx.createRewardedVideoAd({ adUnitId: 'adunit-2d7779a83a4c99d6' })
+      rewardedVideoAd = wx.createRewardedVideoAd({
+        adUnitId: 'adunit-edff7554604c2e77',
+        multiton: true
+      })
       rewardedVideoAd.onLoad(() => {
         console.log('onLoad event emit')
       })
@@ -52,35 +46,59 @@ Page({
         console.log('onError event emit', err)
       })
       rewardedVideoAd.onClose((res) => {
-        // 用户点击了【关闭广告】按钮
         if (res && res.isEnded) {
-          // 正常播放结束，可以下发游戏奖励
-          lotteryUtil.addLotteryRecord(this,this.data.lotteryId)
+          // TODO 正常播放结束，可以下发游戏奖励
+          // lotteryUtil.addLotteryRecord(this, this.data.lotteryId)
+          Toast('抽奖成功');
+          this.setData({
+            lottery_self_info: {
+              isComplete : true,
+              invited: this.data.lottery_self_info.invited
+            }
+          })
         } else {
           Toast('观看完整广告才可参与抽奖！');
         }
       })
     }
+
   },
 
-  // 用户授权
-  onGotUserInfo: function (e) {
-    if (e.detail.userInfo != undefined) {
-      this.setData({
-        userInfo: e.detail.userInfo
-      })
-      util.saveUserInfo(e)
-      this.lottery()
+// 检验密钥
+  onConfirm: function(){
+    if (this.data.secretKey == this.data.lottery_info.secretKey){
+      this.lottery(); 
     }else{
-      Toast('授权之后才能参与抽奖哦！');
+      Toast('请输入正确的密钥！');
     }
   },
 
-  // 抽奖
-  lottery: function () {
-    // this.addLotteryRecord()
+  // 抽奖 分为密钥抽奖和普通抽奖
+  lotteryClick: function () {
+    // 如果是密钥抽奖，则先检测密钥
+    if (this.data.lottery_info.isAd){
+      this.setData({
+        show: true
+      })
+      return;
+    }
+    this.lottery();  
+  },
+
+// 获取用户推送授权并看广告
+  lottery: function(){
+    prizeUtil.addLotteryRecord(this,this.data.prizeId);
+
+    // 获取推送权限请求
+    wx.requestSubscribeMessage({
+      tmplIds: ['WLEUt7RlWpbMCi3-A_hT-uRq5w3hGInxbKRhZ42SZT0'],
+      success(res) {
+        console.log(res)
+      }
+    })
+
+    // 观看广告，参与抽奖
     rewardedVideoAd.show().catch(() => {
-      // 失败重试
       rewardedVideoAd.load()
         .then(() => rewardedVideoAd.show())
         .catch(err => {
@@ -89,52 +107,54 @@ Page({
     })
   },
 
-  // 抽奖历史页面
-  history: function () {
-    wx.navigateTo({
-      url: '../lottery-history/index'
+  // 用户授权信息之后，保存用户信息，抽奖
+  hasGottenUserInfo: function () {
+    util.getUserInfo(this)
+    this.lotteryClick();
+  },
+  /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage: function () {
+    return {
+      title: this.data.lottery_info.title,
+      path: '/pages/test/test?openId=123'
+    }
+  },
+
+// 密钥双向绑定
+  secretKeyOnchange(event) {
+    this.setData({
+      secretKey: event.detail
     })
   },
 
-  // 领取奖品 
-  honoree:function(){
-    const db = wx.cloud.database()
-    Dialog.confirm({
-      title: this.data.lottery_info.title,
-      message: '充值码:'+this.data.lottery_info.CDKEY
-    }).then(() => {
-      wx.setClipboardData({
-        data: this.data.lottery_info.CDKEY,
-        success(res) {
-        }
-      })
-      wx.setStorage({
-        key: 'lotteryed',
-        data: this.data.lottery_info._id
-      })
-    }).catch(() => {
-      console.log("2")
-    });
+// 打开密钥获取页面
+  course(){
+    this.setData({
+      isCourse: true
+    })
   },
 
-  // 转发
-  onShareAppMessage: function (ops) {
-    if (ops.from === 'button') {
-      // 来自页面内转发按钮
-      console.log(ops.target)
-    }
-    return {
-      title: 'Steam点卡抽取',
-      path: 'pages/lottery-details/index?id'+this.data.lotteryId,
-      success: function (res) {
-        // 转发成功
-        console.log("转发成功:" + JSON.stringify(res));
-      },
-      fail: function (res) {
-        // 转发失败
-        console.log("转发失败:" + JSON.stringify(res));
-      }
-    }
+// 关闭密钥获取页面
+  courseClose(){
+    this.setData({
+      isCourse : false
+    })
   },
+
+// 跳转到图文详情教程
+  courseDetails(){
+    wx.navigateTo({
+      url: '../course/course'
+    })
+  },
+
+  // 跳转到抽奖人员详情页面
+  lotteryPeopleList(){
+    wx.navigateTo({
+      url: '../lottery-people-list/lottery-people-list'
+    })
+  }
 
 })

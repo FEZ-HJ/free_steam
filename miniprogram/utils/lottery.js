@@ -5,12 +5,10 @@ const { URL} = getApp();
 // 存入抽奖次数
 const addLotteryRecord = (that,lotteryId) => {
   wx.request({
-    url: URL + 'lottery/saveRecord',
+    url: URL + 'prize/insertRecord',
     data:{
       openId: util.getOpenId(),
-      nickName: that.data.userInfo.nickName,
-      avatarUrl: that.data.userInfo.avatarUrl,
-      uid: lotteryId
+      prizeId: lotteryId
     },
     method:'POST',
     success(res) {
@@ -64,9 +62,24 @@ const getLotteryRecordSelf = (id,that) => {
   })
 }
 
+// 查询所有抽奖记录
 const getAllLotteryContent = (page,size,that) => {
   wx.request({
     url: URL + 'prize/findAllContent?size='+size+'&page='+page,
+    success(res) {
+      console.log('查询全部的抽奖信息:')
+      console.log(res)
+      that.setData({
+        lottery_info: res.data,
+      })
+    }
+  })
+}
+
+// 查询抽奖详情
+const getPrizeDetail = (id,that) => {
+  wx.request({
+    url: URL + 'prize/prizeDetail?id='+id,
     success(res) {
       console.log('查询全部的抽奖信息:')
       console.log(res)
@@ -83,4 +96,5 @@ module.exports = {
   getContentAndRecord: getContentAndRecord,
   getLotteryRecordSelf: getLotteryRecordSelf,
   getAllLotteryContent: getAllLotteryContent,
+  getPrizeDetail: getPrizeDetail,
 }

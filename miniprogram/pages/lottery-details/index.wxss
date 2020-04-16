@@ -1,18 +1,46 @@
-.container {
+.global{
   background-color: #F1F1F1;
   width: 100%;
+  min-height: 1334rpx;
+  overflow:hidden;
+}
+
+.prize{
+  background-color: #fff;
+  border-radius: 20rpx;
+  width: 700rpx;
+  height: 447rpx;
+  margin-left: 25rpx;
+  margin-top: 50rpx;
+}
+
+.lottery{
+  background-color: #fff;
+  border-radius: 20rpx;
+  width: 700rpx;
+  height: 300rpx;
+  margin-left: 25rpx;
+  margin-top: 50rpx;
+  overflow:hidden;
+}
+
+.record{
+  background-color: #fff;
+  border-radius: 20rpx;
+  width: 700rpx;
+  height: 225rpx;
+  margin-left: 25rpx;
+  margin-top: 50rpx;
   margin-bottom: 50rpx;
+  overflow:hidden;
 }
 
 .head {
-  /* background-color: #fff; */
-  /* padding-top: 40rpx; */
-  padding-bottom: 40rpx;
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
-  /* box-shadow:1px 1px 1px #e3e3e3; */
+  height: 120rpx;
 }
 
 .title {
@@ -25,45 +53,87 @@
 .author {
   font-size: 28rpx;
   color: #999;
-  /* margin-bottom: 30rpx; */
 }
 
 .avatar{
-  width:600rpx;
-  height:280rpx;
-  background-color: #fff;
-  margin-bottom: 50rpx;
-  /* border-radius: 50%; */
-  /* margin-bottom: 10rpx; */
+  width:700rpx;
+  height:327rpx;
+  border-radius: 0rpx 0rpx 20rpx 20rpx;
 }
 
-.portrait{
-  width:70rpx;
-  height:70rpx;
+.help{
+  display: flex;
+  flex-direction: column;
+  margin-left: 20rpx;  
+  width: 40%;
+  height: 120rpx;
+  float:left;
+}
+
+.share{
+  width: 30%;
+  height: 120rpx;
+  margin-left: auto;
+  margin-top: 25rpx;
+}
+
+.invite{
+  float: left;
+  width: 100rpx;
+  height: 100rpx;
+  margin-left: 8.3rpx;
+  margin-right: 8.3rpx;
+  background-color: #F5F5F5;
+  border-radius: 50%;
+  color: #A9A9A9;
+  text-align: center;
+  line-height: 100rpx;
+}
+
+.all{
+  margin-top: 25rpx;
+}
+
+.all-head {
+  display: flex;
+  flex-direction: column;
+  margin-left: 20rpx;  
+  width: 40%;
+}
+
+.headImg{
+  float: left;
+  width: 100rpx;
+  height: 100rpx;
+  margin-left: 8.3rpx;
+  margin-right: 8.3rpx;
   border-radius: 50%;
 }
 
-.dark,
-.light {
-  color: black;
-  font-size: 13px;
-  line-height: 70rpx;
-  text-align: center;
+.lottery-button {
+  color: #333;
+  border: 5px solid rgba(255, 255, 255, 0.7);
+  background-color:rgba(238, 238, 238, 0.8);
+  width: 200rpx;
+  height: 200rpx;
+  margin-top: 50rpx;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.text1{
-  color: gray;
-  font-size: 8px;
+.cipher{
+  height: 50rpx;
+  padding: 50rpx 0;
 }
 
-.text2{
-  color: black;
-  font-size: 10px;
+.couresBody{
+  width: 650rpx;
+  height: 900rpx;
 }
 
-.top {
-  color: black;
-  font-size: 13px;
-  line-height: 30rpx;
-  text-align: center;
+.buttonClass{
+  margin-top: 50rpx;
+  margin-left: 40%
 }
