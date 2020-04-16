@@ -66,7 +66,7 @@ const getLotteryRecordSelf = (id,that) => {
 
 const getAllLotteryContent = (page,size,that) => {
   wx.request({
-    url: URL + 'lottery/findAllContent?size='+size+'&page='+page,
+    url: URL + 'prize/findAllContent?size='+size+'&page='+page,
     success(res) {
       console.log('查询全部的抽奖信息:')
       console.log(res)
