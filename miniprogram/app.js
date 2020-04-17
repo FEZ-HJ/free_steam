@@ -5,9 +5,8 @@ const levels = [0, 120, 480, 840, 1320, 1920, 2880, 4200, 5880, 7920, 10320, 130
 const addMaxScore = 100;
 const addMinScore = 50;
 
-const URL = "http://localhost/steamfree/";
-// const URL = "https://steamfree.online/steamfree/";
-
+// const URL = "http://localhost/steamfree/";
+const URL = "https://steamfree.online/steamfree/";
 
 App({
   grades: grades,
@@ -16,12 +15,26 @@ App({
   addMinScore: addMinScore,
   URL: URL,
   onLaunch: function () {
-    
-    if (!wx.cloud) {
-      console.error('请使用 2.2.3 或以上的基础库以使用云能力')
-    } else {
-      wx.cloud.init({
-        traceUser: true,
+    // 初始化时获取用户openID
+    var openId = wx.getStorageSync('openId')
+    if(openId == ''){
+      wx.login({
+        success (res) {
+          if (res.code) {
+            wx.request({
+              url: URL + 'wxLogin',
+              data: {code: res.code},
+              success(res1){
+                wx.setStorage({
+                  key: "openId",
+                  data: res1.data.openid
+                })
+              }
+            })
+          } else {
+            console.log('登录失败！' + res.errMsg)
+          }
+        }
       })
     }
 

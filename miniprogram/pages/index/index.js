@@ -1,10 +1,4 @@
-// miniprogram/pages/index/index.js
 const { URL } = getApp();
-var util = require('../../utils/util.js')
-var signInUtil = require('../../utils/signIn.js')
-import Dialog from '../../dist/dialog/dialog';
-import Notify from '../../dist/notify/notify';
-import Toast from '../../dist/toast/toast';
 Page({
 
   /**
@@ -23,10 +17,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    util.getOpenId(this)
     this.query()
-    this.getHomePage()
-    util.getUserInfo(this)
   },
 
 // 轮播图控制方法
@@ -80,49 +71,9 @@ Page({
     }
   },
 
-// 轮播图点击
-  homepageClick:function(e){
-    var id = e.currentTarget.dataset.replyType
-    if (this.data.userInfo != undefined && (this.data.userInfo.avatarUrl ==             'https://wx.qlogo.cn/mmopen/vi_32/7Fy64zYiczszwKEqzjOnSFhWequlYPDQsEw8X1eR1lasmpTAH8q7pYoZOiaiao9V8MyAWNcBwq6CY6K5j1TrswVzQ/132' || 
-      this.data.userInfo.avatarUrl == 'https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTI64XUGp3cKv4Gn8SOm6WX7RvgBwErgzWZqFPWqK94XCQZCNjFVsficYZFQ4ukGnqvPrjsG1O4ibDug/132')) {
-      wx.navigateTo({
-        url: '../setting/setting'
-      })
-    }
-    else if(id == '999'){
-      wx.previewImage({
-        urls: ['http://www.whoisyours.cn/blog/公众号二维码.png?blog'] // 需要预览的图片http链接列表
-      })
-    } else if (id == '998'){
-      this.setData({
-        show:true
-      })
-    }else{
-      wx.navigateTo({
-        url: '../lottery-details/index?id=' + id
-      })
-    }
-  },
-
   onClose:function(){
     this.setData({
       show: false
-    })
-  },
-
-// 获取首页轮播图
-  getHomePage:function(){
-    const db = wx.cloud.database()
-    const _ = db.command
-    var that = this
-    db.collection('homePage').get({
-      success: res => {
-        that.setData({
-          homepage: res.data
-        })
-        console.log("查询首页图片成功")
-      },
-      fail: console.error
     })
   },
 

@@ -2,6 +2,7 @@
   "usingComponents": {
     "van-divider": "/dist/divider/index",
     "vSignIn": "/components/vSignIn/vSignIn",
+    "vLogin": "/components/vLogin/vLogin",
     "van-toast": "/dist/toast/index",
     "van-popup": "/dist/popup/index",
     "van-field": "/dist/field/index",
@@ -9,6 +10,7 @@
     "van-collapse": "/dist/collapse/index",
     "van-collapse-item": "/dist/collapse-item/index",
     "van-dialog": "/dist/dialog/index",
+    "van-action-sheet": "/dist/action-sheet/index",
     "van-button": "/dist/button/index"
   }
 }

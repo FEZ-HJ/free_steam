@@ -120,3 +120,7 @@
   width:300rpx;
   height:140rpx;
 }
+
+.ad{
+  margin-bottom: 30rpx;
+}

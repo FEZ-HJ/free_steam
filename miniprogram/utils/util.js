@@ -57,8 +57,8 @@ const preDate = (date,day) => {
   return formatDay(new Date(time-day*24*60*60*1000))
 }
 
-// 初始化查询用户信息
-const getUserInfo = (that) => {
+// 存储用户信息到缓存 并将缓存的数据存到当前页面信息
+const setUserInfo = (that) =>{
   var userInfo = wx.getStorageSync('userInfo')
   if (userInfo == ''){
     wx.getSetting({
@@ -72,21 +72,8 @@ const getUserInfo = (that) => {
                 data: data.userInfo
               })
               that.setData({
-                userInfo: data.userInfo
+                userInfo: userInfo
               })
-              wx.request({
-                url: URL + 'user/insert',
-                method: 'POST',
-                data: {
-                  openId: getOpenId(),
-                  avatarUrl: data.userInfo.avatarUrl,
-                  nickName: data.userInfo.nickName,
-                },
-                success(res) {
-                  console.log('保存用户信息成功:')
-                  console.log(res.data)
-                }
-              }) 
             }
           })
         } else {
@@ -101,36 +88,17 @@ const getUserInfo = (that) => {
   }
 }
 
-// 获取用户的openID
-const getOpenId = () => {
-  var openId = wx.getStorageSync('openId')
-  console.log(openId)
-  if (openId == '') {
-    wx.cloud.callFunction({
-      name: 'getOpenId',
-      success: function (res) {
-        console.log(res)
-        openId = res.result.OPENID
-        console.log('查询用户openID成功')
-        wx.setStorage({
-          key: "openId",
-          data: openId
-        })
-        return openId
-      },
-      fail: console.error
-    })
-  }
-  return openId
-}
-
 // 用户授权
 const saveUserInfo = (e) => {
+  wx.setStorage({
+    key: "userInfo",
+    data: e.detail.userInfo
+  })
   wx.request({
     url: URL + 'user/insert',
     method: 'POST',
     data:{
-      openId: getOpenId(),
+      openId: wx.getStorageSync('openId'),
       avatarUrl: e.detail.userInfo.avatarUrl,
       nickName: e.detail.userInfo.nickName,
     },
@@ -141,6 +109,40 @@ const saveUserInfo = (e) => {
   }) 
 }
 
+// 更新用户信息
+const updateUserInfo = () =>{
+  wx.getSetting({
+    success: (data) => {
+      if (data.authSetting['scope.userInfo']) {
+        wx.getUserInfo({
+          success: (data) => {
+            console.log("查询用户信息成功")
+            wx.setStorage({
+              key: "userInfo",
+              data: data.userInfo
+            })
+            wx.request({
+              url: URL + 'user/insert',
+              method: 'POST',
+              data:{
+                openId: wx.getStorageSync('openId'),
+                avatarUrl: data.userInfo.avatarUrl,
+                nickName: data.userInfo.nickName,
+              },
+              success(res) {
+                console.log('保存用户信息成功:')
+                console.log(res.data)
+              }
+            }) 
+          }
+        })
+      } else {
+        console.log("用户暂未授权")
+      }
+    }
+  })
+}
+
 module.exports = {
   formatTime: formatTime,
   formatNumber: formatNumber,
@@ -148,8 +150,8 @@ module.exports = {
   duration: duration,
   format: format,
   parserDate: parserDate,
-  getUserInfo: getUserInfo,
   saveUserInfo: saveUserInfo,
   preDate: preDate,
-  getOpenId: getOpenId
+  setUserInfo: setUserInfo,
+  updateUserInfo: updateUserInfo
 }

@@ -137,3 +137,6 @@
   margin-top: 50rpx;
   margin-left: 40%
 }
+.login{
+  margin-bottom: 40rpx;
+}

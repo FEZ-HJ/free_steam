@@ -3,24 +3,22 @@
   <view class="prize">
 
     <view class="head">
-      <text class='title'>{{lottery_info.title}}</text>
-      <text class='author'>{{lottery_info.detail}}</text>
+      <text class='title'>{{prizeContent.title}}</text>
+      <text class='author'>{{prizeContent.detail}}</text>
     </view>
     
-    <image src="{{lottery_info.img}}"  class="avatar" />
+    <image src="{{prizeContent.img}}"  class="avatar" />
 
   </view>
 
   <view wx:if="{{!lottery_self_info.isComplete}}" class="lottery">
     <vSignIn
       bind:onClickHandler="lotteryClick"
-      bind:onGotUserInfo="hasGottenUserInfo"
       custom-class="lottery-button"
-      userInfo="{{userInfo}}"
     >抽奖</vSignIn>
   </view>
 
-  <view wx:if="{{lottery_self_info.isComplete}}" class="lottery">
+  <!-- <view wx:if="{{lottery_self_info.isComplete}}" class="lottery">
     <view class="help">
       <text class='title'>好友助力</text>
       <text class='author'>邀请好友提高中奖率</text>
@@ -36,18 +34,18 @@
       <view wx:for="{{6 - lottery_self_info.invited.length}}" class="invite" wx:key="index">?</view>
       <view wx:if="{{lottery_self_info.invited.length > 6}}" class="invite">{{lottery_self_info.invited.length}}</view>
     </view>
-  </view>
+  </view> -->
 
   <view class="record">
     <view class="all-head">
       <text class='title'>全部参与</text>
     </view>
-    <view class="all" bindtap="lotteryPeopleList">
-      <block wx:for="{{lottery_info.attended}}"  wx:key="index">
-        <image wx:if="{{index < 5 || lottery_info.attended.length == 6}}" src="{{item}}"  class="headImg" />
+    <view class="all" bindtap="lotteryPeopleList" data-reply-Type="{{prizeContent.id}}">
+      <block wx:for="{{recordList}}"  wx:key="index">
+        <image wx:if="{{index < 5 || recordList.length == 6}}" src="{{item.avatarUrl}}"  class="headImg" />
       </block>
-      <view wx:for="{{6 - lottery_info.attended.length}}" class="invite" wx:key="index">?</view>
-      <view wx:if="{{lottery_info.attended.length > 6}}" class="invite">{{lottery_info.attended.length}}</view>
+      <view wx:for="{{6 - recordList.length}}" class="invite" wx:key="index">?</view>
+      <view wx:if="{{recordList.length > 6}}" class="invite">{{recordList.length}}</view>
     </view>
   </view>
 
@@ -97,3 +95,13 @@
 
   </view>
 </van-popup>
+
+<van-action-sheet show="{{ showGetUserInfo }}" title="登录之后才能抽奖哦" z-index='20000' bind:close="onCloseGetUserInfo">
+  <view class="login">
+    <vLogin
+      bind:onGotUserInfo="hasGottenUserInfo"
+      custom-class="lottery-button"
+    >登录</vLogin>
+  </view>
+</van-action-sheet>
+

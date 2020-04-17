@@ -1,16 +1,14 @@
 {
   "pages": [
-    "pages/test/test",
+    "pages/lottery/lottery",
+    "pages/lottery-details/index",
+    "pages/lottery-people-list/lottery-people-list",
     "pages/index/index",
     "pages/indexDetails/details",
     "pages/discount/index",
     "pages/discountDetails/index",
-    "pages/lottery/lottery",
-    "pages/lottery-details/index",
     "pages/userInfo/userInfo",
-    "components/vSignIn/vSignIn",
-    "pages/course/course",
-    "pages/lottery-people-list/lottery-people-list"
+    "pages/course/course"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",
@@ -25,22 +23,16 @@
     "color": "#c7c7c7",
     "list": [
       {
-        "selectedIconPath": "/images/tab/free@hl.png",
-        "pagePath": "pages/test/test",
-        "text": "限免",
-        "iconPath": "/images/tab/free.png"
+        "selectedIconPath": "/images/tab/cj@hl.png",
+        "pagePath": "pages/lottery/lottery",
+        "text": "抽奖",
+        "iconPath": "/images/tab/cj.png"
       },
       {
         "selectedIconPath": "/images/tab/zhekou@hl.png",
         "pagePath": "pages/discount/index",
         "text": "史低",
         "iconPath": "/images/tab/zhekou.png"
-      },
-      {
-        "selectedIconPath": "/images/tab/cj@hl.png",
-        "pagePath": "pages/lottery/lottery",
-        "text": "抽奖",
-        "iconPath": "/images/tab/cj.png"
       },
       {
         "selectedIconPath": "/images/tab/user@hl.png",

@@ -1,0 +1,13 @@
+<form
+  report-submit
+ >
+  <button
+    open-type="getUserInfo"
+    lang="zh_CN"
+    class="custom-class"
+    hover-class='button-hover'
+    bindgetuserinfo="onGotUserInfo">
+    <slot />
+  </button>
+</form>
+

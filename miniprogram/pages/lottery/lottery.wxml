@@ -1,4 +1,4 @@
-<block wx:for="{{lottery_info}}" wx:key="id">
+<block wx:for="{{prizes}}" wx:key="id">
   <van-panel title="{{item.title}}" desc="{{item.detail}}" status="{{item.endTime == null ? '进行中' : '已结束'}}">
     <view class="img">
       <van-image

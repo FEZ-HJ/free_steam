@@ -1,4 +1,4 @@
-<view class="swiper-container">
+<!-- <view class="swiper-container">
 <swiper autoplay="true" interval="6000" duration="700" class="swiper">
   <block wx:for="{{homepage}}"  wx:key="unique">
     <swiper-item>
@@ -6,7 +6,7 @@
     </swiper-item>
   </block>
 </swiper>
-</view>
+</view> -->
 
 <block wx:for="{{items}}" wx:for-item="item" wx:key="_id" wx:for-index="idx">
   <van-card 

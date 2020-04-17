@@ -1,11 +1,10 @@
 var util = require('../../utils/util.js')
 var signInUtil = require('../../utils/signIn.js')
-var lotteryUtil = require('../../utils/lottery.js')
+var lotteryUtil = require('../../utils/prize.js')
 import Dialog from '../../dist/dialog/dialog';
 import Notify from '../../dist/notify/notify';
 import Toast from '../../dist/toast/toast';
 
-let rewardedVideoAd = null
 let signInoAd = null
 
 Page({
@@ -36,42 +35,18 @@ Page({
 
   onLoad: function (e) {
     // 查询用户信息
-    util.getUserInfo(this)
+    util.setUserInfo(this)
     // 查询抽奖信息 
-    lotteryUtil.getLotteryContent(this)
     // 创建广告
     if (wx.createRewardedVideoAd) {
-      rewardedVideoAd = wx.createRewardedVideoAd({ 
-        adUnitId: 'adunit-edff7554604c2e77',
-        multiton: true
-        })
       signInoAd = wx.createRewardedVideoAd({ 
         adUnitId: 'adunit-edff7554604c2e77',
         multiton: true
         })
-      rewardedVideoAd.onLoad(() => {
-        console.log('onLoad event emit')
-      })
-      rewardedVideoAd.onError((err) => {
-        console.log('onError event emit', err)
-      })
-      rewardedVideoAd.onClose((res) => {
-        // 用户点击了【关闭广告】按钮
-        if (res && res.isEnded) {
-          // 正常播放结束，可以下发游戏奖励
-          lotteryUtil.addLotteryRecord(this, this.data.lotteryId)
-        } else {
-          Toast('观看完整广告才可参与抽奖！');
-        }
-      })
       signInoAd.onClose((res) => {
-        // 用户点击了【关闭广告】按钮
         if (res && res.isEnded) {
-          // 正常播放结束，可以下发游戏奖励
           signInUtil.singn(this)
           Notify('连续签到7天以上，经验积分奖励翻倍！');
-          // var t = parseInt(this.data.continuousDay) + 1
-          // Toast('已连续签到' + t + '天！');
         } else {
           Toast('观看完整广告才可签到！');
         }
@@ -102,7 +77,6 @@ Page({
   // 查询用户信息
   hasGottenUserInfo:function(){
     signInUtil.singn(this)
-    util.getUserInfo(this)
   },
 
   // 积分兑换 
@@ -113,20 +87,6 @@ Page({
     }
   },
 
-  // 抽奖
-  lottery:function(e){
-    this.setData({
-      lotteryId: e.currentTarget.dataset.replyType
-    })
-    rewardedVideoAd.show().catch(() => {
-      // 失败重试
-      rewardedVideoAd.load()
-        .then(() => rewardedVideoAd.show())
-        .catch(err => {
-          console.log('激励视频 广告显示失败')
-        })
-    })
-  },
 
   // 用户授权
   onGotUserInfo: function (e) {
@@ -135,7 +95,6 @@ Page({
         userInfo: e.detail.userInfo
       })
       util.saveUserInfo(e)
-      this.lottery()
     } else {
       Toast('授权之后才能参与抽奖哦！');
     }
