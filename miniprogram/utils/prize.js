@@ -39,9 +39,9 @@ const getAllPrize = (page,size,that) => {
 }
 
 // 查询抽奖详情
-const getPrizeDetail = (id,that) => {
+const getPrizeDetail = (id,openId,that) => {
   wx.request({
-    url: URL + 'prize/prizeDetail?id='+id,
+    url: URL + 'prize/prizeDetail?id='+id+'&openId='+openId,
     success(res) {
       console.log('查询抽奖详情:')
       console.log(res)

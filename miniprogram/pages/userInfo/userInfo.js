@@ -1,6 +1,6 @@
 var util = require('../../utils/util.js')
 var signInUtil = require('../../utils/signIn.js')
-var lotteryUtil = require('../../utils/prize.js')
+var giftUtil = require('../../utils/gift.js')
 import Dialog from '../../dist/dialog/dialog';
 import Notify from '../../dist/notify/notify';
 import Toast from '../../dist/toast/toast';
@@ -25,12 +25,15 @@ Page({
     lottery_info:null,
     // 签到记录
     days:null,
-    signIn: true
+    signIn: true,
+    showGetUserInfo: false
   },
 
   onShow: function(){
     // 查询签到信息
     signInUtil.getSignInfo(this)
+    // 查询奖品信息
+    giftUtil.getAllGift(this)
   },
 
   onLoad: function (e) {
@@ -57,6 +60,13 @@ Page({
 
   // 签到
   customHandler: function () {
+    if(wx.getStorageSync('userInfo') == ''){
+      this.setData({
+        showGetUserInfo : true
+      })
+      return;
+    }
+
     signInoAd.show().catch(() => {
       // 失败重试
       signInoAd.load()
@@ -76,7 +86,9 @@ Page({
 
   // 查询用户信息
   hasGottenUserInfo:function(){
-    signInUtil.singn(this)
+    this.setData({
+      showGetUserInfo: false
+    })
   },
 
   // 积分兑换 

@@ -1,9 +1,7 @@
 <view class='body' wx:if="{{signIn}}">
   <vSignIn
     bind:onClickHandler="customHandler"
-    bind:onGotUserInfo="hasGottenUserInfo"
     custom-class="mybutton"
-    userInfo="{{userInfo}}"
   >签到</vSignIn>
 </view>
 <view class='body' wx:if="{{!signIn}}">
@@ -17,13 +15,38 @@
 
   <van-collapse-item title="积分：{{money}}" name="2" icon="point-gift">
 
+    <block wx:for="{{giftContents}}">
+      <van-panel wx:if="{{index%2 == 0}}" title="{{giftContents[index].price}}积分" status="{{giftContents[index+1].price}}积分">
+        <van-row gutter="20">
+          <van-col span="12">
+            <image bindtap="convert" data-reply-Type="{{giftContents[index].price}}" src="{{giftContents[index].img}}" class="img"></image>
+          </van-col>
+          <van-col span="12">
+            <image bindtap="convert" data-reply-Type="{{giftContents[index+1].price}}" src="{{giftContents[index+1].img}}" class="img"></image>
+          </van-col>
+        </van-row>
+      </van-panel>
+    </block>
+
+    <!-- <van-panel title="30000积分" status="60000积分">
+      <van-row gutter="20">
+        <van-col span="12">
+          <image bindtap="convert" data-reply-Type="30000" src="https://media.st.dl.eccdnx.com/steam/apps/682990/header.jpg?t=1587070097" class="img"></image>
+        </van-col>
+        <van-col span="12">````````````````````````````````````````````````````````````````
+          <image bindtap="convert" data-reply-Type="60000" src="https://media.st.dl.eccdnx.com/steam/apps/612570/header.jpg?t=1587071511" class="img"></image>
+        </van-col>
+      </van-row>
+    </van-panel>
+
+
     <van-panel title="30000积分" status="60000积分">
       <van-row gutter="20">
         <van-col span="12">
-          <image bindtap="convert" data-reply-Type="30000" src="http://www.whoisyours.cn/blog/5$U30P}H2QNE]][PRCV`GM9.png?blog" class="img"></image>
+          <image bindtap="convert" data-reply-Type="30000" src="https://media.st.dl.eccdnx.com/steam/apps/682990/header.jpg?t=1587070097" class="img"></image>
         </van-col>
         <van-col span="12">
-          <image bindtap="convert" data-reply-Type="60000" src="http://www.whoisyours.cn/blog/P3LTT33[B0@1M5)66FDG_FG.png?blog" class="img"></image>
+          <image bindtap="convert" data-reply-Type="60000" src="https://media.st.dl.eccdnx.com/steam/apps/612570/header.jpg?t=1587071511" class="img"></image>
         </van-col>
       </van-row>
     </van-panel>
@@ -37,7 +60,7 @@
           <image bindtap="convert" data-reply-Type="300000" src="http://www.whoisyours.cn/blog/X)L`$1X(1[G})O{@KA3CI@4.png?blog" class="img"></image>
         </van-col>
       </van-row>
-    </van-panel>
+    </van-panel> -->
 
   </van-collapse-item>
   
@@ -57,3 +80,12 @@
 
 <view class="ad"></view>
 <ad unit-id="adunit-c0a9cac207cafbb9" ad-type="video" ad-theme="white"></ad>
+
+<van-action-sheet show="{{ showGetUserInfo }}" title="登录之后才能签到哦" z-index='20000' bind:close="onCloseGetUserInfo">
+  <view class="login">
+    <vLogin
+      bind:onGotUserInfo="hasGottenUserInfo"
+      custom-class="lottery-button"
+    >登录</vLogin>
+  </view>
+</van-action-sheet>

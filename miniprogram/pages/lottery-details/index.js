@@ -22,10 +22,8 @@ Page({
     },
     count : 0,                     //抽奖总人数
     recordList:[],                 //抽奖人员
-    showGetUserInfo: true,
-    actions: [
-      { name: '获取用户信息', color: '#07c160', openType: 'getUserInfo' },
-    ]
+    showGetUserInfo: false,
+    showCdk: false
   },
   /**
    * 生命周期函数--监听页面加载
@@ -33,11 +31,12 @@ Page({
   onLoad: function (options) {
 
     this.setData({
-      prizeId : options.id
+      prizeId : options.id,
+      openId: wx.getStorageSync('openId')
     })
 
     // 查询奖品详情
-    prizeUtil.getPrizeDetail(this.data.prizeId,this);
+    prizeUtil.getPrizeDetail(this.data.prizeId,this.data.openId,this);
 
     if (wx.createRewardedVideoAd) {
       rewardedVideoAd = wx.createRewardedVideoAd({
@@ -73,7 +72,7 @@ Page({
     }
 
     // 如果是密钥抽奖，则先检测密钥
-    if (this.data.prizeContent.isAd == '是'){
+    if (this.data.prizeContent.isAd == '是' && wx.getStorageSync('openId') != this.data.prizeContent.secretKey){
       this.setData({
         show: true
       })
@@ -84,7 +83,11 @@ Page({
 
 // 检验密钥
   onConfirm: function(){
-    if (this.data.secretKey == this.data.lottery_info.secretKey){
+    if (this.data.secretKey == this.data.prizeContent.secretKey){
+      wx.setStorage({
+        key: "secretKey",
+        data: this.data.secretKey
+      })
       this.lottery(); 
     }else{
       Toast('请输入正确的密钥！');
@@ -94,8 +97,6 @@ Page({
 
 // 获取用户推送授权并看广告
   lottery: function(){
-    prizeUtil.addPrizeRecord(this,this.data.prizeId);
-
     // 获取推送权限请求
     wx.requestSubscribeMessage({
       tmplIds: ['WLEUt7RlWpbMCi3-A_hT-uRq5w3hGInxbKRhZ42SZT0'],
@@ -116,7 +117,9 @@ Page({
 
   // 用户授权信息之后，保存用户信息，抽奖
   hasGottenUserInfo: function () {
-    
+    this.setData({
+      showGetUserInfo: false
+    })
   },
   /**
    * 用户点击右上角分享
@@ -167,5 +170,26 @@ Page({
   onCloseGetUserInfo() {
     this.setData({ showGetUserInfo: false });
   },
+
+  getPrize(){
+    wx.setClipboardData({
+      data: this.data.prizeContent.cdk,
+      success (res) {
+        wx.getClipboardData({
+          success (res) {
+          }
+        })
+      }
+    })
+    this.setData({
+      showCdk:true
+    })
+  },
+  onCloseCdk(){
+    this.setData({
+      showCdk:false
+    })
+  },
+
 
 })

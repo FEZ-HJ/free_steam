@@ -16,6 +16,7 @@
     "van-popup": "/dist/popup/index",
     "van-notify": "/dist/notify/index",
     "vSignIn": "/components/vSignIn/vSignIn",
+    "vLogin": "/components/vLogin/vLogin",
     "calendar": "/components/calendar/calendar"
   }
 }
