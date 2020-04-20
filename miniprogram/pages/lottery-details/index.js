@@ -72,7 +72,7 @@ Page({
     }
 
     // 如果是密钥抽奖，则先检测密钥
-    if (this.data.prizeContent.isAd == '是' && wx.getStorageSync('openId') != this.data.prizeContent.secretKey){
+    if (this.data.prizeContent.isAd == '是' && wx.getStorageSync('secretKey') != this.data.prizeContent.secretKey){
       this.setData({
         show: true
       })

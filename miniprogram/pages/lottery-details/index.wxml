@@ -11,14 +11,15 @@
 
   </view>
 
-  <view wx:if="{{prizeContent.endTime == ''}}" class="lottery">
+  <view wx:if="{{prizeContent.endTime == null}}" class="lottery">
     <vSignIn
       bind:onClickHandler="lotteryClick"
       custom-class="lottery-button"
     >抽奖</vSignIn>
+    <view class='text2'>观看次数越多中奖几率越大</view>
   </view>
 
-  <view wx:if="{{prizeContent.endTime != ''}}" class="lottery">
+  <view wx:if="{{prizeContent.endTime != null}}" class="lottery">
     <view class="help">
       <text class='title' style="margin-top:50rpx">中奖人</text>
     </view> 
@@ -76,7 +77,7 @@
         关注'steam限免助手'公众号
       </van-collapse-item>
       <van-collapse-item title="第二步" name="2" is-link="{{isBorder}}">
-        阅读4月15日头条推送文章
+        阅读最新推送的头条文章
       </van-collapse-item>
       <van-collapse-item title="第三步" name="3" is-link="{{isBorder}}">
         在文章底部找到留言内容

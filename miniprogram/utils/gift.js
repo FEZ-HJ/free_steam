@@ -33,7 +33,37 @@ const addConvertRecord = (that,prizeId) => {
   })
 }
 
+// 查询兑换记录
+const giftRecord = (that) => {
+  wx.request({
+    url: URL + 'gift/giftRecord?openId='+wx.getStorageSync('openId'),
+    success(res) {
+      console.log('查询兑换记录:')
+      console.log(res)
+      that.setData({
+        giftRecord: res.data,
+      })
+    }
+  })
+}
+
+// 查询中奖记录
+const winnersRecord = (that) => {
+  wx.request({
+    url: URL + 'prize/winnersRecord?openId='+wx.getStorageSync('openId'),
+    success(res) {
+      console.log('查询中奖记录:')
+      console.log(res)
+      that.setData({
+        winnersRecord: res.data,
+      })
+    }
+  })
+}
+
 module.exports = {
   getAllGift: getAllGift,
   addConvertRecord: addConvertRecord,
+  winnersRecord: winnersRecord,
+  giftRecord: giftRecord,
 }

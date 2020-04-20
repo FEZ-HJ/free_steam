@@ -19,48 +19,14 @@
       <van-panel wx:if="{{index%2 == 0}}" title="{{giftContents[index].price}}积分" status="{{giftContents[index+1].price}}积分">
         <van-row gutter="20">
           <van-col span="12">
-            <image bindtap="convert" data-reply-Type="{{giftContents[index].price}}" src="{{giftContents[index].img}}" class="img"></image>
+            <image bindtap="convert" data-reply-Type="{{giftContents[index].price}}"  data-reply-Type1="{{giftContents[index].title}}" data-reply-Type2="{{giftContents[index].id}}"  src="{{giftContents[index].img}}" class="img"></image>
           </van-col>
           <van-col span="12">
-            <image bindtap="convert" data-reply-Type="{{giftContents[index+1].price}}" src="{{giftContents[index+1].img}}" class="img"></image>
+            <image bindtap="convert" data-reply-Type="{{giftContents[index+1].price}}"  data-reply-Type1="{{giftContents[index].title}}" data-reply-Type2="{{giftContents[index].id}}" src="{{giftContents[index+1].img}}" class="img"></image>
           </van-col>
         </van-row>
       </van-panel>
     </block>
-
-    <!-- <van-panel title="30000积分" status="60000积分">
-      <van-row gutter="20">
-        <van-col span="12">
-          <image bindtap="convert" data-reply-Type="30000" src="https://media.st.dl.eccdnx.com/steam/apps/682990/header.jpg?t=1587070097" class="img"></image>
-        </van-col>
-        <van-col span="12">````````````````````````````````````````````````````````````````
-          <image bindtap="convert" data-reply-Type="60000" src="https://media.st.dl.eccdnx.com/steam/apps/612570/header.jpg?t=1587071511" class="img"></image>
-        </van-col>
-      </van-row>
-    </van-panel>
-
-
-    <van-panel title="30000积分" status="60000积分">
-      <van-row gutter="20">
-        <van-col span="12">
-          <image bindtap="convert" data-reply-Type="30000" src="https://media.st.dl.eccdnx.com/steam/apps/682990/header.jpg?t=1587070097" class="img"></image>
-        </van-col>
-        <van-col span="12">
-          <image bindtap="convert" data-reply-Type="60000" src="https://media.st.dl.eccdnx.com/steam/apps/612570/header.jpg?t=1587071511" class="img"></image>
-        </van-col>
-      </van-row>
-    </van-panel>
-
-    <van-panel title="150000积分" status="300000积分">
-      <van-row gutter="20">
-        <van-col span="12">
-          <image bindtap="convert" data-reply-Type="150000" src="http://www.whoisyours.cn/blog/TV3KW3V2I16}H89ZQX_FFAW.png?blog" class="img"></image>
-        </van-col>
-        <van-col span="12">
-          <image bindtap="convert" data-reply-Type="300000" src="http://www.whoisyours.cn/blog/X)L`$1X(1[G})O{@KA3CI@4.png?blog" class="img"></image>
-        </van-col>
-      </van-row>
-    </van-panel> -->
 
   </van-collapse-item>
   
@@ -70,6 +36,14 @@
       weeks-type="cn"
       show-more-days="true"
     />
+  </van-collapse-item>
+
+  <van-collapse-item title="中奖记录" name="4" icon="medal">
+    <van-cell wx:for="{{winnersRecord}}" wx:key="id" title="{{item.cdk}}" value="{{item.endTime}}"/>
+  </van-collapse-item>
+
+  <van-collapse-item title="兑换记录" name="5" icon="gift-card">
+    <van-cell wx:for="{{giftRecord}}" wx:key="id" title="{{item.cdk}}"  value="{{item.createTime}}" />
   </van-collapse-item>
 
 </van-collapse>

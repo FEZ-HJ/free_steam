@@ -4,7 +4,7 @@ var giftUtil = require('../../utils/gift.js')
 import Dialog from '../../dist/dialog/dialog';
 import Notify from '../../dist/notify/notify';
 import Toast from '../../dist/toast/toast';
-
+const { URL} = getApp();
 let signInoAd = null
 
 Page({
@@ -34,6 +34,10 @@ Page({
     signInUtil.getSignInfo(this)
     // 查询奖品信息
     giftUtil.getAllGift(this)
+    // 查询兑换信息
+    giftUtil.giftRecord(this)
+    // 查询中奖信息
+    giftUtil.winnersRecord(this)
   },
 
   onLoad: function (e) {
@@ -96,9 +100,38 @@ Page({
     var spend = e.currentTarget.dataset.replyType
     if (spend > this.data.money){
       Dialog.alert({ message: '该礼品需要' + spend +'积分,您的积分不足'}).then(() => {});
+    }else{
+      Dialog.confirm({
+        title: '兑换礼品',
+        message: '确认兑换：'+e.currentTarget.dataset.replyType1+"吗？"
+      }).then(() => {
+        wx.request({
+          url: URL + 'gift/convertGift?giftId='+e.currentTarget.dataset.replyType2+"&openId="+wx.getStorageSync('openId'),
+          method: 'GET',
+          success(res) {
+            if(res.data.code=='200'){
+              wx.setClipboardData({
+                data: res.data.giftCdk.cdk,
+                success (res) {
+                  wx.getClipboardData({
+                    success (res) {
+                      Notify('奖品兑换成功！激活码已复制到剪贴板');
+                    }
+                  })
+                }
+              })
+              signInUtil.getSignInfo(this)
+              giftUtil.giftRecord(this)
+            }else{
+              Notify(res.data.message);
+            }
+          }
+        })
+      }).catch(() => {
+        // on cancel
+      });
     }
   },
-
 
   // 用户授权
   onGotUserInfo: function (e) {
@@ -111,5 +144,6 @@ Page({
       Toast('授权之后才能参与抽奖哦！');
     }
   }
+  
 
 });
