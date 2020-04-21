@@ -1,7 +1,7 @@
 <block wx:for="{{items}}" wx:for-item="item" wx:key="_id" wx:for-index="idx">
       
   <van-card 
-    num="{{item.price.discount}}%折扣"
+    num="{{(100 - item.price.discount)/10}}折"
     tag="{{item.score}}"
     price="{{item.price.lowest_price}}"
     origin-price="{{item.price.current}}"

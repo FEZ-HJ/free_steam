@@ -18,7 +18,7 @@
 <van-panel  status="">
   <view class='c'> 
       <view class="e">游戏信息
-        <text class='a'>最大折扣：{{info.price.lowest_discount}}%</text>
+        <text class='a'>最大折扣：{{(100 - info.price.lowest_discount)/10}}折</text>
         <text class='a'>发售时间：{{info.release_date}}</text>
         <text class='a'>游戏类型：{{info.genres}}</text>
         <text class='a'>游戏评分：{{info.score}}</text>

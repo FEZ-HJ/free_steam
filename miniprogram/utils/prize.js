@@ -73,9 +73,26 @@ const addPrizeRecord = (that,prizeId) => {
   })
 }
 
+
+// 保存推送信息
+const pushRecord = (that) => {
+  wx.request({
+    url: URL + 'push/insert',
+    data:{
+      openId: wx.getStorageSync('openId'),
+      prizeId: that.data.prizeId,
+    },
+    method:'POST',
+    success(res) {
+      console.log('保存推送内容:') 
+    }
+  })
+}
+
 module.exports = {
   getAllPrize: getAllPrize,
   getPrizeDetail: getPrizeDetail,
   getPrizeRecord: getPrizeRecord,
   addPrizeRecord: addPrizeRecord,
+  pushRecord: pushRecord,
 }

@@ -22,7 +22,7 @@
             <image bindtap="convert" data-reply-Type="{{giftContents[index].price}}"  data-reply-Type1="{{giftContents[index].title}}" data-reply-Type2="{{giftContents[index].id}}"  src="{{giftContents[index].img}}" class="img"></image>
           </van-col>
           <van-col span="12">
-            <image bindtap="convert" data-reply-Type="{{giftContents[index+1].price}}"  data-reply-Type1="{{giftContents[index].title}}" data-reply-Type2="{{giftContents[index].id}}" src="{{giftContents[index+1].img}}" class="img"></image>
+            <image bindtap="convert" data-reply-Type="{{giftContents[index+1].price}}"  data-reply-Type1="{{giftContents[index+1].title}}" data-reply-Type2="{{giftContents[index+1].id}}" src="{{giftContents[index+1].img}}" class="img"></image>
           </van-col>
         </van-row>
       </van-panel>

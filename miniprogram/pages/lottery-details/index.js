@@ -102,6 +102,7 @@ Page({
       tmplIds: ['WLEUt7RlWpbMCi3-A_hT-uRq5w3hGInxbKRhZ42SZT0'],
       success(res) {
         console.log(res)
+        prizeUtil.pushRecord(this)
       }
     })
 
