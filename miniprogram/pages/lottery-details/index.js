@@ -193,5 +193,9 @@ Page({
     })
   },
 
-
+  morePrize(){
+    wx.switchTab({
+      url: '../lottery/lottery'
+    })
+  }
 })

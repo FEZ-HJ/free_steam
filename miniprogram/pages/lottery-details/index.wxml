@@ -11,6 +11,15 @@
 
   </view>
 
+  <view class="shareButton"> 
+    <view class="leftButton">
+      <van-button round type="default" bind:click="morePrize">更多抽奖</van-button>
+    </view>
+    <view class="rightButton">
+      <van-button round type="default" open-type="share">分享好友</van-button>
+    </view>
+  </view>
+
   <view wx:if="{{prizeContent.endTime == null}}" class="lottery">
     <vSignIn
       bind:onClickHandler="lotteryClick"
