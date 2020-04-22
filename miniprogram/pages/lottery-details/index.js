@@ -97,12 +97,13 @@ Page({
 
 // 获取用户推送授权并看广告
   lottery: function(){
+    var that = this;
     // 获取推送权限请求
     wx.requestSubscribeMessage({
       tmplIds: ['WLEUt7RlWpbMCi3-A_hT-uRq5w3hGInxbKRhZ42SZT0'],
       success(res) {
         console.log(res)
-        prizeUtil.pushRecord(this)
+        prizeUtil.pushRecord(that)
       }
     })
 
