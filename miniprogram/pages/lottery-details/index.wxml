@@ -41,7 +41,7 @@
         <image wx:if="{{index < 5 || recordList.length == 6}}" src="{{item.avatarUrl}}"  class="headImg" />
       </block>
       <view wx:for="{{6 - recordList.length}}" class="invite" wx:key="index">?</view>
-      <view wx:if="{{recordList.length > 6}}" class="invite">{{recordList.length}}</view>
+      <view wx:if="{{recordList.length > 6}}" class="invite">{{count}}</view>
     </view>
   </view>
 
