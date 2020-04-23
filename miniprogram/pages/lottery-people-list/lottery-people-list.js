@@ -11,6 +11,9 @@ Page({
   },
 
   onLoad: function (options) {
+    this.setData({
+      prizeId : options.prizeId
+    })
     prizeUtil.getPrizeRecord(options.prizeId,this.data.page,50,this)
   },
 
@@ -19,7 +22,7 @@ Page({
       this.setData({
         page: this.data.page + 1 
       })
-      prizeUtil.getPrizeRecord(options.prizeId,this.data.page,50,this)
+      prizeUtil.getPrizeRecord(this.data.prizeId,this.data.page,50,this)
     }
   },
 
