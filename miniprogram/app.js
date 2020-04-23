@@ -29,6 +29,36 @@ App({
                   key: "openId",
                   data: res1.data.openid
                 })
+                wx.getSetting({
+                  success: (data) => {
+                    if (data.authSetting['scope.userInfo']) {
+                      wx.getUserInfo({
+                        success: (data) => {
+                          console.log("查询用户信息成功")
+                          wx.setStorage({
+                            key: "userInfo",
+                            data: data.userInfo
+                          })
+                          wx.request({
+                            url: URL + 'user/insert',
+                            method: 'POST',
+                            data:{
+                              openId: res1.data.openid,
+                              avatarUrl: data.userInfo.avatarUrl,
+                              nickName: data.userInfo.nickName,
+                            },
+                            success(res) {
+                              console.log('保存用户信息成功:')
+                              console.log(res.data)
+                            }
+                          }) 
+                        }
+                      })
+                    } else {
+                      console.log("用户暂未授权")
+                    }
+                  }
+                })
               }
             })
           } else {
@@ -36,38 +66,39 @@ App({
           }
         }
       })
+    }else{
+      wx.getSetting({
+        success: (data) => {
+          if (data.authSetting['scope.userInfo']) {
+            wx.getUserInfo({
+              success: (data) => {
+                console.log("查询用户信息成功")
+                wx.setStorage({
+                  key: "userInfo",
+                  data: data.userInfo
+                })
+                wx.request({
+                  url: URL + 'user/insert',
+                  method: 'POST',
+                  data:{
+                    openId: wx.getStorageSync('openId'),
+                    avatarUrl: data.userInfo.avatarUrl,
+                    nickName: data.userInfo.nickName,
+                  },
+                  success(res) {
+                    console.log('保存用户信息成功:')
+                    console.log(res.data)
+                  }
+                }) 
+              }
+            })
+          } else {
+            console.log("用户暂未授权")
+          }
+        }
+      })
     }
 
-    wx.getSetting({
-      success: (data) => {
-        if (data.authSetting['scope.userInfo']) {
-          wx.getUserInfo({
-            success: (data) => {
-              console.log("查询用户信息成功")
-              wx.setStorage({
-                key: "userInfo",
-                data: data.userInfo
-              })
-              wx.request({
-                url: URL + 'user/insert',
-                method: 'POST',
-                data:{
-                  openId: wx.getStorageSync('openId'),
-                  avatarUrl: data.userInfo.avatarUrl,
-                  nickName: data.userInfo.nickName,
-                },
-                success(res) {
-                  console.log('保存用户信息成功:')
-                  console.log(res.data)
-                }
-              }) 
-            }
-          })
-        } else {
-          console.log("用户暂未授权")
-        }
-      }
-    })
 
     this.globalData = {}
   }
