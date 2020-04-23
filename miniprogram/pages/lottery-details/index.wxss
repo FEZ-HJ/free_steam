@@ -65,17 +65,17 @@
 .help{
   display: flex;
   flex-direction: column;
-  margin-left: 20rpx;  
+  /* margin-left: 20rpx;   */
   width: 40%;
-  height: 120rpx;
+  /* height: 120rpx; */
   float:left;
 }
 
 .share{
   width: 30%;
-  height: 120rpx;
+  /* height: 120rpx; */
   margin-left: auto;
-  margin-top: 25rpx;
+  margin-top: 10rpx;
 }
 
 .invite{

@@ -29,13 +29,15 @@
   </view>
 
   <view wx:if="{{prizeContent.endTime != null}}" class="lottery">
-    <view class="help">
-      <text class='title' style="margin-top:50rpx">中奖人</text>
-    </view> 
-    <view class="share" wx:if="{{prizeContent.winners == openId}}">
-      <van-button plain round  type="info" bindtap="getPrize">领取奖品</van-button>
-    </view> 
-    <van-divider customStyle="margin-top: 0"/>
+    <view class="shareButton"> 
+      <view class="leftButton" style="height:88rpx;line-height:88rpx;width:20%">
+        <text class='title'>中奖人</text>
+      </view>
+      <view class="rightButton">
+        <van-button  wx:if="{{prizeContent.winners == openId}}" plain round  type="info" bindtap="getPrize">领取奖品</van-button>
+      </view>
+    </view>
+    <van-divider customStyle="margin-top: 10rpx"/>
     <view class="all">
       <image src="{{prizeContent.avatarUrl}}"  class="headImg" style="margin-left:40%" />
     </view>
