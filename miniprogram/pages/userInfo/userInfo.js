@@ -13,16 +13,10 @@ Page({
     activeNames: '',
     // 积分
     money: '0',
-    // 等级
-    rank:'1',
-    // 经验比
-    progress: '0',
     // 用户信息
     userInfo: null,
     // 连续签到天数
     continuousDay:0,
-    // 奖品信息
-    lottery_info:null,
     // 签到记录
     days:null,
     signIn: true,
@@ -31,11 +25,11 @@ Page({
 
   onShow: function(){
     // 查询签到信息
-    signInUtil.getSignInfo(this)
+    // signInUtil.getSignInfo(this)
     // 查询奖品信息
-    giftUtil.getAllGift(this)
+    // giftUtil.getAllGift(this)
     // 查询兑换信息
-    giftUtil.giftRecord(this)
+    // giftUtil.giftRecord(this)
     // 查询中奖信息
     giftUtil.winnersRecord(this)
   },
@@ -45,20 +39,20 @@ Page({
     util.setUserInfo(this)
     // 查询抽奖信息 
     // 创建广告
-    if (wx.createRewardedVideoAd) {
-      signInoAd = wx.createRewardedVideoAd({ 
-        adUnitId: 'adunit-edff7554604c2e77',
-        multiton: true
-        })
-      signInoAd.onClose((res) => {
-        if (res && res.isEnded) {
-          signInUtil.singn(this)
-          Notify('连续签到7天以上，经验积分奖励翻倍！');
-        } else {
-          Toast('观看完整广告才可签到！');
-        }
-      })
-    }
+    // if (wx.createRewardedVideoAd) {
+    //   signInoAd = wx.createRewardedVideoAd({ 
+    //     adUnitId: 'adunit-edff7554604c2e77',
+    //     multiton: true
+    //     })
+    //   signInoAd.onClose((res) => {
+    //     if (res && res.isEnded) {
+    //       signInUtil.singn(this)
+    //       Notify('连续签到7天以上，经验积分奖励翻倍！');
+    //     } else {
+    //       Toast('观看完整广告才可签到！');
+    //     }
+    //   })
+    // }
 
   },
 
@@ -90,9 +84,7 @@ Page({
 
   // 查询用户信息
   hasGottenUserInfo:function(){
-    this.setData({
-      showGetUserInfo: false
-    })
+    util.setUserInfo(this)
   },
 
   // 积分兑换 
@@ -141,7 +133,7 @@ Page({
       })
       util.saveUserInfo(e)
     } else {
-      Toast('授权之后才能参与抽奖哦！');
+      // Toast('授权之后才能参与抽奖哦！');
     }
   }
   

@@ -1,10 +1,10 @@
-<view class='body' wx:if="{{signIn}}">
-  <vSignIn
-    bind:onClickHandler="customHandler"
-    custom-class="mybutton"
-  >签到</vSignIn>
+<view class='body' wx:if="{{userInfo == null}}">
+    <vLogin
+      bind:onGotUserInfo="hasGottenUserInfo"
+      custom-class="lottery-button"
+    >登录</vLogin>
 </view>
-<view class='body' wx:if="{{!signIn}}">
+<view class='body' wx:if="{{userInfo != null}}">
   <image src="{{userInfo.avatarUrl}}"  class="avatar" />
 </view>
 
@@ -12,7 +12,7 @@
   <!-- <van-collapse-item title="等级：{{rank}}级" name="1" icon="gem">
       <van-progress percentage="{{progress}}" />
   </van-collapse-item> -->
-
+<!-- 
   <van-collapse-item title="积分：{{money}}" name="2" icon="point-gift">
 
     <block wx:for="{{giftContents}}">
@@ -36,15 +36,15 @@
       weeks-type="cn"
       show-more-days="true"
     />
-  </van-collapse-item>
+  </van-collapse-item> -->
 
   <van-collapse-item title="中奖记录" name="4" icon="medal">
     <van-cell wx:for="{{winnersRecord}}" wx:key="id" title="{{item.cdk}}" value="{{item.endTime}}"/>
   </van-collapse-item>
 
-  <van-collapse-item title="兑换记录" name="5" icon="gift-card">
+  <!-- <van-collapse-item title="兑换记录" name="5" icon="gift-card">
     <van-cell wx:for="{{giftRecord}}" wx:key="id" title="{{item.cdk}}"  value="{{item.createTime}}" />
-  </van-collapse-item>
+  </van-collapse-item> -->
 
 </van-collapse>
 
@@ -54,12 +54,3 @@
 
 <view class="ad"></view>
 <ad unit-id="adunit-c0a9cac207cafbb9" ad-type="video" ad-theme="white"></ad>
-
-<van-action-sheet show="{{ showGetUserInfo }}" title="登录之后才能签到哦" z-index='20000' bind:close="onCloseGetUserInfo">
-  <view class="login">
-    <vLogin
-      bind:onGotUserInfo="hasGottenUserInfo"
-      custom-class="lottery-button"
-    >登录</vLogin>
-  </view>
-</van-action-sheet>
