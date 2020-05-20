@@ -1,11 +1,11 @@
 {
   "pages": [
+    "pages/index/index",
     "pages/discount/index",
     "pages/discountDetails/index",
     "pages/lottery/lottery",
     "pages/lottery-details/index",
     "pages/lottery-people-list/lottery-people-list",
-    "pages/index/index",
     "pages/indexDetails/details",
     "pages/course/course",
     "pages/userInfo/userInfo"
@@ -22,6 +22,12 @@
     "backgroundColor": "#ffffff",
     "color": "#c7c7c7",
     "list": [
+      {
+        "selectedIconPath": "/images/tab/free@hl.png",
+        "pagePath": "pages/index/index",
+        "text": "限免",
+        "iconPath": "/images/tab/free.png"
+      },
       {
         "selectedIconPath": "/images/tab/zhekou@hl.png",
         "pagePath": "pages/discount/index",

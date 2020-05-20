@@ -6,11 +6,12 @@ Page({
    */
   data: {
     // 轮播图
-    homepage:null,
+    homepage:['https://media.st.dl.pinyuncloud.com/steam/apps/1174180/header.jpg?t=1583253547','https://media.st.dl.pinyuncloud.com/steam/apps/1174180/ss_66b553f4c209476d3e4ce25fa4714002cc914c4f.600x338.jpg?t=1583253547'],
     // 中奖信息
     honoreeInfo:null,
     // 限免信息
     items:null,
+    show: true
   },
 
   /**
@@ -82,5 +83,11 @@ Page({
     console.log('开始下拉刷新')
     this.query()
   },
+
+  homepageClick(){
+    this.setData({
+      show : true
+    })
+  }
 
 })

@@ -1,12 +1,12 @@
-<!-- <view class="swiper-container">
+<view class="swiper-container">
 <swiper autoplay="true" interval="6000" duration="700" class="swiper">
   <block wx:for="{{homepage}}"  wx:key="unique">
     <swiper-item>
-       <image src="{{item.img}}" data-reply-Type="{{item.id}}" bindtap='homepageClick' class="image"></image>
+       <image src="{{item}}" bindtap='homepageClick' class="image"></image>
     </swiper-item>
   </block>
 </swiper>
-</view> -->
+</view>
 
 <block wx:for="{{items}}" wx:for-item="item" wx:key="_id" wx:for-index="idx">
   <van-card 
@@ -35,8 +35,7 @@
 </block>
 
 <van-dialog
-  title="客服"
-  message="我要和客服聊一聊"
+  message="进入客服消息后，回复【1】关注steam限免助手公众号，即时获取限免信息"
   show="{{ show }}"
   show-cancel-button
   confirm-button-open-type="contact"
