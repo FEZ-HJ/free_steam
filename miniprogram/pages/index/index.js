@@ -6,12 +6,12 @@ Page({
    */
   data: {
     // 轮播图
-    homepage:['https://media.st.dl.pinyuncloud.com/steam/apps/1174180/header.jpg?t=1583253547','https://media.st.dl.pinyuncloud.com/steam/apps/1174180/ss_66b553f4c209476d3e4ce25fa4714002cc914c4f.600x338.jpg?t=1583253547'],
+    homepage:['http://cdn.steamfree.online/de75c6bc08a35a14c1812ba333091ba.png'],
     // 中奖信息
     honoreeInfo:null,
     // 限免信息
     items:null,
-    show: true
+    show: false
   },
 
   /**
@@ -19,6 +19,7 @@ Page({
    */
   onLoad: function (options) {
     this.query()
+    this.queryHomePage()
   },
 
 // 轮播图控制方法
@@ -44,6 +45,22 @@ Page({
       }
     }) 
   },
+
+//初始化 查询所有首页轮播图
+queryHomePage: function () {
+  console.log('开始查询首页轮播图')
+  var that = this
+  wx.request({
+    url: URL+ 'homepage',
+    success(res) {
+      console.log('首页轮播图:')
+      console.log(res.data)
+      that.setData({
+        homepage: res.data
+      })
+    }
+  }) 
+},
 
 // 跳转到详情页面
   collect: function (e) {
@@ -84,10 +101,18 @@ Page({
     this.query()
   },
 
-  homepageClick(){
-    this.setData({
-      show : true
-    })
+  homepageClick(e){
+    console.log(e.currentTarget.dataset.replyType)
+    if(e.currentTarget.dataset.replyType == '' || e.currentTarget.dataset.replyType == undefined){
+      this.setData({
+        show : true
+      })
+    }else{
+      wx.navigateTo({
+        url: e.currentTarget.dataset.replyType
+      })
+    }
+    
   }
 
 })
